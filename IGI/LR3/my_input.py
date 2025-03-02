@@ -25,3 +25,10 @@ def input_float() -> float :
         else :
             break
     return -float(_in) if is_neg else float(_in)
+
+# Returns text string for task 4
+def text_to_parse() -> str :
+    s = "So she was considering in her own mind, as well as she could, for the hot day made her feel "
+    s += "very sleepy and stupid, whether the pleasure of making a daisy-chain would be worth the trouble "
+    s += "of getting up and picking the daisies, when suddenly a White Rabbit with pink eyes ran close by her."
+    return s;

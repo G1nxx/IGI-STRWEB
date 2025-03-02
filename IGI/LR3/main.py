@@ -1,6 +1,7 @@
 from TASK_1 import Macloren_exp
 from TASK_2 import Count_not_negative
 from TASK_3 import Count_lowercase_words
+from TASK_4 import *
 from my_input import *
 
 # Task 1. Main goal is to create method to evaluate exp(x) whith Tailor series and to print all information about this method.
@@ -24,13 +25,25 @@ def task2() :
     N = Count_not_negative()
     print("Count of not negative digits = " + str(N))
 
+# Task 3. Main goal is to count quantity of words with lowercase first letter
 def task3() :
     s = input("Enter your string:\n")
     N = Count_lowercase_words(s)
     print("Count of not lowercase words = " + str(N))
 
+# Task 4. Main goal is to parse text and to count some specific types of words in it, like
+            # 1) quanity of words with min length
+            # 2) quanity of words before comma
+            # 3) word with max length, wich have 'y' at the end of it
 def task4() :
-    print("Task4 is caled")
+    text = text_to_parse()
+    subtask1 = Count_min_len(text)
+    print("Count of words with min len = " + str(subtask1[0]) 
+          + ", with len = " + str(subtask1[1]))
+    subtask2 = Count_words_before_comma(text)
+    print("Count of words with comma after them = " + str(subtask2) )
+    subtask3 = Find_max_word_with_end(text,'y')
+    print("Word with max len and 'y' at the end is: " + subtask3)
 
 def task5() :
     print("Task5 is caled")
