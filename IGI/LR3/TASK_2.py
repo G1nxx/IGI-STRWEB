@@ -1,5 +1,6 @@
 from my_input import input_float
 
+# This function count not negative digits. It stops when user enters digit less then -100.
 def Count_not_negative() -> int:
     n = 0
     while True :

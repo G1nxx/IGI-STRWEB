@@ -1,5 +1,6 @@
 from TASK_1 import Macloren_exp
 from TASK_2 import Count_not_negative
+from TASK_3 import Count_lowercase_words
 from my_input import *
 
 # Task 1. Main goal is to create method to evaluate exp(x) whith Tailor series and to print all information about this method.
@@ -16,6 +17,7 @@ def task1() :
                 .format(x, res[0], res[1], res[2], eps))
         break
 
+# Task 2. Main goal is to count not negative digits in sequense.
 def task2() :
     print("Start entering digits. Program will count all not negative one."
            + "Program stops, if you enter digit less then -100.")
@@ -23,7 +25,9 @@ def task2() :
     print("Count of not negative digits = " + str(N))
 
 def task3() :
-    print("Task3 is caled")
+    s = input("Enter your string:\n")
+    N = Count_lowercase_words(s)
+    print("Count of not lowercase words = " + str(N))
 
 def task4() :
     print("Task4 is caled")
@@ -61,9 +65,9 @@ def main() :
 
 checker = 'y'
 while True :
-    if  checker == 'n' :
+    if  checker.lower() == 'n' :
         break
-    elif checker != 'y' :
+    elif checker.lower() != 'y' :
         print("Error!")
     else :
         main()
