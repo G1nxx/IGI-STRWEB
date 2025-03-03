@@ -1,0 +1,9 @@
+FROM python:3
+
+WORKDIR /usr/src/app
+
+COPY ./script.py .
+
+VOLUME /usr/src/app/files
+
+ENTRYPOINT ["python", "./script.py"]
