@@ -1,7 +1,15 @@
+"""
+        This program is made by student Burchuck Dmitrij Aleksandrovich
+        from group 353502. Date: 02.03.2025
+        Main goal of this proram is to realize and show basick python
+        entities and operations with them.
+        Lab №3. Standart data types, collections, functions and modules.
+"""
 from TASK_1 import Macloren_exp
 from TASK_2 import Count_not_negative
 from TASK_3 import Count_lowercase_words
 from TASK_4 import *
+from TASK_5 import *
 from my_input import *
 
 # Task 1. Main goal is to create method to evaluate exp(x) whith Tailor series and to print all information about this method.
@@ -45,20 +53,43 @@ def task4() :
     subtask3 = Find_max_word_with_end(text,'y')
     print("Word with max len and 'y' at the end is: " + subtask3)
 
+# Task 5. Main goal is to input collection of digits, printing them, finding max of them and finding max betwine 2 first positive digits.
 def task5() :
-    print("Task5 is caled")
+    print("input your collection: ")
+    result = Input_collection()
+    print("Sum = " + str(result[0]))
+    print("Max = " + str(result[1]))
 
-def task6() :
-    print("Task6 is caled")
+# Realization of decorator. User interface.
+def __strart_decorator(main_foo: Callable) :
+    checker = 'y'
+    while True :
+        if checker.lower() == 'n' :
+            break
+        elif checker.lower() != 'y' :
+            print("Error!")
+        else :
+            try :
+                main_foo()
+            except RuntimeError:
+                print("Something went wrong while runtime.")
+            except OverflowError:
+                print("Owerflow error.")
+            except Exception:
+                print("Something went wrong. Exeption was thrown.")
+        checker = input("do you want to continue? [y/n] ")
+    exit()
+
 
 # main. This function is used to start tasks.
+@__strart_decorator
 def main() :
     print("main is started")
     while True :
-        print("Choose task from 1 to 6: ", end='')
+        print("Choose task from 1 to 5: ", end='')
         task = input_int()
-        if (task > 6) | (task < 0) :
-                print("Wrong input. Value must be in range from 1 to 6.")
+        if (task > 5) | (task < 0) :
+            print("Wrong input. Value must be in range from 1 to 5.")
         else :
             match (int(task)) :
                 case 1:
@@ -71,17 +102,7 @@ def main() :
                     task4()
                 case 5:
                     task5()
-                case 6:
-                    task6()
             print ("main is ended")
             break
 
-checker = 'y'
-while True :
-    if  checker.lower() == 'n' :
-        break
-    elif checker.lower() != 'y' :
-        print("Error!")
-    else :
-        main()
-    checker = input("do you want to continue? [y/n] ")
+main()
