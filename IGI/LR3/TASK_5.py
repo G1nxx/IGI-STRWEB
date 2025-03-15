@@ -47,7 +47,9 @@ def Input_collection() -> (float | float) :
         elif checker.lower() != 'y' :
             print("Error!")
         else :
-            arr = randomize(N)
+            gen = randomize(N)
+            for _ in range(N) :
+                arr.append(next(gen))
             break
         checker = input("do you want to continue? [y/n] ")
     sum = Find_sum(arr)

@@ -55,8 +55,8 @@ def text_to_parse() -> str :
     return s;
 
 # Creates array with random values 
-def randomize(N: int) -> List[float]:
-    arr = []
+def randomize(N: int):
     for _ in range(N) :
-        arr.append((random() - 0.5) * int(random() * 100))
-    return arr
+        yield ((random() - 0.5) * int(random() * 100))
+
+
