@@ -1,11 +1,12 @@
 from my_input import collection_for_serialization
 from TASKS.TASK_1 import Executer
 
+# Class is made to manage tasks
 class task_manager:
     def __init__(self):
         pass
 
-    # Task 1. Main goal is to 
+    # Task 1. Main goal is to serialize and deserialize data.
     def task1(self):
         school_workload = collection_for_serialization()
         columns = ["name", "load"]

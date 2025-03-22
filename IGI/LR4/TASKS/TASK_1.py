@@ -2,33 +2,40 @@ from my_input import *
 import pickle
 import csv
 
+# This class is made for serealization data
 class Serializer:
     def __init__(self):
         pass
     
+    # Serealizes data in csv format
     def serialize_csv(self, dict, columns, file_name):
         with open(file_name, "w") as file:
             writer = csv.DictWriter(file, fieldnames=columns)
             writer.writeheader()
             writer.writerows(dict)
 
+    # Deserealizes data in csv format
     def load_csv(self, file_name):
         with open(file_name, "r") as file:
             reader = csv.DictReader(file)
             return list(reader)         
-            
+       
+    # Serealizes data in pickle format     
     def serialize_pickle(self, dict, file_name):
         with open(file_name, "wb") as file:
             pickle.dump(dict, file)
 
+    # Deserealizes data in pickle format
     def load_pickle(self, file_name):
         with open(file_name, "rb") as file:
             return pickle.load(file)
 
+# This class is made for executing different operations with data
 class Executer:
     def __init__(self):
         self.sr = Serializer()
 
+    # Is used to chose serializer
     def serialize(self, _columns, _file_name, _list):
         while True:
             print("Do you want to serialize csv<1>, pickle<2> or both of them<3>?")
@@ -41,7 +48,8 @@ class Executer:
             if inp != 2:
                 self.sr.serialize_csv(_list, _columns, _file_name + ".csv")
             break
-    
+
+    # Is used to chose deserializer
     def deserealize(self, _file_name):
         try:
             while True:
@@ -63,6 +71,7 @@ class Executer:
             return None
         return new_workload
     
+    # Is used to chose search options
     def search(self, _list):
         while True:
             print("Do you want to find element in collection by name<1>, by load<2> or don`t you<3>?")
@@ -89,6 +98,7 @@ class Executer:
                     print("No such element")
             break
     
+    # Is used to chose sort options
     def sort(self, new_workload):
         while True:
             print("Do you want to sort collection by name<1>, by load<2> or don`t you<3>?")
