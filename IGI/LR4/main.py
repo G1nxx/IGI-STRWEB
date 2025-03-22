@@ -6,29 +6,10 @@
         Lab №3. Standart data types, collections, functions and modules.
 """
 from my_input import *
-
-# Task 1. Main goal is to 
-def task1():
-    pass
-
-# Task 2. Main goal is to 
-def task2():
-    pass
-
-# Task 3. Main goal is to
-def task3():
-    pass
-
-# Task 4. Main goal is to p
-def task4():
-    pass
-
-# Task 5. Main goal is to 
-def task5():
-    pass
+from task_manager import *
 
 # Realization of decorator. User interface.
-def __strart_decorator(main_foo: Callable) :
+def __strart_decorator(main_foo: callable) :
     checker = 'y'
     while True :
         if checker.lower() == 'n' :
@@ -47,7 +28,6 @@ def __strart_decorator(main_foo: Callable) :
         checker = input("do you want to continue? [y/n] ")
     exit()
 
-
 # main. This function is used to start tasks.
 @__strart_decorator
 def main() :
@@ -58,17 +38,18 @@ def main() :
         if (task > 5) | (task < 0) :
             print("Wrong input. Value must be in range from 1 to 5.")
         else :
+            manager = task_manager();
             match (int(task)) :
                 case 1:
-                    task1()
+                    manager.task1()
                 case 2:
-                    task2()
+                    manager.task2()
                 case 3:
-                    task3()
+                    manager.task3()
                 case 4:
-                    task4()
+                    manager.task4()
                 case 5:
-                    task5()
+                    manager.task5()
             print ("main is ended")
             break
 
