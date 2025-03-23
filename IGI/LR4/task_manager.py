@@ -27,9 +27,10 @@ class task_manager:
 
     # Task 2. Main goal is to parse text and make file with information about it
     def task2(self):
+        result_file_name = "result.txt"
         file_name = "mac.txt"
         executer = Executer_2()
-        printer = Printer()
+        printer = Printer(result_file_name)
         text = executer.read_from_file(file_name)
 
         counters = executer.count_sentences(text)
@@ -44,8 +45,10 @@ class task_manager:
         printer.print_longest_word(longest_word)
         printer.print_every_even_word(text)
         printer.print_all_emojis(text)
+        printer.save_changes()
 
-
+        executer.archivise(result_file_name)
+        printer.print_info_about_zip()
 
         
 
