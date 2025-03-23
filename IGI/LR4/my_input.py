@@ -1,4 +1,5 @@
 from random import random
+import os
 
 # This method is used to input string and check if is it a int value or not.
 def input_int() -> int:
@@ -57,11 +58,6 @@ def collection_for_serialization():
         {"name": "Som Palich", "load": 3}
     ]
     return school_workload;
-
-# Creates array with random values 
-def randomize(N: int):
-    for _ in range(N) :
-        yield ((random() - 0.5) * int(random() * 100))
 
 if __name__ == '__main__':
     raise Exception("You can`t use this file as executable one");

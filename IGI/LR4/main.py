@@ -17,14 +17,16 @@ def __strart_decorator(main_foo: callable) :
         elif checker.lower() != 'y' :
             print("Error!")
         else :
-            try :
+            #try :
                 main_foo()
+                """
             except RuntimeError:
                 print("Something went wrong while runtime.")
             except OverflowError:
                 print("Owerflow error.")
             except Exception:
-                print("Something went wrong. Exeption was thrown.")
+                prnt("Something went wrong. Exeption was thrown.")"
+                """
         checker = input("do you want to continue? [y/n] ")
     exit()
 
