@@ -1,9 +1,9 @@
 """
         This program is made by student Burchuck Dmitrij Aleksandrovich
-        from group 353502. Date: 02.03.2025
-        Main goal of this proram is to realize and show basick python
-        entities and operations with them.
-        Lab №3. Standart data types, collections, functions and modules.
+        from group 353502. Date: 23.03.2025
+        Main goal of this proram is to realize and show python classes,
+        to work with files and regular expressions.
+        Lab №4. Classes, files and regular expressions.
 """
 from my_input import *
 from task_manager import *

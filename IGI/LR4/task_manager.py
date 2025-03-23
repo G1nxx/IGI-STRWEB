@@ -1,7 +1,8 @@
-from my_input import collection_for_serialization
+from my_input import collection_for_serialization, randomize
 from TASKS.TASK_1 import Executer as Executer_1
 from TASKS.TASK_2 import Executer as Executer_2
 from TASKS.TASK_2 import Printer
+from TASKS.TASK_3 import Evaluator, Painter
 
 # Class is made to manage tasks
 class task_manager:
@@ -52,9 +53,27 @@ class task_manager:
 
         
 
-    # Task 3. Main goal is to
+    # Task 3. Main goal is to work with collections and make graphs
     def task3(self):
-        pass
+        collection = randomize(10) + [2, 2, 2, 2, 7]
+        evaluator = Evaluator()
+        painter = Painter()
+        ar_mean = evaluator.arithmetic_mean(collection)
+        median = evaluator.find_median(collection)
+        moda = evaluator.find_moda(collection)
+        variance = evaluator.find_variance(collection)
+        deviation = evaluator.find_deviation(collection)
+
+        print("Colection: " + str(collection))
+        print("Sorted colection: " + str(sorted(collection)))
+        print("Arithmatic mean: " + str(ar_mean))
+        print("Madian: " + str(median))
+        print("Moda: " + str(moda[0]) + ", occurs " + str(moda[1]) + " times")
+        print("Variance: " + str(variance))
+        print("Deviation: " + str(deviation))
+
+        painter.draw_plot()
+
 
     # Task 4. Main goal is to p
     def task4(self):

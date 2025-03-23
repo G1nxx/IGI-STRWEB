@@ -59,5 +59,12 @@ def collection_for_serialization():
     ]
     return school_workload;
 
+# Creates array with random values 
+def randomize(N: int) -> list[float]:
+    arr = []
+    for _ in range(N) :
+        arr.append((random() - 0.5) * int(random() * 100))
+    return arr
+
 if __name__ == '__main__':
     raise Exception("You can`t use this file as executable one");
