@@ -3,9 +3,10 @@ from TASKS.TASK_1 import Executer as Executer_1
 from TASKS.TASK_2 import Executer as Executer_2
 from TASKS.TASK_2 import Printer
 from TASKS.TASK_3 import Evaluator, Painter
-from TASKS.TASK_4 import Triangle
 from TASKS.TASK_4 import Executer as Executer_4
 from TASKS.TASK_5 import Executer as Executer_5
+from TASKS.TASK_6 import Executer as Executer_6
+import getch
 
 # Class is made to manage tasks
 class task_manager:
@@ -93,10 +94,21 @@ class task_manager:
             print(tr)
             tr.draw()
 
-    # Task 5. Main goal is to 
+    # Task 5. Main goal is to work with numpy
     def task5(self):
         executer = Executer_5()
         executer.execute(3,4)
 
+    # Task 6. Demonstration of pandas
+    def task6(self):
+        executer = Executer_6()
+        executer.print_enterence()
+        print("To see demonstration of pandas. Series press any key")
+        getch.getch()
+        executer.series_demo()
+        print("To see demonstration of pandas. DataFrame press any key")
+        getch.getch()
+        print()
+        executer.print()
 if __name__ == '__main__':
     raise Exception("You can`t use this file as executable one")

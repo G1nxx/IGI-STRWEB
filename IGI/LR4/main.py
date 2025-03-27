@@ -23,6 +23,8 @@ def __strart_decorator(main_foo: callable):
                 print("Something went wrong while runtime.")
             except OverflowError:
                 print("Owerflow error.")
+            except KeyboardInterrupt:
+                print("Keyboard Interrupt")
             except Exception:
                 print("Something went wrong. Exeption was thrown.")
         checker = input("do you want to continue? [y/n] ")
@@ -35,7 +37,7 @@ def main() :
     while True :
         print("Choose task from 1 to 5: ", end='')
         task = input_int()
-        if (task > 5) | (task < 0) :
+        if (task > 6) | (task < 0) :
             print("Wrong input. Value must be in range from 1 to 5.")
         else :
             manager = task_manager();
@@ -50,6 +52,8 @@ def main() :
                     manager.task4()
                 case 5:
                     manager.task5()
+                case 6:
+                    manager.task6()
             print ("main is ended")
             break
 
