@@ -1,4 +1,4 @@
-from random import random
+from random import random, randint
 import os
 
 # This method is used to input string and check if is it a int value or not.
@@ -14,8 +14,8 @@ def input_int() -> int:
     while True :
         if not _in.isdigit():
             _in = input("Incorrect input. Value is not integer. Input right value: ")
-            if (len(_in) != 0) :
-                if (_in[0] == '-') :
+            if (len(_in) != 0):
+                if (_in[0] == '-'):
                     _in = _in[1:]
                     is_neg = True
                 else :
@@ -37,8 +37,8 @@ def input_float() -> float:
     while True :
         if not _in.replace('.','',1).isdigit():
             _in = input("Incorrect input. Value is not digit. Input right value: ")
-            if (len(_in) != 0) :
-                if (_in[0] == '-') :
+            if (len(_in) != 0):
+                if (_in[0] == '-'):
                     _in = _in[1:]
                     is_neg = True
                 else :
@@ -86,6 +86,12 @@ def input_color():
                 return(_in)
             case default:
                 _in = input("Incorrect input. Value is not digit. Input right value: ")
+
+def array_gen(n: int):
+    arr = []
+    for _ in range(n):
+        arr.append(randint(0,100))
+    return arr
 
 if __name__ == '__main__':
     raise Exception("You can`t use this file as executable one");

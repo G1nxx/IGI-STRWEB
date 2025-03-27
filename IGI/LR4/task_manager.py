@@ -5,6 +5,7 @@ from TASKS.TASK_2 import Printer
 from TASKS.TASK_3 import Evaluator, Painter
 from TASKS.TASK_4 import Triangle
 from TASKS.TASK_4 import Executer as Executer_4
+from TASKS.TASK_5 import Executer as Executer_5
 
 # Class is made to manage tasks
 class task_manager:
@@ -94,7 +95,8 @@ class task_manager:
 
     # Task 5. Main goal is to 
     def task5(self):
-        pass
+        executer = Executer_5()
+        executer.execute(3,4)
 
 if __name__ == '__main__':
     raise Exception("You can`t use this file as executable one")

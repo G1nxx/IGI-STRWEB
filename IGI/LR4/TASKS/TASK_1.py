@@ -111,6 +111,8 @@ class Executer:
                 sorted_c = sorted(new_workload, key=lambda d: d["name"])
             if inp == 2:
                 sorted_c = sorted(new_workload, key=lambda d: int(d["load"]))
+            if inp == 3:
+                break
             for el in sorted_c:
                 print(el)
             break

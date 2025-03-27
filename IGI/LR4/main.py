@@ -9,24 +9,22 @@ from my_input import *
 from task_manager import *
 
 # Realization of decorator. User interface.
-def __strart_decorator(main_foo: callable) :
+def __strart_decorator(main_foo: callable):
     checker = 'y'
     while True :
-        if checker.lower() == 'n' :
+        if checker.lower() == 'n':
             break
-        elif checker.lower() != 'y' :
+        elif checker.lower() != 'y':
             print("Error!")
         else :
-            #try :
+            try:
                 main_foo()
-                """
             except RuntimeError:
                 print("Something went wrong while runtime.")
             except OverflowError:
                 print("Owerflow error.")
             except Exception:
-                prnt("Something went wrong. Exeption was thrown.")"
-                """
+                print("Something went wrong. Exeption was thrown.")
         checker = input("do you want to continue? [y/n] ")
     exit()
 
