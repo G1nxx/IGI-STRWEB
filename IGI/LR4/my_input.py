@@ -66,5 +66,26 @@ def randomize(N: int) -> list[float]:
         arr.append((random() - 0.5) * int(random() * 100))
     return arr
 
+def input_color():
+    _in = input()
+    while True :
+        match _in:
+            case "red":
+                return(_in)
+            case "yellow":
+                return(_in)
+            case "green":
+                return(_in)
+            case "blue":
+                return(_in)
+            case "orange":
+                return(_in)
+            case "black":
+                return(_in)
+            case "pink":
+                return(_in)
+            case default:
+                _in = input("Incorrect input. Value is not digit. Input right value: ")
+
 if __name__ == '__main__':
     raise Exception("You can`t use this file as executable one");

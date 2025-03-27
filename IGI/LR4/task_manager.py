@@ -3,6 +3,8 @@ from TASKS.TASK_1 import Executer as Executer_1
 from TASKS.TASK_2 import Executer as Executer_2
 from TASKS.TASK_2 import Printer
 from TASKS.TASK_3 import Evaluator, Painter
+from TASKS.TASK_4 import Triangle
+from TASKS.TASK_4 import Executer as Executer_4
 
 # Class is made to manage tasks
 class task_manager:
@@ -75,9 +77,20 @@ class task_manager:
         painter.draw_plot()
 
 
-    # Task 4. Main goal is to p
+    # Task 4. Main goal is to paint Triangle, inherited from abstract Figure class
     def task4(self):
-        pass
+        #tr = Triangle(3, 60, 60, "Ellow")
+        #print(tr)
+        #tr2 = eval(repr(tr))      # Realization of __repr__ 'magic' method
+        #print(tr2)
+        executer = Executer_4()
+        try:
+            tr = executer.create_triangle()
+        except Exception:
+            print("Can`t to create such triangle")
+        else:
+            print(tr)
+            tr.draw()
 
     # Task 5. Main goal is to 
     def task5(self):
