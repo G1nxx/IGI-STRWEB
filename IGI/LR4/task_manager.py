@@ -103,12 +103,14 @@ class task_manager:
     def task6(self):
         executer = Executer_6()
         executer.print_enterence()
-        print("To see demonstration of pandas. Series press any key")
+        print("To see demonstration of pandas Series. press any key")
         getch.getch()
         executer.series_demo()
-        print("To see demonstration of pandas. DataFrame press any key")
+        print("To see demonstration of pandas DataFrame. press any key")
         getch.getch()
         print()
         executer.print()
+
+        
 if __name__ == '__main__':
     raise Exception("You can`t use this file as executable one")

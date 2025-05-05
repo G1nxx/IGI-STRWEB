@@ -40,7 +40,7 @@ class Executer:
         while True:
             print("Do you want to serialize csv<1>, pickle<2> or both of them<3>?")
             inp = input_int();
-            if inp < 1 and inp > 3:
+            if inp < 1 or inp > 3:
                 print("Chose one of sugested options")
                 continue
             if inp != 1:
