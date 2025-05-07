@@ -1,0 +1,405 @@
+Count of all sentences: 27
+Count of declarative sentences: 18
+Count of interrogative sentences: 4
+Count of exclamatory sentences: 5
+Average length of sentence is: 66.25925925925925
+Average length of word is: 7.485355648535565
+sentence № 1 	Count of words: 17
+sentence № 2 	Count of words: 14
+sentence № 3 	Count of words: 5
+sentence № 4 	Count of words: 8
+sentence № 5 	Count of words: 4
+sentence № 6 	Count of words: 2
+sentence № 7 	Count of words: 11
+sentence № 8 	Count of words: 10
+sentence № 9 	Count of words: 6
+sentence № 10 	Count of words: 10
+sentence № 11 	Count of words: 2
+sentence № 12 	Count of words: 13
+sentence № 13 	Count of words: 13
+sentence № 14 	Count of words: 11
+sentence № 15 	Count of words: 11
+sentence № 16 	Count of words: 10
+sentence № 17 	Count of words: 2
+sentence № 18 	Count of words: 8
+sentence № 19 	Count of words: 14
+sentence № 20 	Count of words: 11
+sentence № 21 	Count of words: 9
+sentence № 22 	Count of words: 2
+sentence № 23 	Count of words: 19
+sentence № 24 	Count of words: 9
+sentence № 25 	Count of words: 18
+Word MAC-адрес
+Word (Media
+Word Access
+Word Control
+Word address
+Word это
+Word уникальный
+Word идентификатор
+Word присваиваемый
+Word сетевому
+Word оборудованию
+Word для
+Word идентификации
+Word устройств
+Word в
+Word локальной
+Word сети
+Word Обычно
+Word он
+Word записывается
+Word в
+Word виде
+Word шести
+Word :(((
+Word пар
+Word шестнадцатеричных
+Word чисел
+Word разделённых
+Word двоеточиями
+Word или
+Word дефисами
+Word Например
+Word 00:1A:2B:3C:4D:5E
+Word это
+Word правильный
+Word MAC-адрес
+Word Однако
+Word не
+Word все
+Word последовательности
+Word символов
+Word являются
+Word корректными
+Word MAC-адресами
+Word Давайте
+Word рассмотрим
+Word несколько
+Word примеров
+Word Правильные
+Word MAC-адреса:
+Word 00:1A:2B:3C:4D:5E
+Word корректный
+Word MAC-адрес
+Word (-:
+Word все
+Word символы
+Word являются
+Word шестнадцатеричными
+Word числами
+Word разделёнными
+Word двоеточиями
+Word 00-1A-2B-3C-4D-5E
+Word также
+Word корректный
+Word MAC-адрес
+Word но
+Word с
+Word использованием
+Word дефисов
+Word вместо
+Word двоеточий
+Word A1:B2:C3:D4:E5:F6
+Word ещё
+Word один
+Word пример
+Word правильного
+Word MAC-адреса
+Word 01:23:45:67:89:AB
+Word корректный
+Word MAC-адрес
+Word содержащий
+Word как
+Word цифры
+Word так
+Word и
+Word буквы
+Word A-F
+Word Неправильные
+Word MAC-адреса:
+Word 00:1A:2B:3C:4D:5G
+Word некорректный
+Word MAC-адрес
+Word так
+Word как
+Word символ
+Word "G
+Word не
+Word является
+Word допустимым
+Word в
+Word шестнадцатеричной
+Word системе
+Word 00:1A:2B:3C:4D
+Word некорректный
+Word MAC-адрес
+Word так
+Word как
+Word он
+Word содержит
+Word только
+Word пять
+Word ;
+Word октетов
+Word вместо
+Word шести
+Word 00:1A:2B:3C:4D:5E:6F
+Word некорректный
+Word MAC-адрес
+Word так
+Word как
+Word он
+Word содержит
+Word семь
+Word октетов
+Word вместо
+Word шести
+Word ;-[[
+Word 00:1A:2B-3C:4D:5E
+Word некорректный
+Word MAC-адрес
+Word так
+Word как
+Word используются
+Word одновременно
+Word двоеточия
+Word и
+Word дефисы
+Word 00:1A:2B:3C:4D:5E:
+Word некорректный
+Word MAC-адрес
+Word так
+Word как
+Word в
+Word конце
+Word присутствует
+Word лишний
+Word пробел
+Word Дополнительные
+Word примеры:
+Word FF:FF:FF:FF:FF:FF
+Word корректный
+Word MAC-адрес
+Word часто
+Word используемый
+Word для
+Word широковещательных
+Word сообщений
+Word 00:00:00:00:00:00
+Word технически
+Word корректный
+Word MAC-адрес
+Word но
+Word на
+Word практике
+Word он
+Word не
+Word используется
+Word так
+Word как
+Word является
+Word нулевым
+Word 12:34:56:78:90:ZZ
+Word некорректный
+Word MAC-адрес
+Word так
+Word как
+Word "ZZ
+Word не
+Word является
+Word допустимым
+Word шестнадцатеричным
+Word значением
+Word 12:34:56:78:90:AB:CD
+Word некорректный
+Word MAC-адрес
+Word так
+Word как
+Word содержит
+Word слишком
+Word много
+Word октетов
+Word :--)
+Word Заключение:
+Word Правильный
+Word MAC-адрес
+Word должен
+Word состоять
+Word из
+Word ровно
+Word шести
+Word пар
+Word шестнадцатеричных
+Word символов
+Word (цифры
+Word 0-9
+Word и
+Word буквы
+Word A-F)
+Word разделённых
+Word двоеточиями
+Word или
+Word дефисами
+Word Любое
+Word отклонение
+Word от
+Word этого
+Word формата
+Word делает
+Word :-[]
+Word MAC-адрес
+Word некорректным
+Word При
+Word работе
+Word с
+Word сетевыми
+Word устройствами
+Word важно
+Word убедиться
+Word что
+Word используемые
+Word MAC-адреса
+Word соответствуют
+Word стандарту
+Word чтобы
+Word избежать
+Word ошибок
+Word в
+Word работе
+Word сети
+All macs: 16
+True macs: 7
+00:1A:2B:3C:4D:5E
+00:1A:2B:3C:4D:5E
+00-1A-2B-3C-4D-5E
+A1:B2:C3:D4:E5:F6
+01:23:45:67:89:AB
+FF:FF:FF:FF:FF:FF
+00:00:00:00:00:00
+The longest word is: 00:1A:2B:3C:4D:5E:6F with pos = 157
+MAC-адрес
+Access
+address)
+уникальный
+присваиваемый
+оборудованию
+идентификации
+в
+сети.
+он
+в
+шести
+пар
+чисел,
+двоеточиями
+дефисами.
+00:1A:2B:3C:4D:5E
+правильный
+Однако
+все
+символов
+корректными
+Давайте
+несколько
+Правильные
+00:1A:2B:3C:4D:5E
+MAC-адрес,
+все
+являются
+числами,
+двоеточиями!
+также
+MAC-адрес,
+с
+дефисов
+двоеточий!
+ещё
+пример
+MAC-адреса!
+корректный
+содержащий
+цифры,
+и
+A-F!
+MAC-адреса:
+некорректный
+так
+символ
+не
+допустимым
+шестнадцатеричной
+00:1A:2B:3C:4D
+MAC-адрес,
+как
+содержит
+пять
+октетов
+шести?
+некорректный
+так
+он
+семь
+вместо
+;-[[
+некорректный
+так
+используются
+двоеточия
+дефисы.
+некорректный
+так
+в
+присутствует
+пробел.
+примеры:
+корректный
+часто
+для
+сообщений.
+технически
+MAC-адрес,
+на
+он
+используется,
+как
+нулевым?
+некорректный
+так
+"ZZ"
+является
+шестнадцатеричным
+12:34:56:78:90:AB:CD
+MAC-адрес,
+как
+слишком
+октетов!
+Заключение:
+MAC-адрес
+состоять
+ровно
+пар
+символов
+0-9
+буквы
+разделённых
+или
+Любое
+от
+формата
+:-[]
+некорректным?
+работе
+сетевыми
+важно
+что
+MAC-адреса
+стандарту,
+избежать
+в
+сети.
+Count of emojis: 4
+:((((
+;)
+;-[[
+:--))
