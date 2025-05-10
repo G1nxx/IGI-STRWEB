@@ -1,25 +1,26 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
-class Client(AbstractUser):
+class User(AbstractUser):
     phone = models.CharField(max_length=20, blank=True)
     address = models.TextField(blank=True)
+    is_employee = models.BooleanField(default=False)
 
     groups = models.ManyToManyField(
         'auth.Group',
         verbose_name='groups',
         blank=True,
         help_text='The groups this user belongs to.',
-        related_name='client_groups',
-        related_query_name='client',
+        related_name='user_groups',
+        related_query_name='user',
     )
     user_permissions = models.ManyToManyField(
         'auth.Permission',
         verbose_name='user permissions',
         blank=True,
         help_text='Specific permissions for this user.',
-        related_name='client_user_permissions',
-        related_query_name='client',
+        related_name='user_permissions',
+        related_query_name='user',
     )
 
     def __str__(self):
@@ -30,7 +31,7 @@ class Car(models.Model):
     model = models.CharField(max_length=30)
     number = models.CharField(max_length=15)
     type = models.CharField(max_length=10)
-    owners = models.ManyToManyField(Client, related_name='cars_owned')
+    owners = models.ManyToManyField(User, related_name='cars_owned')
     
     def __str__(self):
         pass
