@@ -1,7 +1,33 @@
 {% extends "auto_car/base.html" %}
 
 {% block content %}
-<div class="container">
+    <form method="post" action="{% url 'auto_car:signup' %}">  <!-- Используйте url-тег -->
+        {% csrf_token %}
+        
+        {% if error %}
+            <div class="error-message">{{ error }}</div>
+        {% endif %}
+        
+        <p>Name:<br><input name="username" value="{{ form_data.username|default:'' }}" required></p>
+        
+        <p>Mail:<br>
+        <input name="email" type="email" value="{{ form_data.email|default:'' }}" required></p>
+        
+        <p>Password:<br><input name="password" type="password" required></p>
+        
+        <p>Phone number:<br>
+        <input name="phone" type="tel" value="{{ form_data.phone|default:'' }}" required></p>
+        
+        <p>Birthday:<br>
+        <input name="birthday" type="date" value="{{ form_data.birthday|default:'' }}" required></p>
+        
+        <input type="submit" value="Register">
+    </form>
     
-</div>
+    {% if fact %}
+        <div class="joke">
+            <p>{{ fact.setup }}</p>
+            <p>{{ fact.punchline }}</p>
+        </div>
+    {% endif %}
 {% endblock %}

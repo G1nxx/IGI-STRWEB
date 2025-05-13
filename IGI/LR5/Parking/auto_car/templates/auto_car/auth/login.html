@@ -1,7 +1,14 @@
 {% extends "auto_car/base.html" %}
 
 {% block content %}
-<div class="container">
+    <form method="post" action="{% url 'auto_car:login' %}">
+        {% csrf_token %}
+        {{ error }}
+        <p>Email:<br><input name="email" type="email" required/></p>
+        <p>Password:<br><input name="password" type="password" required/></p>
+        <input type="submit" value="send">
+    </form>
+    {{ fact.fact }}
+{% endblock content %}
+
     
-</div>
-{% endblock %}

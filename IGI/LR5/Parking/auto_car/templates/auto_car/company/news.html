@@ -1,0 +1,16 @@
+{% extends "auto_car/base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="news">
+        <h3>Новости</h3>
+        {% for n in news %}
+        <div style="padding-left: 6px; padding-right: 6px; margin: 4px; background-color: bisque; border-radius: 5px;">
+            <p>{{ n.title }}</p>
+            <p>{{ n.text }}</p>
+            <p style="right: auto;">{{ n.date }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

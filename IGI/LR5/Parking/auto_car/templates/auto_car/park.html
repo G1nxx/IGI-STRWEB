@@ -1,0 +1,13 @@
+{% extends "auto_car/base.html" %}
+
+{% block content %}
+<div class="container">
+    <h1>
+        {% if ok %}
+            <p>Автомобиль припаркован успешно</p>
+        {% else %}
+            <p>Автомобиль не припаркован</p>
+        {% endif %}
+    </h1>
+</div>
+{% endblock %}

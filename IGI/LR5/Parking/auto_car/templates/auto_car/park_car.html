@@ -1,0 +1,30 @@
+{% extends "auto_car/base.html" %}
+
+{% block content %}
+<div class="container">
+    <h2>Свободные парковочные места</h2>
+    <div class="row">
+        {% for parking in parking_places %}
+        <div class="col-md-4 mb-4">
+            <div class="card" style="background-color: blanchedalmond;">
+                <div class="card-body">
+                    <p class="card-title">{{ parking.number }} {{ parking.type }}</p>
+                    <p class="card-text">
+                        Cost: 
+                        <span class="text-success"> {{ parking.cost_per_month }}</span>
+                    </p>
+                    <form method="post" action="{% url 'auto_car:client_dashboard/park_car/park' parking.number car_id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary">Припарковать</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <p>Свободных мест нет.</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

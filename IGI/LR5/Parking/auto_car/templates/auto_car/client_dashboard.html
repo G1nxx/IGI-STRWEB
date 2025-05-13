@@ -2,6 +2,36 @@
 
 {% block content %}
 <div class="container">
-    
+    <h2>Мои автомобили</h2>
+    <div class="row">
+        {% for car in cars %}
+        <div class="col-md-4 mb-4">
+            <div class="card" style="background-color: blanchedalmond;">
+                <div class="card-body">
+                    <p class="card-title">{{ car.brand }} {{ car.model }}</p>
+                    <p class="card-text">
+                        Number: {{ car.number }}<br>
+                        Статус: 
+                        {% if car.is_parked %}
+                            <span class="text-success">Припаркован</span>
+                        {% else %}
+                            <span class="text-danger">Не припаркован</span>
+                        {% endif %}
+                    </p>
+                    {% if not car.is_parked %}
+                    <form method="post" action="{% url 'auto_car:client_dashboard/park_car' car.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary">Припарковать</button>
+                    </form>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <p>У вас пока нет зарегистрированных автомобилей.</p>
+        </div>
+        {% endfor %}
+    </div>
 </div>
 {% endblock %}
