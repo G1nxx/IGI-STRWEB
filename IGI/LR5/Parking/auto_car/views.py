@@ -112,11 +112,13 @@ def client_dashboard(request):
 def employee_dashboard(request):
     daily_stats = models.UserSession.get_daily_stats()[:30]
     avg_time = models.UserSession.get_average_session_time()
+    models.UserSession.generate()
     context = {
         'all_payments': models.Bill.objects.all(),
         'clients': models.ServiceUser.objects.filter(is_employee=False),
         'daily_stats': daily_stats,
         'avg_time': avg_time,
+        'graph_url': 'static/images/graph.jpg'
     }
     return render(request, 'auto_car/employee_dashboard.html', context)
 
@@ -124,7 +126,8 @@ def about(request):
     context = {
         'about': {
             'info': company_usecases.get_info()
-            }
+            },
+            'last': company_usecases.get_last_news()
         }
     return render(request, 'auto_car/company/about.html', context)
 
@@ -135,22 +138,49 @@ def news(request):
     return render(request, 'auto_car/company/news.html', context)
 
 def glossary(request):
-    return render(request, 'auto_car/company/glossary.html')
+    context = {
+        'glossaries': company_usecases.get_glossaries()
+    }
+    return render(request, 'auto_car/company/glossary.html', context)
 
 def contacts(request):
-    return render(request, 'auto_car/company/contacts.html')
+    context = {
+        'contacts': company_usecases.get_contacts()
+    }
+    return render(request, 'auto_car/company/contacts.html', context)
 
 def privacy(request):
     return render(request, 'auto_car/company/privacy.html')
 
 def vacancies(request):
-    return render(request, 'auto_car/company/vacancies.html')
+    context = {
+        'vacancies': company_usecases.get_vacancies()
+    }
+    return render(request, 'auto_car/company/vacancies.html', context)
 
 def reviews(request):
-    return render(request, 'auto_car/company/reviews.html')
+    context = {
+        'reviews': company_usecases.get_reviews()
+    }
+    return render(request, 'auto_car/company/reviews.html', context)
+
+def add_review(request):
+    data = {
+        "rate": request.POST.get("rate", ""),
+        "text": request.POST.get("text", ""),
+        "customer": models.ServiceUser.objects.filter(id=request.session['id']).first()
+    }
+    company_usecases.create_review(data)
+    context = {
+        'reviews': company_usecases.get_reviews()
+    }
+    return render(request, 'auto_car/company/reviews.html', context)
 
 def promocodes(request):
-    return render(request, 'auto_car/company/promocodes.html')
+    context = {
+        'promocodes': company_usecases.get_promocodes()
+    }
+    return render(request, 'auto_car/company/promocodes.html', context)
 
 @login_required
 def park_car(request, car_id):

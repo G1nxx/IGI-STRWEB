@@ -6,6 +6,14 @@
         <div class="info">
             <p>{{ about.info }}</p>
         </div>
+        
+    {% endif %}
+    {% if last %}
+        <div style="padding-left: 6px; padding-right: 6px; margin: 4px; background-color: bisque; border-radius: 5px;">
+            <p>{{ last.title }}</p>
+            <p>{{ last.text }}</p>
+            <p style="right: auto;">{{ n.date }}</p>
+        </div>
     {% endif %}
 </div>
 {% endblock %}

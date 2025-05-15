@@ -1,5 +1,6 @@
 {% extends "auto_car/base.html" %}
 
+{% load static %}
 {% block content %}
 <div class="container">
     <div class="news">
@@ -9,6 +10,7 @@
             <p>{{ n.title }}</p>
             <p>{{ n.text }}</p>
             <p style="right: auto;">{{ n.date }}</p>
+            <img src="{% static n.pic.url %}" class="img-fluid" style="width: 250px; height: 250px; object-fit: cover;">
         </div>
         {% endfor %}
     </div>

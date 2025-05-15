@@ -1,7 +1,36 @@
 {% extends "auto_car/base.html" %}
 
+{% load static %}
 {% block content %}
 <div class="container">
-    
+    {% if contacts %}
+    <div class="row mt-5">
+        <div class="col-12">
+            <h3 class="mb-4">Контакты</h3>
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>User</th>
+                            <th>Image</th>
+                            <th>Number</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for contact in contacts %}
+                        <tr>
+                            <td>{{ contact.user.user }}</td>
+                            <td>
+                                <img src="{% static contact.pic.url %}" class="img-fluid" style="width: 250px; height: 250px; object-fit: cover;">
+                            </td>
+                            <td>{{ contact.user.phone }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    {% endif %}
 </div>
 {% endblock %}

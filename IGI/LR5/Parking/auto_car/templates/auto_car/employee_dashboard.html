@@ -1,5 +1,6 @@
 {% extends "auto_car/base.html" %}
 
+{% load static %}
 {% block content %}
 <div class="container">
     <h2>Статистика посещений</h2>
@@ -40,6 +41,7 @@
             <p>У вас пока нет зарегистрированных пользователей.</p>
         </div>
         {% endfor %}
+        <img src="{% static 'images/statistic.png' %}" class="img-fluid" style="width: 500px; height: 500px; object-fit: cover;">
     </div>
 </div>
 {% endblock %}

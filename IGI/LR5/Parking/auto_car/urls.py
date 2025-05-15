@@ -1,4 +1,6 @@
 from django.urls import path, re_path
+from django.conf import settings
+from django.conf.urls.static import static
 from . import views
 
 app_name = 'auto_car'
@@ -17,6 +19,7 @@ urlpatterns = [
     path('privacy/', views.privacy, name='privacy'),
     path('vacancies/', views.vacancies, name='vacancies'),
     path('reviews/', views.reviews, name='reviews'),
+    path('add_review/', views.add_review, name='add_review'),
     path('promocodes/', views.promocodes, name='promocodes'),
     path('client_dashboard/park_car/<int:car_id>/', views.park_car, name='client_dashboard/park_car'),
     re_path(r'^client_dashboard/park_car/park/(?P<parking_id>[a-zA-Z0-9_-]+)/(?P<car_id>\d+)/$', views.park, name='client_dashboard/park_car/park'),
@@ -26,4 +29,4 @@ urlpatterns = [
     re_path(r'^client_dashboard/delete_car/(?P<car_id>\d+)/$', views.delete_car, name='client_dashboard/delete_car'),
     re_path(r'^client_dashboard/update_car/(?P<car_id>\d+)/$', views.update_car, name='client_dashboard/update_car'),
     re_path(r'^client_dashboard/update_car/update/(?P<car_id>\d+)/$', views.update, name='client_dashboard/update_car/update'),
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -2,6 +2,15 @@
 
 {% block content %}
 <div class="container">
-    
+    <div class="vacancies">
+        <h3>Вакансии</h3>
+        {% for n in vacancies %}
+        <div style="padding-left: 6px; padding-right: 6px; margin: 4px; background-color: bisque; border-radius: 5px;">
+            <p>{{ n.name }}</p>
+            <p>{{ n.salary }} $</p>
+            <p>{{ n.info }}</p>
+        </div>
+        {% endfor %}
+    </div>
 </div>
 {% endblock %}

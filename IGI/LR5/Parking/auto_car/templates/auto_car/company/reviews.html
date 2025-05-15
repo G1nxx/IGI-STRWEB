@@ -2,6 +2,22 @@
 
 {% block content %}
 <div class="container">
-    
+     <h3>Отзывы</h3>
+        {% if user.is_authenticated %}
+            <form method="post" action="{% url 'auto_car:add_review' %}">
+                {% csrf_token %}
+                {{ error }}
+                <p>Rate:<br><input name="rate" type="number" required/></p>
+                <p>Text:<br><input name="text" required/></p>
+                <input type="submit" value="send">
+            </form>
+        {% endif %}
+        {% for n in reviews %}
+        <div style="padding-left: 6px; padding-right: 6px; margin: 4px; background-color: bisque; border-radius: 5px;">
+            <p>{{ n.customer }} {{ n.rate }}</p>
+            <p>{{ n.text }}</p>
+            <p>{{ n.date }}</p>
+        </div>
+        {% endfor %}
 </div>
 {% endblock %}

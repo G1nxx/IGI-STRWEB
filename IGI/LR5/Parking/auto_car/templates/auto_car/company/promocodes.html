@@ -2,6 +2,15 @@
 
 {% block content %}
 <div class="container">
-    
+    <div class="promocodes">
+        <h3>Вакансии</h3>
+        {% for n in promocodes %}
+        <div style="padding-left: 6px; padding-right: 6px; margin: 4px; background-color: bisque; border-radius: 5px;">
+            <p>{{ n.number }}</p>
+            <p>{{ n.deadline }}</p>
+            <p>{{ n.discount }}</p>
+        </div>
+        {% endfor %}
+    </div>
 </div>
 {% endblock %}

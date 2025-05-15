@@ -1,9 +1,14 @@
+from io import BytesIO
 from django.db import models
 from django.db.models import Avg, Count, Max
 from django.contrib.auth.models import User
 import django.utils.timezone as timezone
 from django.db.models.functions import TruncDate
 from datetime import timedelta
+from django.core.files.base import ContentFile
+import matplotlib.pyplot as plt
+import numpy as np
+import os
 
 class ServiceUser(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -76,6 +81,10 @@ class Vacancy(models.Model):
 
     def __str__(self):
         return f"Вакансия: {self.name} ({self.salary} руб.)"
+    
+class Contact(models.Model):
+    user = models.ForeignKey(ServiceUser, on_delete=models.CASCADE)
+    pic = models.ImageField(upload_to='auto_car/static/images/', null=True)
 
 class CompanyInfo(models.Model):
     text = models.TextField()
@@ -87,6 +96,7 @@ class News(models.Model):
     title = models.TextField()
     text = models.TextField()
     date = models.DateTimeField(auto_now_add=True)
+    pic = models.ImageField(upload_to='auto_car/static/images/', null=True)
 
     def __str__(self):
         return f"Новость: {self.title} ({self.date.strftime('%d.%m.%Y')})"
@@ -151,3 +161,54 @@ class UserSession(models.Model):
         return cls.objects.exclude(duration__isnull=True).aggregate(
             avg_duration=Avg('duration')
         )['avg_duration'] or timedelta(0)
+
+    @classmethod
+    def generate(cls, filename='auto_car/static/images/statistic.png'):
+        daily = cls.objects.annotate(
+            date=TruncDate('login_time')
+        ).values('date').annotate(
+            users=Count('user', distinct=True),
+            sessions=Count('id'),
+            avg_duration=Avg('duration')
+        ).order_by('-date')[:7]  # Берем последние 7 записей
+        
+        # Создаем фигуру matplotlib
+        plt.figure(figsize=(8, 6))
+        
+        # Подготовка данных
+        days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+        
+        # Создаем список сессий, заполняя нулями для отсутствующих дней
+        sessions_data = {entry['date'].strftime('%a'): entry['sessions'] for entry in daily}
+        sessions = [sessions_data.get(day, 0) for day in days]
+        
+        # Строим столбчатую диаграмму
+        bars = plt.bar(days, sessions, color='skyblue')
+        
+        # Добавляем значения поверх столбцов
+        for bar in bars:
+            height = bar.get_height()
+            plt.text(bar.get_x() + bar.get_width()/2., height,
+                    f'{int(height)}',
+                    ha='center', va='bottom')
+        
+        plt.title('Статистика пользователей:')
+        plt.xlabel('Дни недели')
+        plt.ylabel('Количество сеансов')
+        plt.tight_layout()
+        
+        # Сохраняем график в BytesIO
+        buffer = BytesIO()
+        plt.savefig(buffer, format='png', dpi=100)
+        plt.close()
+        buffer.seek(0)
+        
+        # Создаем директорию, если ее нет
+        os.makedirs(os.path.dirname(filename), exist_ok=True)
+        
+        # Сохраняем на диск
+        with open(filename, 'wb') as f:
+            f.write(buffer.getbuffer())
+        
+        # Возвращаем ContentFile для возможного сохранения в модели
+        return ContentFile(buffer.getvalue(), name=os.path.basename(filename))

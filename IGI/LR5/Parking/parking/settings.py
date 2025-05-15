@@ -161,3 +161,9 @@ LOGGING = {
         },
     },
 }
+
+STATIC_URL = 'auto_car/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Для сбора статики в production
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'auto_car/static'),  # Папка со статикой в development
+]

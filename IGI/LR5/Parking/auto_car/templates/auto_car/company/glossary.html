@@ -2,6 +2,15 @@
 
 {% block content %}
 <div class="container">
-    
+    <div class="glossaries">
+        <h3>Вопрос-ответ</h3>
+        {% for n in glossaries %}
+        <div style="padding-left: 6px; padding-right: 6px; margin: 4px; background-color: bisque; border-radius: 5px;">
+            <p>{{ n.text }}</p>
+            <p>{{ n.answer }}</p>
+            <p>{{ n.date }}</p>
+        </div>
+        {% endfor %}
+    </div>
 </div>
 {% endblock %}
