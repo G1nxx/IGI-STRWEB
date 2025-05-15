@@ -4,7 +4,7 @@ from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 
 def sign_up(data):
-    print(data["birthday_date"])
+    # print(data["birthday_date"])
     birth_date = datetime.datetime.strptime(data["birthday_date"], "%Y-%m-%d")
     today = datetime.datetime.now()
     age = today.year - birth_date.year
@@ -37,7 +37,7 @@ def sign_in(data):
         return None, "Wrong email"
     if len(data["password"]) < 8:
         return None, "Password must be at least 8 characters long"    
-    user =user_db.get_user_by_email(data["email"])
+    user =user_db.get_user_by_email(email)
     if user == None:
         return None, "User not found"
     if user.user.password != password:

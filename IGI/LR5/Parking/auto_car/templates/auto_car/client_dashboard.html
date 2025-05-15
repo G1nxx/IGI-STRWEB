@@ -3,6 +3,10 @@
 {% block content %}
 <div class="container">
     <h2>Мои автомобили</h2>
+    <form method="post" action="{% url 'auto_car:client_dashboard/register_car' %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary">Добавить автомобиль</button>
+    </form>
     <div class="row">
         {% for car in cars %}
         <div class="col-md-4 mb-4">
@@ -17,12 +21,29 @@
                         {% else %}
                             <span class="text-danger">Не припаркован</span>
                         {% endif %}
+                        {% if not car.is_parked %}
+                        <div style="flex: 100px 100px 1; display: flex">
+                            <form method="post" action="{% url 'auto_car:client_dashboard/delete_car' car.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-primary">Удалить</button>
+                            </form>
+                            <form method="post" action="{% url 'auto_car:client_dashboard/update_car' car.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-primary">Редактировать</button>
+                            </form>
+                        </div>
+                        {% endif %}
                     </p>
                     {% if not car.is_parked %}
-                    <form method="post" action="{% url 'auto_car:client_dashboard/park_car' car.id %}">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-primary">Припарковать</button>
-                    </form>
+                        <form method="post" action="{% url 'auto_car:client_dashboard/park_car' car.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-primary">Припарковать</button>
+                        </form>
+                    {% else %}
+                        <form method="post" action="{% url 'auto_car:client_dashboard/unpark_car' car.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-primary">Снять с парковки</button>
+                        </form>
                     {% endif %}
                 </div>
             </div>

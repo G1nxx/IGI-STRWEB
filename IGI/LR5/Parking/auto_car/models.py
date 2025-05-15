@@ -1,6 +1,9 @@
 from django.db import models
+from django.db.models import Avg, Count, Max
 from django.contrib.auth.models import User
 import django.utils.timezone as timezone
+from django.db.models.functions import TruncDate
+from datetime import timedelta
 
 class ServiceUser(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -103,7 +106,7 @@ class Review(models.Model):
     date = models.DateField(auto_now_add=True)
 
     def __str__(self):
-        return f"Отзыв от {self.customer.username}: {self.rate}★ ({self.date.strftime('%d.%m.%Y')})"
+        return f"Отзыв от {self.customer.user.username}: {self.rate}★ ({self.date.strftime('%d.%m.%Y')})"
 
 class Coupon(models.Model):
     number = models.IntegerField()
@@ -112,3 +115,39 @@ class Coupon(models.Model):
 
     def __str__(self):
         return f"Купон #{self.number}: скидка {self.discount}% (до {self.deadline.strftime('%d.%m.%Y')})"
+    
+class UserSession(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    session_key = models.CharField(max_length=40)
+    login_time = models.DateTimeField(auto_now_add=True)
+    logout_time = models.DateTimeField(null=True, blank=True)
+    duration = models.DurationField(null=True, blank=True)
+    
+    def save(self, *args, **kwargs):
+        if self.logout_time and self.login_time:
+            self.duration = self.logout_time - self.login_time
+        super().save(*args, **kwargs)
+    
+    @classmethod
+    def get_daily_stats(cls):
+        return cls.objects.annotate(
+            date=TruncDate('login_time')
+        ).values('date').annotate(
+            users=Count('user', distinct=True),
+            sessions=Count('id'),
+            avg_duration=Avg('duration')
+        ).order_by('-date')
+    
+    @classmethod
+    def get_user_stats(cls, user):
+        return cls.objects.filter(user=user).aggregate(
+            total_sessions=Count('id'),
+            avg_time=Avg('duration'),
+            last_seen=Max('login_time')
+        )
+    
+    @classmethod
+    def get_average_session_time(cls):
+        return cls.objects.exclude(duration__isnull=True).aggregate(
+            avg_duration=Avg('duration')
+        )['avg_duration'] or timedelta(0)

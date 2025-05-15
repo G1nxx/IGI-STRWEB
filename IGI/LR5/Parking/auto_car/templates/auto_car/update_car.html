@@ -1,0 +1,15 @@
+{% extends "auto_car/base.html" %}
+
+{% block content %}
+<div class="container">
+    <form method="post" action="{% url 'auto_car:client_dashboard/update_car/update' car_id %}">
+        {% csrf_token %}
+        {{ error }}
+        <p>Brand:<br><input placeholder={{ data.brand }} name="brand" required/></p>
+        <p>Model:<br><input placeholder={{ data.model }} name="model" required/></p>
+        <p>Number:<br><input placeholder={{ data.number }} name="number" required/></p>
+        <p>Type:<br><input placeholder={{ data.type }} name="type" required/></p>
+        <input type="submit" value="send">
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends "auto_car/base.html" %}
+
+{% block content %}
+<div class="container">
+    <h1>
+        {% if type == "create" %}
+            {% if ok %}
+                <p>Автомобиль зарегестрирован успешно</p>
+            {% else %}
+                <p>Автомобиль не был зарегистрирован</p>
+            {% endif %}
+        {% endif %}
+        {% if type == "read" %}
+            {% if ok %}
+                <p>Автомобиль зарегестрирован успешно</p>
+            {% else %}
+                <p>Автомобиль не был зарегистрирован</p>
+            {% endif %}
+        {% endif %}
+        {% if type == "update" %}
+            {% if ok %}
+                <p>Информация об автомобиле обновлена успешно</p>
+            {% else %}
+                <p>Информация об автомобиле не была обновлена</p>
+            {% endif %}
+        {% endif %}
+        {% if type == "delete" %}
+            {% if ok %}
+                <p>Автомобиль удален успешно</p>
+            {% else %}
+                <p>Автомобиль не был удален</p>
+            {% endif %}
+        {% endif %}
+    </h1>
+</div>
+{% endblock %}

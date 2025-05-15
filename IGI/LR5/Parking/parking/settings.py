@@ -51,6 +51,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'auto_car.middleware.SessionTrackingMiddleware',
 ]
 
 ROOT_URLCONF = 'parking.urls'
@@ -109,6 +111,9 @@ AUTH_PASSWORD_VALIDATORS = [
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
+
+GEOIP_PATH = os.path.join(BASE_DIR, 'geoip')
+GEOIP_CITY = 'GeoLite2-City.mmdb'
 
 USE_I18N = True
 

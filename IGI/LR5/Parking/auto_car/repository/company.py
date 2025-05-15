@@ -26,3 +26,20 @@ def park_car(p_id, c_id):
             return True
     except (Car.DoesNotExist, ParkingSpace.DoesNotExist):
         return False
+    
+def unpark_car(c_id):
+    try:
+        with transaction.atomic():
+            car = Car.objects.get(id=c_id)
+            parking_space = ParkingSpace.objects.get(parked_car__id=c_id, is_free=False)
+            
+            car.is_parked = False
+            car.save()
+            
+            parking_space.is_free = True
+            parking_space.parked_car = None
+            parking_space.save()
+            
+            return True
+    except (Car.DoesNotExist, ParkingSpace.DoesNotExist):
+        return False

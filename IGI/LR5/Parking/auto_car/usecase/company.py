@@ -11,3 +11,6 @@ def get_cars(id):
 
 def park_car(p_id, c_id):
     return company_db.park_car(p_id, c_id)
+
+def unpark_car(c_id):
+    return company_db.unpark_car(c_id)

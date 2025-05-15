@@ -1,0 +1,15 @@
+{% extends "auto_car/base.html" %}
+
+{% block content %}
+<div class="container">
+    <form method="post" action="{% url 'auto_car:client_dashboard/register_car/create_car' user_id %}">
+        {% csrf_token %}
+        {{ error }}
+        <p>Brand:<br><input name="brand" required/></p>
+        <p>Model:<br><input name="model" required/></p>
+        <p>Number:<br><input name="number" required/></p>
+        <p>Type:<br><input name="type" required/></p>
+        <input type="submit" value="send">
+    </form>
+</div>
+{% endblock %}
