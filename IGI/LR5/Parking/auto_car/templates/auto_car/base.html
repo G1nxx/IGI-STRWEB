@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+    <link rel="icon" href="auto_car/static/images/logo.png" type="image/x-icon">
+    <link rel="apple-touch-icon" href="auto_car/static/images/logo.png">
+    <meta name="description" content="Auto Car - bes choise for your car.">
+    <meta name="keywords" content="parking, car, park, near, cheap">
     <meta charset="UTF-8">
+    <meta name="author" content="G1nxx">
+    <meta name="robots" content="index, follow">
+    <meta name="geo.region" content="RU-MIN">
+    <meta name="geo.placename" content="Минск">
+    <meta name="geo.position" content="53.54;27.33">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% block title %}
-        <a href="{% url 'auto_car:index' %}">
-            Парковочный сервис
-        </a>
-    {% endblock %}
     <style>
         .auth-links { float: right; }
         .user-info { background: #eee; padding: 10px; }
@@ -32,22 +36,54 @@
             text-decoration: underline;
         }
     </style>
+
+    <script type="application/ld+json">
+    {
+        "@type": "WebSite",
+        "name": "AutoCar",
+        "url": "https://auto_car.com/",
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://auto_car.com/search?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+        }
+    }
+    </script>
+
+    <meta property="og:title" content="AutoCar">
+    <meta property="og:description" content="Parking for everyone">
+    <meta property="og:image" content="auto_car/static/images/logo.png">
+    <meta property="og:url" content="https://auto_car.com">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="AutoCar">
+    <meta name="twitter:description" content="Parking for everyone">
 </head>
 <body>
-    <div class="auth-links">
+    <header>
+        {% block title %}
+            <a href="{% url 'auto_car:index' %}">
+                Парковочный сервис
+            </a>
+        {% endblock %}
         {% if user.is_authenticated %}
             <span>Привет, {{ user.username }}!</span>
-            <a href="{% url 'auto_car:logout' %}">Выйти</a>
-            {% if user.is_staff %}
-                <a href="{% url 'auto_car:employee_dashboard' %}">Личный кабинет</a>
-            {% else %}
-                <a href="{% url 'auto_car:client_dashboard' %}">Личный кабинет</a>
-            {% endif %}
-        {% else %}
-            <a href="{% url 'auto_car:login' %}">Войти</a> | 
-            <a href="{% url 'auto_car:signup' %}">Регистрация</a>
         {% endif %}
-    </div>
+
+        <nav class="auth-links">
+            {% if user.is_authenticated %}
+                <a href="{% url 'auto_car:logout' %}">Выйти</a>
+                {% if user.is_staff %}
+                    <a href="{% url 'auto_car:employee_dashboard' %}">Личный кабинет</a>
+                {% else %}
+                    <a href="{% url 'auto_car:client_dashboard' %}">Личный кабинет</a>
+            {% endif %}
+            {% else %}
+                <a href="{% url 'auto_car:login' %}">Войти</a> | 
+                <a href="{% url 'auto_car:signup' %}">Регистрация</a>
+            {% endif %}
+        </nav>
+    </header>
     
     {% block content %}{% endblock %}
     

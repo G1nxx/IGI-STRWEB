@@ -1,23 +1,37 @@
 {% extends "auto_car/base.html" %}
 
 {% block content %}
-<div class="container">
-     <h3>Отзывы</h3>
+<main class="container">
+    <header>
+        <h3>Отзывы</h3>
+    </header>
+
+    <section>
         {% if user.is_authenticated %}
             <form method="post" action="{% url 'auto_car:add_review' %}">
                 {% csrf_token %}
                 {{ error }}
-                <p>Rate:<br><input name="rate" type="number" required/></p>
-                <p>Text:<br><input name="text" required/></p>
+                 <fieldset>
+                <legend>Напишите свой отзыв</legend>
+                <div>
+                    <label for="rate">Оценка</label>
+                    <input name="rate"required aria-required="true" />
+                </div>
+                <div>
+                    <label for="text">Коментарий:</label>
+                    <input name="text" required aria-required="true" />
+                </div>
                 <input type="submit" value="send">
+            </fieldset>
             </form>
         {% endif %}
-        {% for n in reviews %}
-        <div style="padding-left: 6px; padding-right: 6px; margin: 4px; background-color: bisque; border-radius: 5px;">
-            <p>{{ n.customer }} {{ n.rate }}</p>
-            <p>{{ n.text }}</p>
-            <p>{{ n.date }}</p>
-        </div>
+        {% for rewiew in reviews %}
+        <article class="review-card" style="padding-left: 6px; padding-right: 6px; margin: 4px; background-color: bisque; border-radius: 5px;">
+            <h3 class="review-customer">{{ rewiew.customer }} {{ rewiew.rate }} &star;</h3>
+            <p class="review-text">{{ rewiew.text }}</p>
+            <p class="review-date">{{ rewiew.date }}</p>
+        </article>
         {% endfor %}
-</div>
+    </section>
+</main>
 {% endblock %}

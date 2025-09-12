@@ -1,30 +1,39 @@
 {% extends "auto_car/base.html" %}
 
 {% block content %}
-<div class="container">
-    <h2>Свободные парковочные места</h2>
-    <div class="row">
-        {% for parking in parking_places %}
-        <div class="col-md-4 mb-4">
-            <div class="card" style="background-color: blanchedalmond;">
-                <div class="card-body">
-                    <p class="card-title">{{ parking.number }} {{ parking.type }}</p>
-                    <p class="card-text">
-                        Cost: 
-                        <span class="text-success"> {{ parking.cost_per_month }}</span>
-                    </p>
-                    <form method="post" action="{% url 'auto_car:client_dashboard/park_car/park' parking.number car_id %}">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-primary">Припарковать</button>
-                    </form>
-                </div>
+<main class="container">
+    <header>
+        <h1>Свободные парковочные места</h1>
+    </header>
+    {% if parking_places %}
+        <section aria-labelledby="parking-places-heading">
+            <div class="row" role="list">
+                {% for parking in parking_places %}
+                    <div class="col-md-4 mb-4" role="listitem">
+                        <article class="card" style="background-color: blanchedalmond;">
+                            <div class="card-body">
+                                <h3 class="card-title h5">{{ parking.number }} {{ parking.type }}</h3>
+                                <p class="card-text">
+                                    Стоимость: 
+                                    <span class="text-success">{{ parking.cost_per_month }}</span> руб./месяц
+                                </p>
+                                <form method="post" action="{% url 'auto_car:client_dashboard/park_car/park' parking.number car_id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-primary">Припарковать</button>
+                                </form>
+                            </div>
+                        </article>
+                    </div>
+                {% endfor %}
             </div>
-        </div>
-        {% empty %}
-        <div class="col-12">
-            <p>Свободных мест нет.</p>
-        </div>
-        {% endfor %}
-    </div>
-</div>
+        </section>
+    {% else %}
+        <section aria-labelledby="no-parking-heading">
+            <h2 id="no-parking-heading" class="visually-hidden">Нет свободных мест</h2>
+            <div class="col-12">
+                <p>Свободных мест нет.</p>
+            </div>
+        </section>
+    {% endif %}
+</main>
 {% endblock %}

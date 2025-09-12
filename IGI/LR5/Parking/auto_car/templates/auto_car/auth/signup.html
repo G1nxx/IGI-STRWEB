@@ -1,33 +1,47 @@
 {% extends "auto_car/base.html" %}
 
 {% block content %}
-    <form method="post" action="{% url 'auto_car:signup' %}">  <!-- Используйте url-тег -->
-        {% csrf_token %}
-        
-        {% if error %}
-            <div class="error-message">{{ error }}</div>
+    <main>
+        <h1>Регистрация</h1>
+        <form method="post" action="{% url 'auto_car:signup' %}">
+            {% csrf_token %}
+            {% if error %}
+                <div role="alert" aria-live="polite" class="error-message">
+                    <p>{{ error }}</p>
+                </div>
+            {% endif %}
+            <fieldset>
+                <legend>Личная информация</legend>
+                <div>
+                    <label for="username">Имя:</label>
+                    <input id="username" name="username" type="text" value="{{ form_data.username|default:'' }}" required aria-required="true">
+                </div>
+                <div>
+                    <label for="email">Email:</label>
+                    <input id="email" name="email" type="email" value="{{ form_data.email|default:'' }}" required aria-required="true">
+                </div
+                <div>
+                    <label for="password">Пароль:</label>
+                    <input id="password" name="password" type="password" required aria-required="true">
+                </div>
+                <div>
+                    <label for="phone">Номер телефона:</label>
+                    <input id="phone" name="phone" type="tel" value="{{ form_data.phone|default:'' }}" required aria-required="true">
+                </div>
+                <div>
+                    <label for="birthday">Дата рождения:</label>
+                    <input id="birthday" name="birthday" type="date" value="{{ form_data.birthday|default:'' }}" required aria-required="true">
+                </div>
+            </fieldset>
+            <button type="submit">Зарегистрироваться</button>
+        </form>
+        {% if fact %}
+            <aside aria-label="Шутка дня">
+                <div class="joke">
+                    <p>{{ fact.setup }}</p>
+                    <p>{{ fact.punchline }}</p>
+                </div>
+            </aside>
         {% endif %}
-        
-        <p>Name:<br><input name="username" value="{{ form_data.username|default:'' }}" required></p>
-        
-        <p>Mail:<br>
-        <input name="email" type="email" value="{{ form_data.email|default:'' }}" required></p>
-        
-        <p>Password:<br><input name="password" type="password" required></p>
-        
-        <p>Phone number:<br>
-        <input name="phone" type="tel" value="{{ form_data.phone|default:'' }}" required></p>
-        
-        <p>Birthday:<br>
-        <input name="birthday" type="date" value="{{ form_data.birthday|default:'' }}" required></p>
-        
-        <input type="submit" value="Register">
-    </form>
-    
-    {% if fact %}
-        <div class="joke">
-            <p>{{ fact.setup }}</p>
-            <p>{{ fact.punchline }}</p>
-        </div>
-    {% endif %}
+    </main>
 {% endblock %}

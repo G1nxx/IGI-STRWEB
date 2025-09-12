@@ -1,16 +1,18 @@
 {% extends "auto_car/base.html" %}
 
 {% block content %}
-<div class="container">
-    <div class="glossaries">
-        <h3>Вопрос-ответ</h3>
-        {% for n in glossaries %}
-        <div style="padding-left: 6px; padding-right: 6px; margin: 4px; background-color: bisque; border-radius: 5px;">
-            <p>{{ n.text }}</p>
-            <p>{{ n.answer }}</p>
-            <p>{{ n.date }}</p>
+<main class="container">
+    <section aria-labelledby="faq-heading">
+        <h3 id="faq-heading">Вопрос-ответ</h3>
+        <div class="faq-list">
+            {% for n in glossaries %}
+            <article class="faq-item" style="padding: 6px; margin: 4px; background-color: bisque; border-radius: 5px;">
+                <h3 class="faq-question">{{ n.text }}</h3>
+                <p class="faq-answer">{{ n.answer }}</p>
+                <time class="faq-date" datetime="{{ n.date|date:'Y-m-d' }}">{{ n.date }}</time>
+            </article>
+            {% endfor %}
         </div>
-        {% endfor %}
-    </div>
-</div>
+    </section>
+</main>
 {% endblock %}

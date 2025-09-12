@@ -1,16 +1,18 @@
 {% extends "auto_car/base.html" %}
 
 {% block content %}
-<div class="container">
-    <div class="vacancies">
-        <h3>Вакансии</h3>
-        {% for n in vacancies %}
-        <div style="padding-left: 6px; padding-right: 6px; margin: 4px; background-color: bisque; border-radius: 5px;">
-            <p>{{ n.name }}</p>
-            <p>{{ n.salary }} $</p>
-            <p>{{ n.info }}</p>
-        </div>
+<main class="container">
+    <header>
+        <h1>Вакансии</h1>
+    </header>
+    <section class="vacancies">
+        {% for vacancy in vacancies %}
+        <article class="vacancy-card" style="padding-left: 6px; padding-right: 6px; margin: 4px; background-color: bisque; border-radius: 5px;">
+            <h3 class="vacancy-name">Вакансия: {{ vacancy.name }}</h3>
+            <p class="vacancy-salary">Зарплата: {{ vacancy.salary }} $</p>
+            <p class="vacancy-info">Иформация: {{ vacancy.info }}</p>
+        </article>
         {% endfor %}
-    </div>
-</div>
+    </section>
+</main>
 {% endblock %}

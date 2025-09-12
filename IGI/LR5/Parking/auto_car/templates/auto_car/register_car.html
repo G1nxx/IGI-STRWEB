@@ -1,15 +1,35 @@
 {% extends "auto_car/base.html" %}
 
 {% block content %}
-<div class="container">
+<main class="container">
+    <h1>Регистрация нового автомобиля</h1>
     <form method="post" action="{% url 'auto_car:client_dashboard/register_car/create_car' user_id %}">
         {% csrf_token %}
-        {{ error }}
-        <p>Brand:<br><input name="brand" required/></p>
-        <p>Model:<br><input name="model" required/></p>
-        <p>Number:<br><input name="number" required/></p>
-        <p>Type:<br><input name="type" required/></p>
-        <input type="submit" value="send">
+        {% if error %}
+            <div role="alert" aria-live="polite">
+                <p>{{ error }}</p>
+            </div>
+        {% endif %}
+        <fieldset>
+            <legend>Информация об автомобиле</legend>
+            <div>
+                <label for="brand">Марка:</label>
+                <input id="brand" name="brand" type="text" required aria-required="true">
+            </div>
+            <div>
+                <label for="model">Модель:</label>
+                <input id="model" name="model" type="text" required aria-required="true">
+            </div>
+            <div>
+                <label for="number">Номер:</label>
+                <input id="number" name="number" type="text" required aria-required="true">
+            </div>
+            <div>
+                <label for="type">Тип:</label>
+                <input id="type" name="type" type="text" required aria-required="true">
+            </div>
+        </fieldset>
+        <button type="submit">Зарегистрировать</button>
     </form>
-</div>
+</main>
 {% endblock %}

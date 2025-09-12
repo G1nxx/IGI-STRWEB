@@ -1,13 +1,15 @@
 {% extends "auto_car/base.html" %}
 
 {% block content %}
-<div class="container">
-    <h2>Мои автомобили</h2>
+<main class="container">
+    <header>
+        <h2>Мои автомобили</h2>
+    </header>
     <form method="post" action="{% url 'auto_car:client_dashboard/register_car' %}">
         {% csrf_token %}
         <button type="submit" class="btn btn-primary">Добавить автомобиль</button>
     </form>
-    <div class="row">
+    <section class="row">
         {% for car in cars %}
         <div class="col-md-4 mb-4">
             <div class="card" style="background-color: blanchedalmond;">
@@ -53,6 +55,6 @@
             <p>У вас пока нет зарегистрированных автомобилей.</p>
         </div>
         {% endfor %}
-    </div>
-</div>
+    </section>
+</main>
 {% endblock %}

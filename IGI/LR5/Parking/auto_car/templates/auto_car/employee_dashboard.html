@@ -2,46 +2,54 @@
 
 {% load static %}
 {% block content %}
-<div class="container">
-    <h2>Статистика посещений</h2>
-    <p>Среднее время на сайте: {{ avg_time }}</p>
+<main class="container">
+    <header>
+        <h2>Статистика посещений</h2>
+        <p>Среднее время на сайте: {{ avg_time }}</p>
+    </header>
 
-    <table>
-    <tr>
-        <th>Дата</th>
-        <th>Уникальные пользователи</th>
-        <th>Сессии</th>
-        <th>Среднее время</th>
-    </tr>
-    {% for day in daily_stats %}
-    <tr>
-        <td>{{ day.date }}</td>
-        <td>{{ day.users }}</td>
-        <td>{{ day.sessions }}</td>
-        <td>{{ day.avg_duration }}</td>
-    </tr>
-    {% endfor %}
-    </table>
-    <h2>Пользователи</h2>
-    <div class="row">
-        {% for client in clients %}
-        <div class="col-md-4 mb-4">
-            <div class="card" style="background-color: blanchedalmond;">
-                <div class="card-body">
-                    <p class="card-title">{{ client.user }}</p>
-                    <p class="card-text">
-                        Number: {{ client.phone }}<br>
-                        Birthday: {{ client.birthday_date }}<br>
-                    </p>
+    <section class="user-statistics">
+        <table>
+        <tr>
+            <th>Дата</th>
+            <th>Уникальные пользователи</th>
+            <th>Сессии</th>
+            <th>Среднее время</th>
+        </tr>
+        {% for day in daily_stats %}
+        <tr>
+            <td>{{ day.date }}</td>
+            <td>{{ day.users }}</td>
+            <td>{{ day.sessions }}</td>
+            <td>{{ day.avg_duration }}</td>
+        </tr>
+        {% endfor %}
+        </table>
+    </section>
+    <section class="users">
+        <header>
+            <h2>Пользователи</h2>
+        </header>
+        <section class="row">
+            {% for client in clients %}
+            <div class="col-md-4 mb-4">
+                <div class="card" style="background-color: blanchedalmond;">
+                    <div class="card-body">
+                        <p class="card-title">{{ client.user }}</p>
+                        <p class="card-text">
+                            Number: {{ client.phone }}<br>
+                            Birthday: {{ client.birthday_date }}<br>
+                        </p>
+                    </div>
                 </div>
             </div>
-        </div>
-        {% empty %}
-        <div class="col-12">
-            <p>У вас пока нет зарегистрированных пользователей.</p>
-        </div>
-        {% endfor %}
-        <img src="{% static 'images/statistic.png' %}" class="img-fluid" style="width: 500px; height: 500px; object-fit: cover;">
-    </div>
-</div>
+            {% empty %}
+            <div class="col-12">
+                <p>У вас пока нет зарегистрированных пользователей.</p>
+            </div>
+            {% endfor %}
+            <img src="{% static 'images/statistic.png' %}" class="img-fluid" style="width: 500px; height: 500px; object-fit: cover;">
+        </section>
+    </section>
+</main>
 {% endblock %}

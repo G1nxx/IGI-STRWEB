@@ -1,16 +1,18 @@
 {% extends "auto_car/base.html" %}
 
 {% block content %}
-<div class="container">
-    <div class="promocodes">
-        <h3>Вакансии</h3>
-        {% for n in promocodes %}
-        <div style="padding-left: 6px; padding-right: 6px; margin: 4px; background-color: bisque; border-radius: 5px;">
-            <p>{{ n.number }}</p>
-            <p>{{ n.deadline }}</p>
-            <p>{{ n.discount }}</p>
-        </div>
+<main class="container">
+    <header>
+        <h1>Промокоды</h1>
+    </header>
+    <section class="promocodes">
+        {% for promo in promocodes %}
+        <article class="promocode-card" style="padding-left: 6px; padding-right: 6px; margin: 4px; background-color: bisque; border-radius: 5px;">
+            <h3 class="promo-number">Промокод: {{ promo.number }}</h3>
+            <p class="promo-discount">Скидка: {{ promo.discount }}</p>
+            <p class="promo-deadline">Действует до: <time datetime="{{ promo.deadline|date:'Y-m-d' }}">{{ promo.deadline }}</time></p>
+        </article>
         {% endfor %}
-    </div>
-</div>
+    </section>
+</main>
 {% endblock %}

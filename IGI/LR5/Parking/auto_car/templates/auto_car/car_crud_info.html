@@ -1,36 +1,58 @@
 {% extends "auto_car/base.html" %}
 
 {% block content %}
-<div class="container">
-    <h1>
-        {% if type == "create" %}
-            {% if ok %}
-                <p>Автомобиль зарегестрирован успешно</p>
-            {% else %}
-                <p>Автомобиль не был зарегистрирован</p>
-            {% endif %}
+<main class="container">
+    {% if type == "create" %}
+        {% if ok %}
+            <article aria-labelledby="create-success-heading">
+                <h1 id="create-success-heading">Автомобиль зарегистрирован успешно</h1>
+                <p>Ваш автомобиль был успешно добавлен в систему.</p>
+            </article>
+        {% else %}
+            <article aria-labelledby="create-error-heading">
+                <h1 id="create-error-heading">Автомобиль не был зарегистрирован</h1>
+                <p>При регистрации автомобиля произошла ошибка. Пожалуйста, попробуйте снова.</p>
+            </article>
         {% endif %}
-        {% if type == "read" %}
-            {% if ok %}
-                <p>Автомобиль зарегестрирован успешно</p>
-            {% else %}
-                <p>Автомобиль не был зарегистрирован</p>
-            {% endif %}
+    {% endif %}
+    {% if type == "read" %}
+        {% if ok %}
+            <article aria-labelledby="read-success-heading">
+                <h1 id="read-success-heading">Информация об автомобиле</h1>
+                <p>Данные автомобиля успешно получены.</p>
+            </article>
+        {% else %}
+            <article aria-labelledby="read-error-heading">
+                <h1 id="read-error-heading">Не удалось получить информацию об автомобиле</h1>
+                <p>При получении данных автомобиля произошла ошибка.</p>
+            </article>
         {% endif %}
-        {% if type == "update" %}
-            {% if ok %}
-                <p>Информация об автомобиле обновлена успешно</p>
-            {% else %}
-                <p>Информация об автомобиле не была обновлена</p>
-            {% endif %}
+    {% endif %}
+    {% if type == "update" %}
+        {% if ok %}
+            <article aria-labelledby="update-success-heading">
+                <h1 id="update-success-heading">Информация об автомобиле обновлена успешно</h1>
+                <p>Данные вашего автомобиля были успешно обновлены.</p>
+            </article>
+        {% else %}
+            <article aria-labelledby="update-error-heading">
+                <h1 id="update-error-heading">Информация об автомобиле не была обновлена</h1>
+                <p>При обновлении данных автомобиля произошла ошибка. Пожалуйста, попробуйте снова.</p>
+            </article>
         {% endif %}
-        {% if type == "delete" %}
-            {% if ok %}
-                <p>Автомобиль удален успешно</p>
-            {% else %}
-                <p>Автомобиль не был удален</p>
-            {% endif %}
+    {% endif %}
+    {% if type == "delete" %}
+        {% if ok %}
+            <article aria-labelledby="delete-success-heading">
+                <h1 id="delete-success-heading">Автомобиль удален успешно</h1>
+                <p>Ваш автомобиль был успешно удален из системы.</p>
+            </article>
+        {% else %}
+            <article aria-labelledby="delete-error-heading">
+                <h1 id="delete-error-heading">Автомобиль не был удален</h1>
+                <p>При удалении автомобиля произошла ошибка. Пожалуйста, попробуйте снова.</p>
+            </article>
         {% endif %}
-    </h1>
-</div>
+    {% endif %}
+</main>
 {% endblock %}

@@ -1,13 +1,17 @@
 {% extends "auto_car/base.html" %}
 
 {% block content %}
-<div class="container">
-    <h1>
-        {% if ok %}
-            <p>Автомобиль припаркован успешно</p>
-        {% else %}
-            <p>Автомобиль не припаркован</p>
-        {% endif %}
-    </h1>
-</div>
+<main class="container">
+    {% if ok %}
+        <article aria-labelledby="success-heading">
+            <h1 id="success-heading">Автомобиль припаркован успешно</h1>
+            <p>Ваш автомобиль был успешно припаркован. Хорошего дня!</p>
+        </article>
+    {% else %}
+        <article aria-labelledby="error-heading">
+            <h1 id="error-heading">Автомобиль не припаркован</h1>
+            <p>При попытке припарковать автомобиль произошла ошибка. Пожалуйста, попробуйте снова или обратитесь в службу поддержки.</p>
+        </article>
+    {% endif %}
+</main>
 {% endblock %}

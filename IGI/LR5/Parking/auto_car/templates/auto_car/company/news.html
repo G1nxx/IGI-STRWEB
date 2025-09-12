@@ -2,17 +2,29 @@
 
 {% load static %}
 {% block content %}
-<div class="container">
-    <div class="news">
-        <h3>Новости</h3>
-        {% for n in news %}
-        <div style="padding-left: 6px; padding-right: 6px; margin: 4px; background-color: bisque; border-radius: 5px;">
-            <p>{{ n.title }}</p>
-            <p>{{ n.text }}</p>
-            <p style="right: auto;">{{ n.date }}</p>
-            <img src="{% static n.pic.url %}" class="img-fluid" style="width: 250px; height: 250px; object-fit: cover;">
+<main class="container">
+    <section aria-labelledby="news-heading">
+        <h2 id="news-heading">Новости</h2>
+        <div class="news-list">
+            {% for n in news %}
+            <article class="news-item" style="padding: 6px; margin: 4px; background-color: bisque; border-radius: 5px;">
+                <header>
+                    <h3>{{ n.title }}</h3>
+                </header>
+                <div class="news-content" style="display: flex; align-items: flex-start; gap: 20px;">
+                    <div class="news-text" style="flex: 1;">
+                        <p>{{ n.text }}</p>
+                    </div>
+                    <div class="news-image">
+                        <img src="{% static n.pic.url %}" alt="Иллюстрация к новости: {{ n.title }}" width="250" height="250" style="object-fit: cover;">
+                    </div>
+                </div>
+                <footer>
+                    <time datetime="{{ n.date|date:'Y-m-d' }}">{{ n.date }}</time>
+                </footer>
+            </article>
+            {% endfor %}
         </div>
-        {% endfor %}
-    </div>
-</div>
+    </section>
+</main>
 {% endblock %}

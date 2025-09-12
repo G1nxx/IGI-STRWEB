@@ -2,35 +2,32 @@
 
 {% load static %}
 {% block content %}
-<div class="container">
+<main class="container">
     {% if contacts %}
-    <div class="row mt-5">
-        <div class="col-12">
-            <h3 class="mb-4">Контакты</h3>
-            <div class="table-responsive">
-                <table class="table table-striped table-hover">
-                    <thead class="table-dark">
-                        <tr>
-                            <th>User</th>
-                            <th>Image</th>
-                            <th>Number</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for contact in contacts %}
-                        <tr>
-                            <td>{{ contact.user.user }}</td>
-                            <td>
-                                <img src="{% static contact.pic.url %}" class="img-fluid" style="width: 250px; height: 250px; object-fit: cover;">
-                            </td>
-                            <td>{{ contact.user.phone }}</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
+        <section aria-labelledby="contacts-heading">
+            <h2 id="contacts-heading">Контакты</h2>
+            <table>
+                <caption class="visually-hidden">Список контактов с фотографиями и номерами телефонов</caption>
+                <thead>
+                    <tr>
+                        <th scope="col">Пользователь</th>
+                        <th scope="col">Фотография</th>
+                        <th scope="col">Номер телефона</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for contact in contacts %}
+                    <tr>
+                        <td>{{ contact.user.user }}</td>
+                        <td>
+                            <img src="{% static contact.pic.url %}" alt="Фотография {{ contact.user.user }}" width="150" height="150">
+                        </td>
+                        <td>{{ contact.user.phone }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
     {% endif %}
-</div>
+</main>
 {% endblock %}

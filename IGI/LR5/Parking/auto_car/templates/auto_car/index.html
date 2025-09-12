@@ -1,34 +1,55 @@
 {% extends "auto_car/base.html" %}
 
 {% block content %}
-<div class="container">
+<main class="container">
     {% csrf_token %}
-    <h2>Текущее время: {{ current_time }} {{ time_zone }}</h2>
-    <h2>Наши услуги</h2>
     
-    {% if not user.is_authenticated %}
-        <div class="services">
-            {% for service in services %}
-                <div class="service">
-                    <h3>{{ service.name }}</h3>
-                    <p>Цена: {{ service.price }}</p>
-                </div>
-            {% endfor %}
-        </div>
+    <header class="time-header">
+        <h1>Текущее время: <time datetime="{{ current_time|date:'Y-m-d H:i' }}">{{ current_time }}</time> {{ time_zone }}</h1>
+    </header>
+    
+    <article>
+        <header>
+            <h2>Наши услуги</h2>
+        </header>
         
-        <div class="promocodes">
-            <h3>Акции и промокоды</h3>
-            {% for promo in promocodes %}
-                <p>{{ promo.code }} - {{ promo.description }}</p>
-            {% endfor %}
-        </div>
-    {% endif %}
-    
-    {% if user.is_authenticated %}
-        <div class="quick-info">
-            <p>У вас {{ cars.count }} автомобилей</p>
-            <p>Последний платеж: {{ payments.last.amount }}</p>
-        </div>
-    {% endif %}
-</div>
+        {% if not user.is_authenticated %}
+            <section aria-labelledby="services-heading">
+                <h3 id="services-heading" class="visually-hidden">Список услуг</h3>
+                <div class="services">
+                    {% for service in services %}
+                        <div class="service" itemscope itemtype="https://schema.org/Service">
+                            <h4 itemprop="name">{{ service.name }}</h4>
+                            <p>Цена: <span itemprop="price" content="{{ service.price }}">{{ service.price }}</span> руб.</p>
+                            <meta itemprop="serviceType" content="автосервис">
+                        </div>
+                    {% endfor %}
+                </div>
+            </section>
+            
+            <section aria-labelledby="promocodes-heading">
+                <h3 id="promocodes-heading">Акции и промокоды</h3>
+                <div class="promocodes">
+                    {% for promo in promocodes %}
+                        <div class="promocode" itemscope itemtype="https://schema.org/Offer">
+                            <strong itemprop="name">{{ promo.code }}</strong> - 
+                            <span itemprop="description">{{ promo.description }}</span>
+                        </div>
+                    {% endfor %}
+                </div>
+            </section>
+        {% endif %}
+        
+        {% if user.is_authenticated %}
+            <section aria-labelledby="user-info-heading">
+                <h3 id="user-info-heading">Ваша информация</h3>
+                <div class="quick-info">
+                    <p>У вас <span>{{ cars.count }}</span> автомобилей</p>
+                    <p>Последний платеж: <span>{{ payments.last.amount }}</span> руб.</p>
+                </div>
+            </section>
+        {% endif %}
+    </article>
+</main>
+
 {% endblock %}
