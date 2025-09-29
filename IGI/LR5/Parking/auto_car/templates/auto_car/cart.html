@@ -1,0 +1,34 @@
+{% extends "auto_car/base.html" %}
+
+{% block content %}
+<main class="container">
+    <section class="row">
+        {% for item in cart_items %}
+        <div>
+            <p>{{ item.service.name }}</p>
+            <!-- <p>Цена: {{ item.service.cost }}</p> -->
+            <p>Количество: {{ item.quantity }}</p>
+
+            <form method="post" action="{% url 'auto_car:update_order' user.id item.id %}">
+                {% csrf_token %}
+                <label for="quantity_{{ item.id }}">Обновить количество:</label>
+                <input name="number" type="number" id="quantity_{{ item.id }}" name="quantity" value="{{ item.quantity }}" min="1">
+                <button type="submit">Обновить</button>
+            </form>
+            <form method="post" action="{% url 'auto_car:delete_order' user.id item.id %}">
+                {% csrf_token %}
+                <button type="submit">Удалить</button>
+            </form>
+        </div>
+        {% empty %}
+        <p>В корзине пока нет товаров.</p>
+        {% endfor %}
+        {% if cart_items %}
+            <form method="post" action="{% url 'auto_car:bye_cart' user.id %}">
+                {% csrf_token %}
+                <button type="submit">Оплатить</button>
+            </form>
+        {% endif %}
+    </section>
+</main>
+{% endblock %}

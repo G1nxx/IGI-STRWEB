@@ -35,3 +35,27 @@ def get_glossaries():
 
 def get_vacancies():
     return company_db.get_vacancies()
+
+def get_year_history():
+    return company_db.get_year_history()
+
+def get_services():
+    return company_db.get_services()
+
+def get_partners():
+    return company_db.get_partners()
+
+def add_to_cart(u_id, id):
+    return company_db.add_to_cart(u_id, id)
+
+def get_cart(u_id):
+    return company_db.get_cart(u_id)
+
+def update_order(id, val):
+    company_db.update_order(id, val)
+
+def delete_order(id):
+    company_db.delete_order(id)
+
+def bye_cart(u_id):
+    company_db.bye_cart(u_id)

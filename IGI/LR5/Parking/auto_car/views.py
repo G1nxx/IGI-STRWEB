@@ -11,9 +11,10 @@ from . import models
 
 def index(request):
     context = {
-        # "cars": company_usecases.get_cars(request.session['id']),
-    #     'services': Service.objects.all(),
-    #     'promocodes': PromoCode.objects.all() if not request.user.is_authenticated else None
+        "services": company_usecases.get_services(),
+        'promocodes': company_usecases.get_promocodes(),
+        'last': company_usecases.get_last_news(),
+        'partners': company_usecases.get_partners()
     }
     if 'id' in request.session:
         ses_id = request.session['id']
@@ -124,10 +125,12 @@ def employee_dashboard(request):
 
 def about(request):
     context = {
-        'about': {
-            'info': company_usecases.get_info()
-            },
-            'last': company_usecases.get_last_news()
+        'about': 
+        {
+            'info': company_usecases.get_info(),
+            'year_historys': company_usecases.get_year_history()
+        },
+        'last': company_usecases.get_last_news()
         }
     return render(request, 'auto_car/company/about.html', context)
 
@@ -136,6 +139,22 @@ def news(request):
         'news': models.News.objects.all()
     }
     return render(request, 'auto_car/company/news.html', context)
+
+def read_more(request, _id, type):
+    if (type == "news") :
+        context = {
+            'news': models.News.objects.get(id=_id),
+            'type': 'news'
+        }
+        return render(request, 'auto_car/company/read_more.html', context)
+    elif (type == "coment") :
+        context = {
+            'coment': models.Review.objects.get(id=_id),
+            'type': 'coment'
+        }
+        return render(request, 'auto_car/company/read_more.html', context)
+    else :
+        return render(request, 'auto_car/company/read_more.html')
 
 def glossary(request):
     context = {
@@ -178,7 +197,8 @@ def add_review(request):
 
 def promocodes(request):
     context = {
-        'promocodes': company_usecases.get_promocodes()
+        'promocodes': company_usecases.get_promocodes(),
+        'archive': ""
     }
     return render(request, 'auto_car/company/promocodes.html', context)
 
@@ -262,3 +282,40 @@ def update(request, car_id):
         }
         return render(request, 'auto_car/car_crud_info.html', context)
     return render(request, 'auto_car/car_crud_info.html', {'ok': False, 'type': 'update'})
+
+def demonstration(request) :
+    return render(request, 'auto_car/demonstration.html')
+
+def cart(request, u_id) :
+    content = {
+        'cart_items': company_usecases.get_cart(u_id)
+    }
+    return render(request, 'auto_car/cart.html', content)
+
+def add_to_cart(request, u_id, id):
+    content = {
+        'cart_items': company_usecases.get_cart(u_id)
+    }
+    company_usecases.add_to_cart(u_id, id)
+    return render(request, "auto_car/cart.html", content)
+
+def update_order(request, u_id, id):
+    company_usecases.update_order(id, request.POST.get("number"))
+    content = {
+        'cart_items': company_usecases.get_cart(u_id)
+    }
+    return render(request, "auto_car/cart.html", content)
+
+def delete_order(request, u_id, id):
+    company_usecases.delete_order(id)
+    content = {
+        'cart_items': company_usecases.get_cart(u_id)
+    }
+    return render(request, "auto_car/cart.html", content)
+
+def bye_cart(request, u_id):
+    company_usecases.bye_cart(u_id)
+    content = {
+        'cart_items': company_usecases.get_cart(u_id)
+    }
+    return render(request, "auto_car/cart.html", content)

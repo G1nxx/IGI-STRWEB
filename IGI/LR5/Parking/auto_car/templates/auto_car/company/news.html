@@ -7,22 +7,28 @@
         <h2 id="news-heading">Новости</h2>
         <div class="news-list">
             {% for n in news %}
-            <article class="news-item" style="padding: 6px; margin: 4px; background-color: bisque; border-radius: 5px;">
-                <header>
-                    <h3>{{ n.title }}</h3>
-                </header>
-                <div class="news-content" style="display: flex; align-items: flex-start; gap: 20px;">
-                    <div class="news-text" style="flex: 1;">
-                        <p>{{ n.text }}</p>
+            <form method="post" action="{% url 'auto_car:news/read_more' n.id 'news' %}">
+                {% csrf_token %}
+                <article class="news-item" style="padding: 6px; margin: 4px; background-color: bisque; border-radius: 5px;">
+                    <header>
+                        <h3>{{ n.title }}</h3>
+                    </header>
+                    <div class="news-content" style="display: flex; align-items: flex-start; gap: 20px;">
+                        <div class="news-text" style="flex: 1;">
+                            <p>{{ n.text|truncatewords:30 }}</p>
+                        </div>
+                        <div class="news-image">
+                            <img src="{% static n.pic.url %}" alt="Иллюстрация к новости: {{ n.title }}" width="250" height="250" style="object-fit: cover;" >
+                        </div>
                     </div>
-                    <div class="news-image">
-                        <img src="{% static n.pic.url %}" alt="Иллюстрация к новости: {{ n.title }}" width="250" height="250" style="object-fit: cover;">
-                    </div>
-                </div>
-                <footer>
-                    <time datetime="{{ n.date|date:'Y-m-d' }}">{{ n.date }}</time>
-                </footer>
-            </article>
+                    <footer style="display: flex; justify-content: space-between; align-items: center; margin-top: 15px;">
+                        <time datetime="{{ n.date|date:'Y-m-d' }}">{{ n.date }}</time>
+                        <button type="submit" class="read-more-btn" style="background-color: #007bff; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer;">
+                            Читать далее →
+                        </button>
+                    </footer>
+                </article>
+            </form>
             {% endfor %}
         </div>
     </section>

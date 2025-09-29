@@ -1,5 +1,6 @@
-from auto_car.models import CompanyInfo, ParkingSpace, Car, News, Review, Contact, Coupon, Vacancy, FAQ
+from auto_car.models import CompanyInfo, ParkingSpace, Car, Cart, News, Review, Contact, Coupon, Vacancy, FAQ, YearHistory, Service, Partner, ServiceUser, OrderService
 from django.db import transaction
+from time import timezone
 
 def get_company_info():
     return CompanyInfo.objects.first()
@@ -64,3 +65,52 @@ def get_glossaries():
 
 def get_vacancies():
     return Vacancy.objects.all()
+
+def get_year_history():
+    return YearHistory.objects.all()
+
+def get_services():
+    return Service.objects.all()
+
+def get_partners():
+    return Partner.objects.all()
+
+def add_to_cart(u_id, service_id):
+    s_usr = ServiceUser.objects.get(user_id=u_id)
+    cart = Cart.objects.get(user=s_usr)
+    service = Service.objects.get(id=service_id)
+    
+    o_service, created_os = OrderService.objects.get_or_create(
+        service=service,
+        defaults={'quantity': 1}
+    )
+    
+    if cart.goods.filter(id=o_service.id).exists():
+        o_service.quantity += 1
+        o_service.save()
+    else:
+        cart.goods.add(o_service)
+    
+    cart.save()
+
+def get_cart(u_id):
+    s_usr = ServiceUser.objects.get(user_id=u_id)
+    cart = Cart.objects.get(user=s_usr)
+    return cart.goods.all()
+
+def update_order(id, val):
+    ord = OrderService.objects.get(id=id)
+    ord.quantity = val
+    ord.save()
+
+def delete_order(id):
+    ord = OrderService.objects.get(id=id)
+    ord.delete()
+
+def bye_cart(u_id):
+    s_usr = ServiceUser.objects.get(user_id=u_id)
+    cart = Cart.objects.get(user=s_usr)
+    goods = cart.goods.all()
+    for g in goods :
+        g.delete()
+    

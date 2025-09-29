@@ -26,11 +26,21 @@
             </form>
         {% endif %}
         {% for rewiew in reviews %}
-        <article class="review-card" style="padding-left: 6px; padding-right: 6px; margin: 4px; background-color: bisque; border-radius: 5px;">
-            <h3 class="review-customer">{{ rewiew.customer }} {{ rewiew.rate }} &star;</h3>
-            <p class="review-text">{{ rewiew.text }}</p>
-            <p class="review-date">{{ rewiew.date }}</p>
-        </article>
+        <form method="post" action="{% url 'auto_car:news/read_more' rewiew.id 'coment' %}">
+            {% csrf_token %}
+            <article class="review-card" style="padding-left: 6px; padding-right: 6px; margin: 4px; background-color: bisque; border-radius: 5px;">
+                <h3 class="review-customer">{{ rewiew.customer }} {{ rewiew.rate }} &star;</h3>
+                <p class="review-text">{{ rewiew.text }}</p>
+                <p class="review-date">{{ rewiew.date }}</p>
+                <footer style="display: flex; justify-content: space-between; align-items: center; margin-top: 15px;">
+                    <time datetime="{{ n.date|date:'Y-m-d' }}">{{ n.date }}</time>
+                    <button type="submit" class="read-more-btn" style="background-color: #007bff; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer;">
+                        Читать подробнее →
+                    </button>
+                </footer>
+            </article>
+        </form>
+            </article>
         {% endfor %}
     </section>
 </main>

@@ -212,3 +212,27 @@ class UserSession(models.Model):
         
         # Возвращаем ContentFile для возможного сохранения в модели
         return ContentFile(buffer.getvalue(), name=os.path.basename(filename))
+    
+class YearHistory(models.Model):
+    year = models.IntegerField()
+    text = models.TextField()
+
+    def __str__(self):
+        return f"Год #{self.year}: {self.text})"
+    
+class Service(models.Model):
+    name = models.TextField()
+    description = models.TextField()
+
+class OrderService(models.Model):
+    service = models.ForeignKey(Service, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)
+
+class Cart(models.Model):
+    user = models.ForeignKey(ServiceUser, on_delete=models.CASCADE)
+    goods = models.ManyToManyField(OrderService, related_name='services_requested')
+    
+class Partner(models.Model):
+    name = models.TextField()
+    description = models.TextField()
+    url = models.TextField()

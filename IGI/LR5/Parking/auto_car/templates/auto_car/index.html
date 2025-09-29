@@ -1,10 +1,13 @@
+<!DOCTYPE html>
 {% extends "auto_car/base.html" %}
 
+{% load static %}
 {% block content %}
 <main class="container">
     {% csrf_token %}
     
     <header class="time-header">
+        <img src="{% static 'images/logo.png' %}" alt="Auto Car Logo" style="width: 120px">
         <h1>Текущее время: <time datetime="{{ current_time|date:'Y-m-d H:i' }}">{{ current_time }}</time> {{ time_zone }}</h1>
     </header>
     
@@ -13,32 +16,36 @@
             <h2>Наши услуги</h2>
         </header>
         
-        {% if not user.is_authenticated %}
-            <section aria-labelledby="services-heading">
-                <h3 id="services-heading" class="visually-hidden">Список услуг</h3>
-                <div class="services">
-                    {% for service in services %}
-                        <div class="service" itemscope itemtype="https://schema.org/Service">
-                            <h4 itemprop="name">{{ service.name }}</h4>
-                            <p>Цена: <span itemprop="price" content="{{ service.price }}">{{ service.price }}</span> руб.</p>
-                            <meta itemprop="serviceType" content="автосервис">
-                        </div>
-                    {% endfor %}
-                </div>
-            </section>
-            
-            <section aria-labelledby="promocodes-heading">
-                <h3 id="promocodes-heading">Акции и промокоды</h3>
-                <div class="promocodes">
-                    {% for promo in promocodes %}
-                        <div class="promocode" itemscope itemtype="https://schema.org/Offer">
-                            <strong itemprop="name">{{ promo.code }}</strong> - 
-                            <span itemprop="description">{{ promo.description }}</span>
-                        </div>
-                    {% endfor %}
-                </div>
-            </section>
-        {% endif %}
+        
+        <section aria-labelledby="services-heading">
+            <h3 id="services-heading" class="visually-hidden">Список услуг</h3>
+            <div class="services">
+                {% for service in services %}
+                    <div class="service" style="background-color: antiquewhite; border-radius: 4px;">
+                        <strong p="name">itempro{{ service.name }}</strong> -
+                        <span itemprop="discription">{{ service.description }}</span>
+                        {% if user.is_authenticated %}
+                        <form  method="post" action="{% url 'auto_car:add_to_cart' user.id service.id %}">
+                            {% csrf_token %}
+                            <button type="submit">Добавить в корзину</button>
+                        </form>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+        
+        <section aria-labelledby="promocodes-heading">
+            <h3 id="promocodes-heading">Акции и промокоды</h3>
+            <div class="promocodes">
+                {% for promo in promocodes %}
+                    <div class="promocode" itemscope itemtype="https://schema.org/Offer">
+                        <strong itemprop="name">{{ promo.number }}</strong> - 
+                        <span itemprop="description">{{ promo.discount }}</span>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
         
         {% if user.is_authenticated %}
             <section aria-labelledby="user-info-heading">
@@ -50,6 +57,42 @@
             </section>
         {% endif %}
     </article>
+
+    {% if last %}
+        <article aria-labelledby="news-heading" style="padding: 6px; margin: 4px; background-color: bisque; border-radius: 5px;">
+            <header>
+                <h3 id="news-heading">{{ last.title }}</h3>
+            </header>
+            <p>{{ last.text }}</p>
+            <footer>
+                <time datetime="{{ last.date|date:'Y-m-d' }}">{{ last.date }}</time>
+            </footer>
+        </article>
+    {% endif %}
+    
+    <aside class="banner-ad" itemscope itemtype="https://schema.org/WPAdBlock">
+        <a href="/about/" target="_blank" rel="noopener" itemprop="url">
+            <img src="{% static 'images/add1.png' %}" srcset="images/add1.png 1x, images/add2.png 2x, alt="Реклама: выгодное предложение" itemprop="image" style="max-width:120px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,.2);">
+        </a>
+        <a href="/about/" target="_blank" rel="noopener" itemprop="url">
+            <img src="{% static 'images/add2.png' %}" alt="Реклама: выгодное предложение" itemprop="image" style="max-width:120px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,.2);">
+        </a>
+    </aside>
+
+    <section aria-labelledby="partners-heading" style="margin-top: 30px; padding: 20px; background-color: #f8f9fa; border-radius: 8px;">
+        <h2 id="partners-heading">Наши партнеры</h2>
+        <p>Мы сотрудничаем с лучшими компаниями в сфере автопарковок и автомобильных услуг</p>
+        
+        <div class="partners-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; margin-top: 20px;">
+            {% for partner in partners %}
+            <div class="partner-card" style="background: white; padding: 15px; border-radius: 8px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                <h3>{{ partner.name }}</h3>
+                <p>{{ partner.description }}</p>
+                <a href={{ partner.url }} style="display: inline-block; margin-top: 10px; padding: 8px 15px; background-color: #007bff; color: white; text-decoration: none; border-radius: 4px;">Подробнее</a>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
 </main>
 
 {% endblock %}

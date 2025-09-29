@@ -2,12 +2,38 @@
 
 {% block content %}
 <main class="container">
+    <header class="about-company" style="display: grid; grid-template-columns: auto 1fr; gap: 20px; align-items: start; padding: 20px; background: #f8f9fa; border-radius: 8px;">
+        <section style="display: flex; justify-content: center; align-items: center; padding: 15px; background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+            <img src="../../auto_car/static/images/logo.png"
+                alt="Логотип компании"
+                style="max-width: 50px; height: auto; object-fit: contain;">
+        </section>
+        {% if about %}
+            <section aria-labelledby="about-heading">
+                <h2 id="about-heading">О нас</h2>
+                <div class="info">
+                    <p>{{ about.info }}</p>
+                </div>
+            </section>
+        {% endif %}
+    </header>
+    <section aria-labelledby="video-heading" style="margin-bottom: 30px;">
+        <h2 id="video-heading">Our video</h2>
+        <div style="display: flex; justify-content: center; background-color: #f8f9fa; padding: 20px; border-radius: 8px;">
+            <video controls width="100%" style="max-width: 800px; border-radius: 6px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                <source src="../../auto_car/static/videos/PixVerse_V5_Image_Text_720P_машина_заезжает_на.mp4" type="video/mp4">
+                Ваш браузер не поддерживает видео тег.
+            </video>
+        </div>
+    </section>
     {% if about %}
-        <section aria-labelledby="about-heading">
-            <h2 id="about-heading">О нас</h2>
-            <div class="info">
-                <p>{{ about.info }}</p>
-            </div>
+        <section class="hiatory_year">
+            {% for hy in about.year_historys %}
+            <article class="year_history_-card" style="padding-left: 6px; padding-right: 6px; margin: 4px; background-color: bisque; border-radius: 5px;">
+                <h3 class="year_history-year">Год: {{ hy.year }}</h3>
+                <p class="year_history-text">{{ hy.text }}</p>
+            </article>
+            {% endfor %}
         </section>
     {% endif %}
     {% if last %}
@@ -21,5 +47,34 @@
             </footer>
         </article>
     {% endif %}
+    <section style="display: flex; justify-content: center; align-items: center; padding: 20px;">
+        <img src="../../auto_car/static/images/sertificate.png"
+            alt="Сертификат не найден"
+            style="max-width: 100%; height: auto; object-fit: contain; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+    </section>
+    <section aria-labelledby="requisites-heading" style="margin-top: 30px; padding: 20px; background-color: #f8f9fa; border-radius: 8px;">
+        <div class="requisites" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
+            <div>
+                <h3>Юридическая информация</h3>
+                <p><strong>Название:</strong> Auto Car</p>
+                <p><strong>ИНН:</strong> 1234567890</p>
+                <p><strong>КПП:</strong> 123456789</p>
+                <p><strong>ОГРН:</strong> 1234567890123</p>
+            </div>
+            <div>
+                <h3>Банковские реквизиты</h3>
+                <p><strong>Банк:</strong> TBANK</p>
+                <p><strong>Р/с:</strong> 40702810123456789012</p>
+                <p><strong>К/с:</strong> 30101234567890123456</p>
+                <p><strong>БИК:</strong> 044525225</p>
+            </div>
+            <div>
+                <h3>Контакты</h3>
+                <p><strong>Адрес:</strong> г. Минск, ул. Пушкинская, д. 29</p>
+                <p><strong>Телефон:</strong> +375 (33) 333-33-33</p>
+                <p><strong>Email:</strong> auto_car_comercial@gmail.com</p>
+            </div>
+        </div>
+    </section>
 </main>
 {% endblock %}

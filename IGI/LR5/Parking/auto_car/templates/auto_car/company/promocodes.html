@@ -6,7 +6,22 @@
         <h1>Промокоды</h1>
     </header>
     <section class="promocodes">
+        <h2>
+            Действующие
+        </h2>
         {% for promo in promocodes %}
+        <article class="promocode-card" style="padding-left: 6px; padding-right: 6px; margin: 4px; background-color: bisque; border-radius: 5px;">
+            <h3 class="promo-number">Промокод: {{ promo.number }}</h3>
+            <p class="promo-discount">Скидка: {{ promo.discount }}</p>
+            <p class="promo-deadline">Действует до: <time datetime="{{ promo.deadline|date:'Y-m-d' }}">{{ promo.deadline }}</time></p>
+        </article>
+        {% endfor %}
+    </section>
+    <section class="archive">
+        <h2>
+            Архивные
+        </h2>
+        {% for promo in archive %}
         <article class="promocode-card" style="padding-left: 6px; padding-right: 6px; margin: 4px; background-color: bisque; border-radius: 5px;">
             <h3 class="promo-number">Промокод: {{ promo.number }}</h3>
             <p class="promo-discount">Скидка: {{ promo.discount }}</p>
