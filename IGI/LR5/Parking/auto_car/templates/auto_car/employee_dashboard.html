@@ -2,54 +2,62 @@
 
 {% load static %}
 {% block content %}
-<main class="container">
-    <header>
-        <h2>Статистика посещений</h2>
-        <p>Среднее время на сайте: {{ avg_time }}</p>
+<main class="main container">
+    <header class="page-header">
+        <h1 class="page-header__title">Статистика посещений</h1>
+        <p class="page-header__subtitle">Среднее время на сайте: {{ avg_time }}</p>
     </header>
 
-    <section class="user-statistics">
-        <table>
-        <tr>
-            <th>Дата</th>
-            <th>Уникальные пользователи</th>
-            <th>Сессии</th>
-            <th>Среднее время</th>
-        </tr>
-        {% for day in daily_stats %}
-        <tr>
-            <td>{{ day.date }}</td>
-            <td>{{ day.users }}</td>
-            <td>{{ day.sessions }}</td>
-            <td>{{ day.avg_duration }}</td>
-        </tr>
-        {% endfor %}
-        </table>
+    <section class="statistics">
+        <div class="statistics__table">
+            <table class="table">
+                <thead class="table__header">
+                    <tr class="table__row">
+                        <th class="table__cell table__cell--header">Дата</th>
+                        <th class="table__cell table__cell--header">Уникальные пользователи</th>
+                        <th class="table__cell table__cell--header">Сессии</th>
+                        <th class="table__cell table__cell--header">Среднее время</th>
+                    </tr>
+                </thead>
+                <tbody class="table__body">
+                    {% for day in daily_stats %}
+                    <tr class="table__row">
+                        <td class="table__cell">{{ day.date }}</td>
+                        <td class="table__cell">{{ day.users }}</td>
+                        <td class="table__cell">{{ day.sessions }}</td>
+                        <td class="table__cell">{{ day.avg_duration }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </section>
-    <section class="users">
-        <header>
-            <h2>Пользователи</h2>
+    
+    <section class="users-section">
+        <header class="section-header">
+            <h2 class="section-header__title">Пользователи</h2>
         </header>
-        <section class="row">
+        <div class="users-grid">
             {% for client in clients %}
-            <div class="col-md-4 mb-4">
-                <div class="card" style="background-color: blanchedalmond;">
-                    <div class="card-body">
-                        <p class="card-title">{{ client.user }}</p>
-                        <p class="card-text">
-                            Number: {{ client.phone }}<br>
-                            Birthday: {{ client.birthday_date }}<br>
-                        </p>
+            <div class="user-card">
+                <div class="user-card__content">
+                    <h3 class="user-card__name">{{ client.user }}</h3>
+                    <div class="user-card__info">
+                        <p class="user-card__phone">Телефон: {{ client.phone }}</p>
+                        <p class="user-card__birthday">Дата рождения: {{ client.birthday_date }}</p>
                     </div>
                 </div>
             </div>
             {% empty %}
-            <div class="col-12">
-                <p>У вас пока нет зарегистрированных пользователей.</p>
+            <div class="users-empty">
+                <p class="users-empty__text">У вас пока нет зарегистрированных пользователей.</p>
             </div>
             {% endfor %}
-            <img src="{% static 'images/statistic.png' %}" class="img-fluid" style="width: 500px; height: 500px; object-fit: cover;">
-        </section>
+        </div>
+        
+        <div class="statistics-image">
+            <img src="{% static 'images/statistic.png' %}" alt="График статистики" class="statistics-image__img">
+        </div>
     </section>
 </main>
 {% endblock %}

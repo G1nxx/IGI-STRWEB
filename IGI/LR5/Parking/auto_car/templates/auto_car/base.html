@@ -13,26 +13,26 @@
         <meta name="geo.position" content="53.54;27.33">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <style>
-            .auth-links { float: right; }
-            .user-info { background: #eee; padding: 10px; }
-            footer {
+            .header__auth { float: right; }
+            .header__user-info { background: #eee; padding: 10px; }
+            .footer {
                 margin-top: 50px;
                 padding: 20px 0;
                 border-top: 1px solid #ddd;
                 text-align: center;
             }
-            .footer-links {
+            .footer__links {
                 display: flex;
                 justify-content: center;
                 flex-wrap: wrap;
                 gap: 15px;
                 margin-bottom: 10px;
             }
-            .footer-links a {
+            .footer__link {
                 color: #333;
                 text-decoration: none;
             }
-            .footer-links a:hover {
+            .footer__link:hover {
                 text-decoration: underline;
             }
         </style>
@@ -60,48 +60,48 @@
         <meta name="twitter:description" content="Parking for everyone">
     </head>
     <body>
-        <header>
+        <header class="header">
             {% block title %}
-                <a href="{% url 'auto_car:index' %}">
+                <a href="{% url 'auto_car:index' %}" class="header__logo">
                     Парковочный сервис
                 </a>
             {% endblock %}
             {% if user.is_authenticated %}
-                <span>Привет, {{ user.username }}!</span>
+                <span class="header__user-info">Привет, {{ user.username }}!</span>
             {% endif %}
 
-            <nav class="auth-links">
+            <nav class="header__auth">
                 {% if user.is_authenticated %}
-                    <a href="{% url 'auto_car:logout' %}">Выйти</a>
+                    <a href="{% url 'auto_car:logout' %}" class="header__link">Выйти</a>
                     {% if user.is_staff %}
-                        <a href="{% url 'auto_car:employee_dashboard' %}">Личный кабинет</a>
+                        <a href="{% url 'auto_car:employee_dashboard' %}" class="header__link">Личный кабинет</a>
                     {% else %}
-                        <a href="{% url 'auto_car:client_dashboard' %}">Личный кабинет</a>
-                    <a href="{% url 'auto_car:cart' user.id %}">Cart</a>
+                        <a href="{% url 'auto_car:client_dashboard' %}" class="header__link">Личный кабинет</a>
+                    <a href="{% url 'auto_car:cart' user.id %}" class="header__link">Корзина</a>
                 {% endif %}
                 {% else %}
-                    <a href="{% url 'auto_car:login' %}">Войти</a> | 
-                    <a href="{% url 'auto_car:signup' %}">Регистрация</a>
+                    <a href="{% url 'auto_car:login' %}" class="header__link">Войти</a> | 
+                    <a href="{% url 'auto_car:signup' %}" class="header__link">Регистрация</a>
                 {% endif %}
-                <a href="{% url 'auto_car:demonstration' %}">Demo</a>
+                <a href="{% url 'auto_car:demonstration' %}" class="header__link">Демо</a>
             </nav>
         </header>
         
         {% block content %}
         {% endblock %}
         
-        <footer>
-            <div class="footer-links">
-                <a href="{% url 'auto_car:about' %}">О компании</a>
-                <a href="{% url 'auto_car:news' %}">Новости</a>
-                <a href="{% url 'auto_car:glossary' %}">Словарь терминов и понятий</a>
-                <a href="{% url 'auto_car:contacts' %}">Контакты</a>
-                <a href="{% url 'auto_car:privacy' %}">Политика конфиденциальности</a>
-                <a href="{% url 'auto_car:vacancies' %}">Вакансии</a>
-                <a href="{% url 'auto_car:reviews' %}">Отзывы</a>
-                <a href="{% url 'auto_car:promocodes' %}">Промокоды и купоны</a>
+        <footer class="footer">
+            <div class="footer__links">
+                <a href="{% url 'auto_car:about' %}" class="footer__link">О компании</a>
+                <a href="{% url 'auto_car:news' %}" class="footer__link">Новости</a>
+                <a href="{% url 'auto_car:glossary' %}" class="footer__link">Словарь терминов и понятий</a>
+                <a href="{% url 'auto_car:contacts' %}" class="footer__link">Контакты</a>
+                <a href="{% url 'auto_car:privacy' %}" class="footer__link">Политика конфиденциальности</a>
+                <a href="{% url 'auto_car:vacancies' %}" class="footer__link">Вакансии</a>
+                <a href="{% url 'auto_car:reviews' %}" class="footer__link">Отзывы</a>
+                <a href="{% url 'auto_car:promocodes' %}" class="footer__link">Промокоды и купоны</a>
             </div>
-            <p>&copy; {% now "Y" %} Парковочный сервис. Все права защищены.</p>
+            <p class="footer__copyright">&copy; {% now "Y" %} Парковочный сервис. Все права защищены.</p>
         </footer>
     </body>
 </html>

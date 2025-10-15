@@ -1,58 +1,66 @@
 {% extends "auto_car/base.html" %}
 
 {% block content %}
-<main class="container">
-    <header>
-        <h2>Мои автомобили</h2>
+<main class="main container">
+    <header class="page-header">
+        <h1 class="page-header__title">Мои автомобили</h1>
     </header>
-    <form method="post" action="{% url 'auto_car:client_dashboard/register_car' %}">
-        {% csrf_token %}
-        <button type="submit" class="btn btn-primary">Добавить автомобиль</button>
-    </form>
-    <section class="row">
+    
+    <div class="page-actions">
+        <form class="form" method="post" action="{% url 'auto_car:client_dashboard/register_car' %}">
+            {% csrf_token %}
+            <button type="submit" class="button button--primary">Добавить автомобиль</button>
+        </form>
+    </div>
+    
+    <section class="cars-grid">
         {% for car in cars %}
-        <div class="col-md-4 mb-4">
-            <div class="card" style="background-color: blanchedalmond;">
-                <div class="card-body">
-                    <p class="card-title">{{ car.brand }} {{ car.model }}</p>
-                    <p class="card-text">
-                        Number: {{ car.number }}<br>
+        <div class="car-card">
+            <div class="car-card__content">
+                <h3 class="car-card__title">{{ car.brand }} {{ car.model }}</h3>
+                <div class="car-card__info">
+                    <p class="car-card__number">Номер: {{ car.number }}</p>
+                    <p class="car-card__status">
                         Статус: 
                         {% if car.is_parked %}
-                            <span class="text-success">Припаркован</span>
+                            <span class="car-card__status--parked">Припаркован</span>
                         {% else %}
-                            <span class="text-danger">Не припаркован</span>
-                        {% endif %}
-                        {% if not car.is_parked %}
-                        <div style="flex: 100px 100px 1; display: flex">
-                            <form method="post" action="{% url 'auto_car:client_dashboard/delete_car' car.id %}">
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-primary">Удалить</button>
-                            </form>
-                            <form method="post" action="{% url 'auto_car:client_dashboard/update_car' car.id %}">
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-primary">Редактировать</button>
-                            </form>
-                        </div>
+                            <span class="car-card__status--not-parked">Не припаркован</span>
                         {% endif %}
                     </p>
+                </div>
+                
+                {% if not car.is_parked %}
+                <div class="car-card__actions car-card__actions--management">
+                    <form class="form form--inline" method="post" action="{% url 'auto_car:client_dashboard/delete_car' car.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="button button--danger">Удалить</button>
+                    </form>
+                    <form class="form form--inline" method="post" action="{% url 'auto_car:client_dashboard/update_car' car.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="button button--secondary">Редактировать</button>
+                    </form>
+                </div>
+                {% endif %}
+                
+                <div class="car-card__actions">
                     {% if not car.is_parked %}
-                        <form method="post" action="{% url 'auto_car:client_dashboard/park_car' car.id %}">
+                        <form class="form" method="post" action="{% url 'auto_car:client_dashboard/park_car' car.id %}">
                             {% csrf_token %}
-                            <button type="submit" class="btn btn-primary">Припарковать</button>
+                            <button type="submit" class="button button--primary">Припарковать</button>
                         </form>
                     {% else %}
-                        <form method="post" action="{% url 'auto_car:client_dashboard/unpark_car' car.id %}">
+                        <form class="form" method="post" action="{% url 'auto_car:client_dashboard/unpark_car' car.id %}">
                             {% csrf_token %}
-                            <button type="submit" class="btn btn-primary">Снять с парковки</button>
+                            <button type="submit" class="button button--primary">Снять с парковки</button>
                         </form>
                     {% endif %}
                 </div>
             </div>
         </div>
         {% empty %}
-        <div class="col-12">
-            <p>У вас пока нет зарегистрированных автомобилей.</p>
+        <div class="cars-empty">
+            <p class="cars-empty__text">У вас пока нет зарегистрированных автомобилей.</p>
         </div>
         {% endfor %}
     </section>

@@ -1,37 +1,39 @@
 {% extends "auto_car/base.html" %}
 
 {% block content %}
-<main class="container">
-    <header>
-        <h1>Свободные парковочные места</h1>
+<main class="main container">
+    <header class="page-header">
+        <h1 class="page-header__title">Свободные парковочные места</h1>
     </header>
+    
     {% if parking_places %}
-        <section aria-labelledby="parking-places-heading">
-            <div class="row" role="list">
+        <section class="parking-section" aria-labelledby="parking-places-heading">
+            <h2 id="parking-places-heading" class="visually-hidden">Список свободных парковочных мест</h2>
+            <div class="parking-grid" role="list">
                 {% for parking in parking_places %}
-                    <div class="col-md-4 mb-4" role="listitem">
-                        <article class="card" style="background-color: blanchedalmond;">
-                            <div class="card-body">
-                                <h3 class="card-title h5">{{ parking.number }} {{ parking.type }}</h3>
-                                <p class="card-text">
+                    <div class="parking-card" role="listitem">
+                        <article class="parking-card__content">
+                            <h3 class="parking-card__title">{{ parking.number }} {{ parking.type }}</h3>
+                            <div class="parking-card__info">
+                                <p class="parking-card__cost">
                                     Стоимость: 
-                                    <span class="text-success">{{ parking.cost_per_month }}</span> руб./месяц
+                                    <span class="parking-card__price">{{ parking.cost_per_month }}</span> руб./месяц
                                 </p>
-                                <form method="post" action="{% url 'auto_car:client_dashboard/park_car/park' parking.number car_id %}">
-                                    {% csrf_token %}
-                                    <button type="submit" class="btn btn-primary">Припарковать</button>
-                                </form>
                             </div>
+                            <form class="parking-card__form" method="post" action="{% url 'auto_car:client_dashboard/park_car/park' parking.number car_id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="button button--primary">Припарковать</button>
+                            </form>
                         </article>
                     </div>
                 {% endfor %}
             </div>
         </section>
     {% else %}
-        <section aria-labelledby="no-parking-heading">
+        <section class="parking-empty" aria-labelledby="no-parking-heading">
             <h2 id="no-parking-heading" class="visually-hidden">Нет свободных мест</h2>
-            <div class="col-12">
-                <p>Свободных мест нет.</p>
+            <div class="parking-empty__content">
+                <p class="parking-empty__text">Свободных мест нет.</p>
             </div>
         </section>
     {% endif %}

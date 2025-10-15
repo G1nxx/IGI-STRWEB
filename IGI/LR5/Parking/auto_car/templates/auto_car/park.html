@@ -1,16 +1,16 @@
 {% extends "auto_car/base.html" %}
 
 {% block content %}
-<main class="container">
+<main class="main container">
     {% if ok %}
-        <article aria-labelledby="success-heading">
-            <h1 id="success-heading">Автомобиль припаркован успешно</h1>
-            <p>Ваш автомобиль был успешно припаркован. Хорошего дня!</p>
+        <article class="message message--success" aria-labelledby="success-heading">
+            <h1 id="success-heading" class="message__title">Автомобиль припаркован успешно</h1>
+            <p class="message__text">Ваш автомобиль был успешно припаркован. Хорошего дня!</p>
         </article>
     {% else %}
-        <article aria-labelledby="error-heading">
-            <h1 id="error-heading">Автомобиль не припаркован</h1>
-            <p>При попытке припарковать автомобиль произошла ошибка. Пожалуйста, попробуйте снова или обратитесь в службу поддержки.</p>
+        <article class="message message--error" aria-labelledby="error-heading">
+            <h1 id="error-heading" class="message__title">Автомобиль не припаркован</h1>
+            <p class="message__text">При попытке припарковать автомобиль произошла ошибка. Пожалуйста, попробуйте снова или обратитесь в службу поддержки.</p>
         </article>
     {% endif %}
 </main>

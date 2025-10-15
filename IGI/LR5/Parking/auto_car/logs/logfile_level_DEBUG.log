@@ -25279,3 +25279,46 @@ WARNING 2025-09-22 21:56:35,511 log Not Found: /client_dashboard/register_car/au
 WARNING 2025-09-22 21:56:35,511 basehttp "GET /client_dashboard/register_car/auto_car/static/images/logo.png HTTP/1.1" 404 11140
 WARNING 2025-09-22 21:56:35,514 log Not Found: /client_dashboard/register_car/auto_car/static/images/logo.png
 WARNING 2025-09-22 21:56:35,515 basehttp "GET /client_dashboard/register_car/auto_car/static/images/logo.png HTTP/1.1" 404 11140
+INFO 2025-09-29 07:10:35,167 autoreload Watching for file changes with StatReloader
+INFO 2025-09-29 07:10:39,145 basehttp "GET / HTTP/1.1" 200 10366
+INFO 2025-09-29 07:10:39,170 basehttp "GET /auto_car/static/images/logo.png HTTP/1.1" 304 0
+WARNING 2025-09-29 07:10:39,182 log Not Found: /images/add1.png
+WARNING 2025-09-29 07:10:39,182 basehttp "GET /images/add1.png HTTP/1.1" 404 11002
+INFO 2025-09-29 07:10:39,183 basehttp "GET /auto_car/static/images/add2.png HTTP/1.1" 304 0
+INFO 2025-09-29 07:10:47,107 basehttp "GET /about/ HTTP/1.1" 200 9708
+INFO 2025-09-29 07:10:47,138 basehttp "GET /auto_car/static/images/sertificate.png HTTP/1.1" 304 0
+INFO 2025-09-29 07:10:47,148 basehttp "GET /auto_car/static/videos/PixVerse_V5_Image_Text_720P_%D0%BC%D0%B0%D1%88%D0%B8%D0%BD%D0%B0_%D0%B7%D0%B0%D0%B5%D0%B7%D0%B6%D0%B0%D0%B5%D1%82_%D0%BD%D0%B0.mp4 HTTP/1.1" 304 0
+WARNING 2025-09-29 07:10:47,196 log Not Found: /about/auto_car/static/images/logo.png
+WARNING 2025-09-29 07:10:47,198 log Not Found: /about/auto_car/static/images/logo.png
+WARNING 2025-09-29 07:10:47,199 basehttp "GET /about/auto_car/static/images/logo.png HTTP/1.1" 404 11068
+WARNING 2025-09-29 07:10:47,199 basehttp "GET /about/auto_car/static/images/logo.png HTTP/1.1" 404 11068
+INFO 2025-09-29 07:11:23,129 basehttp "GET / HTTP/1.1" 200 10366
+WARNING 2025-09-29 07:11:23,244 log Not Found: /images/add1.png
+WARNING 2025-09-29 07:11:23,244 basehttp "GET /images/add1.png HTTP/1.1" 404 11002
+INFO 2025-09-29 07:11:25,535 basehttp "GET /login/ HTTP/1.1" 200 4951
+WARNING 2025-09-29 07:11:25,666 log Not Found: /login/auto_car/static/images/logo.png
+WARNING 2025-09-29 07:11:25,668 log Not Found: /login/auto_car/static/images/logo.png
+WARNING 2025-09-29 07:11:25,668 basehttp "GET /login/auto_car/static/images/logo.png HTTP/1.1" 404 11068
+WARNING 2025-09-29 07:11:25,668 basehttp "GET /login/auto_car/static/images/logo.png HTTP/1.1" 404 11068
+INFO 2025-09-29 07:11:37,158 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-09-29 07:11:37,174 basehttp "GET / HTTP/1.1" 200 12000
+WARNING 2025-09-29 07:11:37,204 log Not Found: /images/add1.png
+WARNING 2025-09-29 07:11:37,204 basehttp "GET /images/add1.png HTTP/1.1" 404 11002
+INFO 2025-09-29 07:11:42,056 basehttp "GET /client_dashboard/ HTTP/1.1" 200 8172
+WARNING 2025-09-29 07:11:42,202 log Not Found: /client_dashboard/auto_car/static/images/logo.png
+WARNING 2025-09-29 07:11:42,202 basehttp "GET /client_dashboard/auto_car/static/images/logo.png HTTP/1.1" 404 11101
+WARNING 2025-09-29 07:11:42,206 log Not Found: /client_dashboard/auto_car/static/images/logo.png
+WARNING 2025-09-29 07:11:42,206 basehttp "GET /client_dashboard/auto_car/static/images/logo.png HTTP/1.1" 404 11101
+INFO 2025-09-29 07:13:19,319 basehttp "GET /cart/5/ HTTP/1.1" 200 4518
+WARNING 2025-09-29 07:13:19,357 log Not Found: /cart/5/auto_car/static/images/logo.png
+WARNING 2025-09-29 07:13:19,357 basehttp "GET /cart/5/auto_car/static/images/logo.png HTTP/1.1" 404 11071
+WARNING 2025-09-29 07:13:19,362 log Not Found: /cart/5/auto_car/static/images/logo.png
+WARNING 2025-09-29 07:13:19,362 basehttp "GET /cart/5/auto_car/static/images/logo.png HTTP/1.1" 404 11071
+INFO 2025-09-29 07:13:24,687 basehttp "GET / HTTP/1.1" 200 12000
+WARNING 2025-09-29 07:13:24,716 log Not Found: /images/add1.png
+WARNING 2025-09-29 07:13:24,716 basehttp "GET /images/add1.png HTTP/1.1" 404 11002
+INFO 2025-09-29 07:13:26,771 basehttp "POST /add_to_cart/5/1/ HTTP/1.1" 200 6098
+WARNING 2025-09-29 07:13:26,916 log Not Found: /add_to_cart/5/1/auto_car/static/images/logo.png
+WARNING 2025-09-29 07:13:26,917 basehttp "GET /add_to_cart/5/1/auto_car/static/images/logo.png HTTP/1.1" 404 11098
+WARNING 2025-09-29 07:13:26,920 log Not Found: /add_to_cart/5/1/auto_car/static/images/logo.png
+WARNING 2025-09-29 07:13:26,920 basehttp "GET /add_to_cart/5/1/auto_car/static/images/logo.png HTTP/1.1" 404 11098

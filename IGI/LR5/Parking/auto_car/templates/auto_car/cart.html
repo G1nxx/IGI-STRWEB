@@ -1,33 +1,45 @@
 {% extends "auto_car/base.html" %}
 
 {% block content %}
-<main class="container">
-    <section class="row">
-        {% for item in cart_items %}
-        <div>
-            <p>{{ item.service.name }}</p>
-            <!-- <p>Цена: {{ item.service.cost }}</p> -->
-            <p>Количество: {{ item.quantity }}</p>
-
-            <form method="post" action="{% url 'auto_car:update_order' user.id item.id %}">
+<main class="main container">
+    <section class="cart">
+        <h1 class="cart__title">Корзина</h1>
+        <div class="cart__items">
+            {% for item in cart_items %}
+            <div class="cart-item">
+                <div class="cart-item__info">
+                    <h3 class="cart-item__name">{{ item.service.name }}</h3>
+                    <p class="cart-item__quantity">Количество: {{ item.quantity }}</p>
+                </div>
+                
+                <form class="cart-item__form" method="post" action="{% url 'auto_car:update_order' user.id item.id %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label class="form-group__label" for="quantity_{{ item.id }}">Обновить количество:</label>
+                        <input class="form-group__input" name="number" type="number" id="quantity_{{ item.id }}" name="quantity" value="{{ item.quantity }}" min="1">
+                    </div>
+                    <button class="button button--secondary" type="submit">Обновить</button>
+                </form>
+                
+                <form class="cart-item__form" method="post" action="{% url 'auto_car:delete_order' user.id item.id %}">
+                    {% csrf_token %}
+                    <button class="button button--danger" type="submit">Удалить</button>
+                </form>
+            </div>
+            {% empty %}
+            <div class="cart__empty">
+                <p class="cart__empty-text">В корзине пока нет товаров.</p>
+            </div>
+            {% endfor %}
+        </div>
+        
+        {% if cart_items %}
+        <div class="cart__actions">
+            <form class="cart__checkout-form" method="post" action="{% url 'auto_car:bye_cart' user.id %}">
                 {% csrf_token %}
-                <label for="quantity_{{ item.id }}">Обновить количество:</label>
-                <input name="number" type="number" id="quantity_{{ item.id }}" name="quantity" value="{{ item.quantity }}" min="1">
-                <button type="submit">Обновить</button>
-            </form>
-            <form method="post" action="{% url 'auto_car:delete_order' user.id item.id %}">
-                {% csrf_token %}
-                <button type="submit">Удалить</button>
+                <button class="button button--primary" type="submit">Оплатить</button>
             </form>
         </div>
-        {% empty %}
-        <p>В корзине пока нет товаров.</p>
-        {% endfor %}
-        {% if cart_items %}
-            <form method="post" action="{% url 'auto_car:bye_cart' user.id %}">
-                {% csrf_token %}
-                <button type="submit">Оплатить</button>
-            </form>
         {% endif %}
     </section>
 </main>
