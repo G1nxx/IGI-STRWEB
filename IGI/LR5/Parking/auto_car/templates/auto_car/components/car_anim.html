@@ -1,0 +1,36 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Парковка</title>
+    <link rel="stylesheet" href="{% static 'css/car_anim.css' %}">
+</head>
+<body>
+    <div class="scene">
+        <div class="car">
+            <div class="car-body">
+                <div class="headlights">
+                    <div class="headlight left"></div>
+                    <div class="headlight right"></div>
+                </div>
+                <div class="windows">
+                    <div class="window front"></div>
+                    <div class="window rear" style="margin-right: 25px;"></div>
+                </div>
+            </div>
+            <div class="wheels">
+                <div class="wheel front"></div>
+                <div class="wheel rear" style="margin-right: 20px;"></div>
+            </div>
+        </div>
+        <div class="parking-spot"></div>
+    </div>
+    
+    <div class="company-name">
+        <h1>AUTO CAR COMPALY</h1>
+    </div>
+</body>
+</html>

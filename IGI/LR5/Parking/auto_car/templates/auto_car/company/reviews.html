@@ -1,47 +1,232 @@
 {% extends "auto_car/base.html" %}
 
 {% block content %}
-<main class="container">
-    <header>
-        <h3>Отзывы</h3>
+<main class="container reviews">
+    <header class="reviews__header">
+        <h3 class="reviews__title">Отзывы</h3>
     </header>
 
-    <section>
+    <section class="reviews__section">
         {% if user.is_authenticated %}
-            <form method="post" action="{% url 'auto_car:add_review' %}">
+            <form method="post" action="{% url 'auto_car:add_review' %}" class="reviews__form">
                 {% csrf_token %}
                 {{ error }}
-                 <fieldset>
-                <legend>Напишите свой отзыв</legend>
-                <div>
-                    <label for="rate">Оценка</label>
-                    <input name="rate"required aria-required="true" />
-                </div>
-                <div>
-                    <label for="text">Коментарий:</label>
-                    <input name="text" required aria-required="true" />
-                </div>
-                <input type="submit" value="send">
-            </fieldset>
+                <fieldset class="reviews__fieldset">
+                    <legend>Напишите свой отзыв</legend>
+
+                    <div class="reviews__field">
+                        <label for="rate">Оценка</label>
+                        <input type="number" name="rate" id="rate" min="1" max="5" required aria-required="true">
+                    </div>
+
+                    <div class="reviews__field">
+                        <label for="text">Комментарий</label>
+                        <textarea name="text" id="text" rows="3" required aria-required="true"></textarea>
+                    </div>
+
+                    <input type="submit" value="Отправить" class="reviews__submit">
+                </fieldset>
             </form>
         {% endif %}
-        {% for rewiew in reviews %}
-        <form method="post" action="{% url 'auto_car:news/read_more' rewiew.id 'coment' %}">
-            {% csrf_token %}
-            <article class="review-card" style="padding-left: 6px; padding-right: 6px; margin: 4px; background-color: bisque; border-radius: 5px;">
-                <h3 class="review-customer">{{ rewiew.customer }} {{ rewiew.rate }} &star;</h3>
-                <p class="review-text">{{ rewiew.text }}</p>
-                <p class="review-date">{{ rewiew.date }}</p>
-                <footer style="display: flex; justify-content: space-between; align-items: center; margin-top: 15px;">
-                    <time datetime="{{ n.date|date:'Y-m-d' }}">{{ n.date }}</time>
-                    <button type="submit" class="read-more-btn" style="background-color: #007bff; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer;">
-                        Читать подробнее →
-                    </button>
-                </footer>
-            </article>
-        </form>
-            </article>
-        {% endfor %}
+
+        <div class="reviews__list">
+            {% for review in reviews %}
+            <form method="post" action="{% url 'auto_car:news/read_more' review.id 'coment' %}" class="reviews__item-form">
+                {% csrf_token %}
+                <article class="reviews__item">
+                    <h3 class="reviews__customer">
+                        {{ review.customer }} — {{ review.rate }}&nbsp;★
+                    </h3>
+                    <p class="reviews__text">{{ review.text }}</p>
+                    <p class="reviews__date">{{ review.date }}</p>
+
+                    <footer class="reviews__footer">
+                        <time datetime="{{ review.date|date:'Y-m-d' }}">{{ review.date }}</time>
+                        <button type="submit" class="reviews__btn">Читать подробнее →</button>
+                    </footer>
+                </article>
+            </form>
+            {% endfor %}
+        </div>
     </section>
 </main>
+
+<style>
+    .reviews {
+    padding: 20px;
+}
+
+.reviews__title {
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.reviews__form {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    font-family: sans-serif;
+}
+
+.reviews__fieldset {
+    border: none;
+    padding: 0;
+}
+
+.reviews__field {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 12px;
+}
+
+.reviews__field label {
+    font-family: "Segoe UI", Arial, sans-serif; 
+    font-size: 1rem;
+    font-weight: 600;
+    color: #222;
+    margin-bottom: 6px;
+}
+
+.reviews__field input,
+.reviews__field textarea {
+    font-family: monospace;
+    font-size: 1rem;
+    color: #333;
+    background-color: #fff;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.reviews__field input:focus,
+.reviews__field textarea:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 4px rgba(0,123,255,0.3);
+    outline: none;
+    background-color: #fefeff;
+}
+
+.reviews__field input:disabled,
+.reviews__field textarea:disabled {
+    background-color: #eee;
+    color: #777;
+    font-style: italic;
+}
+
+.reviews__field input:required:invalid,
+.reviews__field textarea:required:invalid {
+    border-color: #dc3545;
+    background-color: #fff5f5;
+}
+
+
+.reviews__submit {
+    font-family: "Verdana", sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.reviews__submit:hover {
+    background-color: #0069d9;
+    transform: translateY(-1px);
+}
+
+.reviews__submit:active {
+    background-color: #0056b3;
+    transform: translateY(0);
+}
+
+.reviews__submit:disabled {
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
+}
+
+.reviews__list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.reviews__item {
+    background-color: bisque;
+    border-radius: 8px;
+    padding: 14px 18px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    font-family: "Georgia", serif;
+}
+
+.reviews__item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.reviews__customer {
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #333;
+}
+
+.reviews__text {
+    font-size: 1rem;
+    color: #444;
+    line-height: 1.5;
+    margin-bottom: 8px;
+}
+
+.reviews__date {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.reviews__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 12px;
+}
+
+.reviews__btn {
+    font-family: "Verdana", sans-serif;
+    font-size: 0.95rem;
+    background-color: #007b88;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.reviews__btn:hover {
+    background-color: #0069d9;
+    transform: translateY(-1px);
+}
+
+.reviews__btn:active {
+    background-color: #0056b3;
+}
+
+.reviews__btn:disabled {
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
+}
+
+</style>
+
 {% endblock %}

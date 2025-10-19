@@ -2,32 +2,100 @@
 
 {% block content %}
 <main class="container">
-    <header>
-        <h1>Промокоды</h1>
+    <header class="page-header">
+        <h1 class="page-header__title">Промокоды</h1>
     </header>
+    
     <section class="promocodes">
-        <h2>
-            Действующие
-        </h2>
-        {% for promo in promocodes %}
-        <article class="promocode-card" style="padding-left: 6px; padding-right: 6px; margin: 4px; background-color: bisque; border-radius: 5px;">
-            <h3 class="promo-number">Промокод: {{ promo.number }}</h3>
-            <p class="promo-discount">Скидка: {{ promo.discount }}</p>
-            <p class="promo-deadline">Действует до: <time datetime="{{ promo.deadline|date:'Y-m-d' }}">{{ promo.deadline }}</time></p>
-        </article>
-        {% endfor %}
+        <h2 class="section-title">Действующие</h2>
+        <div class="promocodes-grid">
+            {% for promo in promocodes %}
+            <article class="promocode-card">
+                <h3 class="promocode-card__title">Промокод: {{ promo.number }}</h3>
+                <p class="promocode-card__discount">Скидка: {{ promo.discount }}</p>
+                <p class="promocode-card__deadline">Действует до: <time datetime="{{ promo.deadline|date:'Y-m-d' }}">{{ promo.deadline }}</time></p>
+            </article>
+            {% endfor %}
+        </div>
     </section>
+    
     <section class="archive">
-        <h2>
-            Архивные
-        </h2>
-        {% for promo in archive %}
-        <article class="promocode-card" style="padding-left: 6px; padding-right: 6px; margin: 4px; background-color: bisque; border-radius: 5px;">
-            <h3 class="promo-number">Промокод: {{ promo.number }}</h3>
-            <p class="promo-discount">Скидка: {{ promo.discount }}</p>
-            <p class="promo-deadline">Действует до: <time datetime="{{ promo.deadline|date:'Y-m-d' }}">{{ promo.deadline }}</time></p>
-        </article>
-        {% endfor %}
+        <h2 class="section-title">Архивные</h2>
+        <div class="promocodes-grid">
+            {% for promo in archive %}
+            <article class="promocode-card promocode-card--archived">
+                <h3 class="promocode-card__title">Промокод: {{ promo.number }}</h3>
+                <p class="promocode-card__discount">Скидка: {{ promo.discount }}</p>
+                <p class="promocode-card__deadline">Действовал до: <time datetime="{{ promo.deadline|date:'Y-m-d' }}">{{ promo.deadline }}</time></p>
+            </article>
+            {% endfor %}
+        </div>
     </section>
 </main>
+
+<style>
+.section-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.promocodes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.promocode-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    padding: 20px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.promocode-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+}
+
+.promocode-card--archived {
+    opacity: 0.7;
+    background: #f8f9fa;
+}
+
+.promocode-card__title {
+    font-size: 1.2rem;
+    color: #222;
+    margin-bottom: 12px;
+    font-weight: 600;
+}
+
+.promocode-card__discount, 
+.promocode-card__deadline {
+    margin: 8px 0;
+    font-size: 0.95rem;
+    color: #444;
+    line-height: 1.4;
+}
+
+.promocode-card__deadline {
+    color: #666;
+    font-style: italic;
+}
+
+@media (max-width: 768px) {
+    .promocodes-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .promocode-card {
+        padding: 15px;
+    }
+}
+</style>
 {% endblock %}

@@ -1,0 +1,156 @@
+.scene {
+    position: relative;
+    width: 600px;
+    height: 300px;
+    margin-bottom: 50px;
+}
+
+.parking-spot {
+    position: absolute;
+    bottom: 50px;
+    left: 200px;
+    width: 200px;
+    height: 120px;
+    border: 2px dashed #7f8c8d;
+    border-radius: 10px;
+}
+
+.car {
+    position: absolute;
+    bottom: 50px;
+    left: -150px;
+    width: 180px;
+    height: 80px;
+    animation: driveIn 3s forwards, driveOut 3s 8s forwards;
+}
+
+.car-body {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: #e74c3c;
+    border-radius: 15px 15px 5px 5px;
+}
+
+.headlights {
+    position: absolute;
+    top: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 5px;
+}
+
+.headlight {
+    width: 12px;
+    height: 8px;
+    background: #f1c40f;
+    border-radius: 3px;
+    opacity: 0;
+    animation: blinkLights 0.5s 3s 2, blinkLights 0.5s 8s 2;
+}
+
+.windows {
+    position: absolute;
+    top: 5px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 15px;
+}
+
+.window {
+    width: 40px;
+    height: 25px;
+    background: #3498db;
+    border-radius: 5px;
+}
+
+.window.front {
+    border-radius: 10px 5px 5px 5px;
+}
+
+.window.rear {
+    border-radius: 5px 10px 5px 5px;
+}
+
+.wheels {
+    position: absolute;
+    bottom: -8px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 8px;
+}
+
+.wheel {
+    width: 20px;
+    height: 20px;
+    background: #2c3e50;
+    border-radius: 50%;
+    border: 2px solid #34495e;
+}
+
+.company-name {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    animation: showCompany 2s 11s forwards;
+}
+
+.company-name h1 {
+    font-family: 'Montserrat', 'Roboto', Arial, sans-serif; 
+    font-weight: 700;
+    color: white;
+    font-size: 3em;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    text-align: center;
+    /* Kerning */
+    letter-spacing: 0.05em; 
+    font-kerning: normal;
+    font-feature-settings: "kern" 1;
+}
+
+@keyframes driveIn {
+    0% {
+        left: -150px;
+        transform: scale(1);
+    }
+    100% {
+        left: 210px;
+        transform: scale(1);
+    }
+}
+
+@keyframes driveOut {
+    0% {
+        left: 210px;
+        transform: scale(1);
+    }
+    100% {
+        left: 750px;
+        transform: scale(0.8);
+    }
+}
+
+@keyframes blinkLights {
+    0%, 100% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+@keyframes showCompany {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.5);
+    }
+    100% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}

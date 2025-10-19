@@ -1,107 +1,98 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="ru">
-    <head>
-        <link rel="icon" href="auto_car/static/images/logo.png" type="image/x-icon">
-        <link rel="apple-touch-icon" href="auto_car/static/images/logo.png">
-        <meta name="description" content="Auto Car - bes choise for your car.">
-        <meta name="keywords" content="parking, car, park, near, cheap">
-        <meta charset="UTF-8">
-        <meta name="author" content="G1nxx">
-        <meta name="robots" content="index, follow">
-        <meta name="geo.region" content="RU-MIN">
-        <meta name="geo.placename" content="Минск">
-        <meta name="geo.position" content="53.54;27.33">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <style>
-            .header__auth { float: right; }
-            .header__user-info { background: #eee; padding: 10px; }
-            .footer {
-                margin-top: 50px;
-                padding: 20px 0;
-                border-top: 1px solid #ddd;
-                text-align: center;
-            }
-            .footer__links {
-                display: flex;
-                justify-content: center;
-                flex-wrap: wrap;
-                gap: 15px;
-                margin-bottom: 10px;
-            }
-            .footer__link {
-                color: #333;
-                text-decoration: none;
-            }
-            .footer__link:hover {
-                text-decoration: underline;
-            }
-        </style>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AutoCar — лучший выбор для вашего автомобиля.">
+    <meta name="keywords" content="parking, car, park, near, cheap">
+    <meta name="author" content="G1nxx">
+    <meta name="robots" content="index, follow">
+    <meta name="geo.region" content="RU-MIN">
+    <meta name="geo.placename" content="Минск">
+    <meta name="geo.position" content="53.54;27.33">
 
-        <script type="application/ld+json">
-        {
-            "@type": "WebSite",
-            "name": "AutoCar",
-            "url": "https://auto_car.com/",
-            "potentialAction": {
-                "@type": "SearchAction",
-                "target": "https://auto_car.com/search?q={search_term_string}",
-                "query-input": "required name=search_term_string"
-            }
+    <!-- Open Graph -->
+    <meta property="og:title" content="AutoCar">
+    <meta property="og:description" content="Parking for everyone">
+    <meta property="og:image" content="{% static 'images/logo.png' %}">
+    <meta property="og:url" content="https://auto_car.com">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="AutoCar">
+    <meta name="twitter:description" content="Parking for everyone">
+    <meta name="twitter:image" content="{% static 'images/logo.png' %}">
+
+    <!-- Icons -->
+    <link rel="icon" href="{% static 'images/logo.png' %}" type="image/png">
+    <link rel="apple-touch-icon" href="{% static 'images/logo.png' %}">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <!-- <link rel="stylesheet" href="{% static 'css/preloader.css' %}"> -->
+
+    <title>AutoCar — {% block title %}Парковочный сервис{% endblock %}</title>
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "AutoCar",
+        "url": "https://auto_car.com/",
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://auto_car.com/search?q={search_term_string}",
+            "query-input": "required name=search_term_string"
         }
-        </script>
+    }
+    </script>
+</head>
+<body style="background: linear-gradient(0.1turn, #e66465, #9198e5);">
+    <header class="header" style="position: fixed; z-index: 1000; width: 100%; padding: 0; margin-bottom: 10px;">
+        <a href="{% url 'auto_car:index' %}" class="header__logo">Парковочный сервис</a>
 
-        <meta property="og:title" content="AutoCar">
-        <meta property="og:description" content="Parking for everyone">
-        <meta property="og:image" content="auto_car/static/images/logo.png">
-        <meta property="og:url" content="https://auto_car.com">
-
-        <meta name="twitter:card" content="summary">
-        <meta name="twitter:title" content="AutoCar">
-        <meta name="twitter:description" content="Parking for everyone">
-    </head>
-    <body>
-        <header class="header">
-            {% block title %}
-                <a href="{% url 'auto_car:index' %}" class="header__logo">
-                    Парковочный сервис
-                </a>
-            {% endblock %}
+        <div class="header__auth">
             {% if user.is_authenticated %}
                 <span class="header__user-info">Привет, {{ user.username }}!</span>
-            {% endif %}
 
-            <nav class="header__auth">
-                {% if user.is_authenticated %}
-                    <a href="{% url 'auto_car:logout' %}" class="header__link">Выйти</a>
-                    {% if user.is_staff %}
-                        <a href="{% url 'auto_car:employee_dashboard' %}" class="header__link">Личный кабинет</a>
-                    {% else %}
-                        <a href="{% url 'auto_car:client_dashboard' %}" class="header__link">Личный кабинет</a>
+                {% if user.is_staff %}
+                    <a href="{% url 'auto_car:employee_dashboard' %}" class="header__link">Личный кабинет</a>
+                {% else %}
+                    <a href="{% url 'auto_car:client_dashboard' %}" class="header__link">Личный кабинет</a>
                     <a href="{% url 'auto_car:cart' user.id %}" class="header__link">Корзина</a>
                 {% endif %}
-                {% else %}
-                    <a href="{% url 'auto_car:login' %}" class="header__link">Войти</a> | 
-                    <a href="{% url 'auto_car:signup' %}" class="header__link">Регистрация</a>
-                {% endif %}
-                <a href="{% url 'auto_car:demonstration' %}" class="header__link">Демо</a>
-            </nav>
-        </header>
-        
-        {% block content %}
-        {% endblock %}
-        
-        <footer class="footer">
-            <div class="footer__links">
-                <a href="{% url 'auto_car:about' %}" class="footer__link">О компании</a>
-                <a href="{% url 'auto_car:news' %}" class="footer__link">Новости</a>
-                <a href="{% url 'auto_car:glossary' %}" class="footer__link">Словарь терминов и понятий</a>
-                <a href="{% url 'auto_car:contacts' %}" class="footer__link">Контакты</a>
-                <a href="{% url 'auto_car:privacy' %}" class="footer__link">Политика конфиденциальности</a>
-                <a href="{% url 'auto_car:vacancies' %}" class="footer__link">Вакансии</a>
-                <a href="{% url 'auto_car:reviews' %}" class="footer__link">Отзывы</a>
-                <a href="{% url 'auto_car:promocodes' %}" class="footer__link">Промокоды и купоны</a>
-            </div>
-            <p class="footer__copyright">&copy; {% now "Y" %} Парковочный сервис. Все права защищены.</p>
-        </footer>
-    </body>
+                
+                <a href="{% url 'auto_car:logout' %}" class="header__link">Выйти</a>
+            {% else %}
+                <a href="{% url 'auto_car:login' %}" class="header__link">Войти</a>
+                <a href="{% url 'auto_car:signup' %}" class="header__link">Регистрация</a>
+            {% endif %}
+
+            <a href="{% url 'auto_car:demonstration' %}" class="header__link">Демо</a>
+        </div>
+    </header>
+    <div style="padding-top: 20px;">
+    {% block content %}
+    {% endblock %}
+    </div>
+
+    <footer class="footer">
+        <div class="footer__links">
+            <a href="{% url 'auto_car:about' %}" class="footer__link">О компании</a>
+            <a href="{% url 'auto_car:news' %}" class="footer__link">Новости</a>
+            <a href="{% url 'auto_car:glossary' %}" class="footer__link">Словарь терминов</a>
+            <a href="{% url 'auto_car:contacts' %}" class="footer__link">Контакты</a>
+            <a href="{% url 'auto_car:privacy' %}" class="footer__link">Политика конфиденциальности</a>
+            <a href="{% url 'auto_car:vacancies' %}" class="footer__link">Вакансии</a>
+            <a href="{% url 'auto_car:reviews' %}" class="footer__link">Отзывы</a>
+            <a href="{% url 'auto_car:promocodes' %}" class="footer__link">Промокоды и купоны</a>
+        </div>
+        <p class="footer__copyright">
+            &copy; {% now "Y" %} Парковочный сервис. Все права защищены.
+        </p>
+    </footer>
+</body>
 </html>

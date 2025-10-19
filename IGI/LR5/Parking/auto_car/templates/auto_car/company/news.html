@@ -1,31 +1,31 @@
 {% extends "auto_car/base.html" %}
-
 {% load static %}
+
 {% block content %}
-<main class="container">
-    <section aria-labelledby="news-heading">
-        <h2 id="news-heading">Новости</h2>
-        <div class="news-list">
+<main class="container news">
+    <section aria-labelledby="news-heading" class="news__section">
+        <h2 id="news-heading" class="news__title">Новости</h2>
+        <div class="news__list">
             {% for n in news %}
-            <form method="post" action="{% url 'auto_car:news/read_more' n.id 'news' %}">
+            <form method="post" action="{% url 'auto_car:news/read_more' n.id 'news' %}" class="news__form">
                 {% csrf_token %}
-                <article class="news-item" style="padding: 6px; margin: 4px; background-color: bisque; border-radius: 5px;">
-                    <header>
-                        <h3>{{ n.title }}</h3>
+                <article class="news__item">
+                    <header class="news__header">
+                        <h3 class="news__headline">{{ n.title }}</h3>
                     </header>
-                    <div class="news-content" style="display: flex; align-items: flex-start; gap: 20px;">
-                        <div class="news-text" style="flex: 1;">
+
+                    <div class="news__content">
+                        <div class="news__text">
                             <p>{{ n.text|truncatewords:30 }}</p>
                         </div>
-                        <div class="news-image">
-                            <img src="{% static n.pic.url %}" alt="Иллюстрация к новости: {{ n.title }}" width="250" height="250" style="object-fit: cover;" >
+                        <div class="news__image">
+                            <img src="{% static n.pic.url %}" alt="Иллюстрация к новости: {{ n.title }}">
                         </div>
                     </div>
-                    <footer style="display: flex; justify-content: space-between; align-items: center; margin-top: 15px;">
-                        <time datetime="{{ n.date|date:'Y-m-d' }}">{{ n.date }}</time>
-                        <button type="submit" class="read-more-btn" style="background-color: #007bff; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer;">
-                            Читать далее →
-                        </button>
+
+                    <footer class="news__footer">
+                        <time class="news__date" datetime="{{ n.date|date:'Y-m-d' }}">{{ n.date }}</time>
+                        <button type="submit" class="news__btn">Читать далее →</button>
                     </footer>
                 </article>
             </form>
@@ -33,4 +33,108 @@
         </div>
     </section>
 </main>
+
+<style>
+.news {
+    padding: 20px;
+}
+
+.container.news {
+    background: url('{%static "images/background.png"%}');
+}
+
+.news__title {
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 24px;
+}
+
+.news__list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.news__item {
+    background-color: bisque;
+    border-radius: 8px;
+    padding: 14px 18px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.news__item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.news__content {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    margin-top: 8px;
+}
+
+.news__image img {
+    width: 250px;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.news__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.news__date {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.news__text {
+    flex: 1;
+    font-size: 1rem;
+    color: #444;
+    line-height: 1.5;
+    max-height: 15em; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -moz-box;        
+    line-clamp: 3;      
+    -moz-box-orient: vertical;
+    -webkit-columns: 150px 3;
+    -moz-columns: 150px 3; 
+    columns: 150px 3; 
+}
+
+.news__btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.news__btn:hover {
+    background-color: #0069d9;
+    transform: translateY(-1px);
+}
+
+.news__full-text {
+    column-count: 2;              
+    column-gap: 40px;          
+    text-align: justify;
+    line-height: 1.6;
+    font-size: 1.05rem;
+    color: #333;
+}
+</style>
 {% endblock %}
