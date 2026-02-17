@@ -109,7 +109,8 @@
     text-align: center;
     /* Kerning */
     letter-spacing: 0.05em; 
-    font-kerning: normal;
+    line-height: normal;
+    font-kerning: auto;
     font-feature-settings: "kern" 1;
 }
 

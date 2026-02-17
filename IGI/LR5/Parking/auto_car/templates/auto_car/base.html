@@ -13,29 +13,23 @@
     <meta name="geo.placename" content="Минск">
     <meta name="geo.position" content="53.54;27.33">
 
-    <!-- Open Graph -->
     <meta property="og:title" content="AutoCar">
     <meta property="og:description" content="Parking for everyone">
     <meta property="og:image" content="{% static 'images/logo.png' %}">
     <meta property="og:url" content="https://auto_car.com">
 
-    <!-- Twitter -->
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="AutoCar">
     <meta name="twitter:description" content="Parking for everyone">
     <meta name="twitter:image" content="{% static 'images/logo.png' %}">
 
-    <!-- Icons -->
     <link rel="icon" href="{% static 'images/logo.png' %}" type="image/png">
     <link rel="apple-touch-icon" href="{% static 'images/logo.png' %}">
 
-    <!-- Styles -->
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
-    <!-- <link rel="stylesheet" href="{% static 'css/preloader.css' %}"> -->
 
     <title>AutoCar — {% block title %}Парковочный сервис{% endblock %}</title>
 
-    <!-- Structured Data -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -50,10 +44,25 @@
     }
     </script>
 </head>
-<body style="background: linear-gradient(0.1turn, #e66465, #9198e5);">
+<style>
+        :root {
+            --gradient-start: #e66465;
+            --gradient-end: #9198e5;
+            --bg-primary: linear-gradient(0.1turn, var(--gradient-start), var(--gradient-end));
+        }
+
+        [data-theme="dark"] {
+            --gradient-start: #2c3e50;
+            --gradient-end: #34495e;
+        }
+    </style>
+</head>
+<body style="background: linear-gradient(0.1turn, var(--gradient-start), var(--gradient-end));">
     <header class="header" style="position: fixed; z-index: 1000; width: 100%; padding: 0; margin-bottom: 10px;">
         <a href="{% url 'auto_car:index' %}" class="header__logo">Парковочный сервис</a>
-
+        <form id="themeToggle">
+            <button type="submit"></button>
+        </form>
         <div class="header__auth">
             {% if user.is_authenticated %}
                 <span class="header__user-info">Привет, {{ user.username }}!</span>
@@ -73,6 +82,7 @@
 
             <a href="{% url 'auto_car:demonstration' %}" class="header__link">Демо</a>
         </div>
+        <script src="{% static 'js/theme-switch.js' %}"></script>
     </header>
     <div style="padding-top: 20px;">
     {% block content %}

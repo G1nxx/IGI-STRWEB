@@ -4,30 +4,73 @@
 {% block content %}
 <main class="main container">
     {% csrf_token %}
-    {% include "auto_car/components/preloader.html" %}
-    {% include "auto_car/components/car_anim.html" %}
+    {% include "auto_car/components/html/preloader.html" %}
+    {% include "auto_car/components/html/car_anim.html" %}
     <header class="page-header">
-         
-        <!-- <div class="anim-container">
-            <div class="ring-up-left"></div>
-            <div class="ring-up-right"></div>
-            <div class="ring-down"></div>
-        </div> -->
-
-
-
-        <img src="{% static 'images/logo.png' %}" alt="Auto Car Logo" class="page-header-logo" 
-        style=" max-width: 100px;
+        <style>
+            .page-header-logo {
+                max-width: 100px;
                 height: 100px;
-                transform: rotate(30deg);">
+                transition: transform 0.3s ease;
+            }
+
+            .page-header-logo:hover {
+                transform: rotate(30deg);
+                cursor: grab;
+            }
+
+            #pagination { margin-top: 20px; }
+
+            #pagination button {
+                margin: 0 3px;
+                padding: 5px 10px;
+            }
+            #pagination button.active {
+                background: #444;
+                color: #fff;
+            }
+
+        </style>
+
+
+        <img src="{% static 'images/logo.png' %}" alt="Auto Car Logo" class="page-header-logo">
         <h1 class="page-header__title">
             Текущее время: 
             <time datetime="{{ current_time|date:'Y-m-d H:i' }}">{{ current_time }}</time> 
             <span class="page-header__timezone">{{ time_zone }}</span>
         </h1>
     </header>
+    
+
+
+    {% include "auto_car/components/html/slider.html" %}
+    
+    <script>
+    const slides = [
+        { img: "{% static 'images/logo.png' %}", caption: "first", link: "/contacts" },
+        { img: "{% static 'images/pngtree-picture-of-a-blue-bird-on-a-black-background-image_2937385.jpg' %}", caption: "second", link: "/news" },
+        { img: "{% static 'images/add1.png' %}", caption: "third", link: "/about" },
+        { img: "{% static 'images/add2.png' %}", caption: "second", link: "/privacy" }
+    ];
+
+    const slider = new Slider(
+        document.getElementById("mySlider"),
+        slides
+    );
+    </script>
+
+
+    
+    <h1>Информация о батарее</h1>
+
+    <p id="chargeInfo">Зарядка: —</p>
+    <p id="levelInfo">Уровень: —</p>
+    <p id="chargingTimeInfo">Время до полной зарядки: —</p>
+    <p id="dischargingTimeInfo">Время до разрядки: —</p>
+
+    <script src="{% static 'js/battary.js' %}"></script>
+    
     <article class="content">
-        <!-- Услуги -->
         <section class="services-section section" aria-labelledby="services-heading">
             <header class="section-header">
                 <h2 id="services-heading" class="section-header__title">Наши услуги</h2>
@@ -54,7 +97,18 @@
             </div>
         </section>
 
-        <!-- Акции -->
+        <script src="{% static 'js/3d-card.js'%}"></script>
+        <script src="{% static 'js/pagination.js'%}"></script>
+        <div id="pagination"></div>
+        <label>Show by:
+            <select id="per-page-select">
+                <option value="3">3</option>
+                <option value="5">5</option>
+                <option value="10">10</option>
+            </select>
+        </label>
+
+
         <section class="promocodes-section section" aria-labelledby="promocodes-heading">
             <header class="section-header">
                 <h2 id="promocodes-heading" class="section-header__title">Акции и промокоды</h2>
@@ -72,7 +126,6 @@
             </div>
         </section>
 
-        <!-- Информация о пользователе -->
         {% if user.is_authenticated %}
         <section class="user-info-section section" aria-labelledby="user-info-heading">
             <header class="section-header">
@@ -87,7 +140,6 @@
         {% endif %}
     </article>
 
-    <!-- Новости -->
     {% if last %}
     <article class="news-card card" style="position: sticky;" aria-labelledby="news-heading">
         <header class="news-card__header">
@@ -100,7 +152,6 @@
     </article>
     {% endif %}
 
-    <!-- Баннеры -->
     <aside class="banner">
         <a href="/about/" target="_blank" rel="noopener" class="banner__link">
             <figure>
@@ -119,7 +170,6 @@
         </a>
     </aside>
 
-    <!-- Партнеры -->
     <section class="partners-section section" aria-labelledby="partners-heading">
         <header class="section-header">
             <h2 id="partners-heading" class="section-header__title">Наши партнеры</h2>

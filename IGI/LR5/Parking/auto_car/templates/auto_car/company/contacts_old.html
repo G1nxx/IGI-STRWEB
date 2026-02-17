@@ -1,0 +1,36 @@
+{% extends "auto_car/base.html" %}
+
+{% load static %}
+{% block content %}
+<main class="container contacts">
+    {% if contacts %}
+        <section class="contacts__section" aria-labelledby="contacts-heading">
+            <h2 id="contacts-heading" class="contacts__title">Контакты</h2>
+
+            <div class="contacts__flex-container">
+                <div class="contacts__header">
+                    <div class="contacts__header-item">Пользователь</div>
+                    <div class="contacts__header-item">Фотография</div>
+                    <div class="contacts__header-item">Номер телефона</div>
+                </div>
+                
+                <div class="contacts__body">
+                    {% for contact in contacts %}
+                    <div class="contacts__row">
+                        <div class="contacts__cell" data-label="Пользователь">
+                            {{ contact.user.user }}
+                        </div>
+                        <div class="contacts__cell" data-label="Фотография">
+                            <img src="{% static contact.pic.url %}" alt="Фотография {{ contact.user.user }}">
+                        </div>
+                        <div class="contacts__cell" data-label="Номер телефона">
+                            {{ contact.user.phone }}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+    {% endif %}
+</main>
+{% endblock %}

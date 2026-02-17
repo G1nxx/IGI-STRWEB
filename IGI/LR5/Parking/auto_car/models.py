@@ -170,22 +170,17 @@ class UserSession(models.Model):
             users=Count('user', distinct=True),
             sessions=Count('id'),
             avg_duration=Avg('duration')
-        ).order_by('-date')[:7]  # Берем последние 7 записей
+        ).order_by('-date')[:7]
         
-        # Создаем фигуру matplotlib
         plt.figure(figsize=(8, 6))
         
-        # Подготовка данных
         days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
         
-        # Создаем список сессий, заполняя нулями для отсутствующих дней
         sessions_data = {entry['date'].strftime('%a'): entry['sessions'] for entry in daily}
         sessions = [sessions_data.get(day, 0) for day in days]
         
-        # Строим столбчатую диаграмму
         bars = plt.bar(days, sessions, color='skyblue')
         
-        # Добавляем значения поверх столбцов
         for bar in bars:
             height = bar.get_height()
             plt.text(bar.get_x() + bar.get_width()/2., height,
@@ -197,20 +192,16 @@ class UserSession(models.Model):
         plt.ylabel('Количество сеансов')
         plt.tight_layout()
         
-        # Сохраняем график в BytesIO
         buffer = BytesIO()
         plt.savefig(buffer, format='png', dpi=100)
         plt.close()
         buffer.seek(0)
         
-        # Создаем директорию, если ее нет
         os.makedirs(os.path.dirname(filename), exist_ok=True)
         
-        # Сохраняем на диск
         with open(filename, 'wb') as f:
             f.write(buffer.getbuffer())
         
-        # Возвращаем ContentFile для возможного сохранения в модели
         return ContentFile(buffer.getvalue(), name=os.path.basename(filename))
     
 class YearHistory(models.Model):
@@ -236,3 +227,19 @@ class Partner(models.Model):
     name = models.TextField()
     description = models.TextField()
     url = models.TextField()
+
+class Employee(models.Model):
+    name = models.CharField(max_length=100, verbose_name="FIO")
+    position = models.CharField(max_length=100, verbose_name="Position")
+    photo_url = models.URLField(max_length=200, blank=True, null=True, verbose_name="URL photo") 
+    phone = models.CharField(max_length=30, verbose_name="Phone")
+    email = models.EmailField(verbose_name="Email")
+    description = models.TextField(blank=True, verbose_name="Description")
+    
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = "Employee"
+        verbose_name_plural = "Employees"
+        ordering = ['name']

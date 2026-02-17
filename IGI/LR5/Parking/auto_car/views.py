@@ -6,8 +6,10 @@ from django.contrib.auth import logout as auth_logout, login as auth_login
 from auto_car.usecase import user as user_usecase, company as company_usecases, car as car_usecases
 from django.utils import timezone
 from .utils.geoip import get_timezone_by_ip
+from django.http import JsonResponse
 
 from . import models
+from auto_car.models import Employee
 
 def index(request):
     context = {
@@ -164,9 +166,29 @@ def glossary(request):
 
 def contacts(request):
     context = {
-        'contacts': company_usecases.get_contacts()
+        'data': company_usecases.get_contacts()
     }
     return render(request, 'auto_car/company/contacts.html', context)
+
+def employee_list_page(request):
+    return render(request, 'main/employee_list.html') 
+
+def employees_data_json(request):
+    employees = Employee.objects.all().order_by('name') 
+
+    data = []
+    for employee in employees:
+        data.append({
+            'id': employee.id,
+            'name': employee.name,
+            'position': employee.position,
+            'photo_url': employee.photo_url,
+            'phone': employee.phone,
+            'email': employee.email,
+            'description': employee.description,
+        })
+        
+    return JsonResponse(data, safe=False)
 
 def privacy(request):
     return render(request, 'auto_car/company/privacy.html')

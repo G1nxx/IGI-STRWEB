@@ -24,6 +24,7 @@ urlpatterns = [
     # path('reviews/read_more/<int:_id>/<str:type>/', views.read_more, name='review/read_more'),
     path('glossary/', views.glossary, name='glossary'),
     path('contacts/', views.contacts, name='contacts'),
+    path('employees/', views.employees_data_json, name='employees_data_json'),
     path('privacy/', views.privacy, name='privacy'),
     path('vacancies/', views.vacancies, name='vacancies'),
     path('reviews/', views.reviews, name='reviews'),

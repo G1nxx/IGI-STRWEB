@@ -1,21 +1,8 @@
+{% load static %}
+
 <!DOCTYPE html>
-<html> <!--manifest="Устарел" lang="ru" id="demo-1" class="demo" dir="auto" tabindex="1" contenteditable="false" spellcheck="false" style="z-index: 1;" draggable="false" dropzone="false"-->
-    <head> <!--itemid="12345" itemprop="http://schema.org/Review" itemref="12346" itemscope itemtype="ewfw"--> <!--Microdata-->
-        <!--
-        onabort onfocus onmousemove onseeked
-        onblur oninput onmouseout onseeking
-        oncancel oninvalid onmouseover onselect
-        oncanplay onkeydown onmouseup onshow
-        oncanplaythrough onkeypress onmousewheel onstalled
-        onchange onkeyup onpause onsubmit
-        onclick onload onplay onsuspend
-        oncuechange onloadeddata onplaying ontimeupdate
-        ondblclick onloadedmetadata onprogress ontoggle
-        ondurationchange onloadstart onratechange onvolumechange
-        onemptied onmousedown onreset onwaiting
-        onended onmouseenter onresize
-        onerror onmouseleave onscroll
--->
+<html>
+    <head> 
         <title>Страница демонстрации</title>
         
 <style>
@@ -121,7 +108,7 @@
             padding: 4px 8px;
         }
 
-        input[type="submit"], input[type="reset"], button {
+        input[type$="submit"], input[type^="reset"], button {
             background-color: #007acc;
             color: white;
             border: none;
@@ -284,18 +271,36 @@
             padding: 10px;
             box-sizing: border-box;
         }
+
+        .car-bg {
+            position: fixed;
+            top: 0;
+            right: 50%;
+            z-index: -10;          
+            pointer-events: none;  
+            width: 200px;
+        }
+        .park-bg {
+            position: fixed;
+            top: 700px;
+            left: 20%;
+            z-index: -11;          
+            pointer-events: none;  
+            width: 700px;
+        }
+
+        .car-bg img {
+            width: 100%;
+            opacity: 0.9;
+            transition: transform 0.1s ease-in-out;
+        }
+
         </style>
-        <meta name="author" data-author="Me">
-        <base target="_blank">
-        <link rel="stylesheet" href="__" hreflang="2" media="" sizes="10x10" type="audio">
-        <script>
-            //  JS
-        </script>
+
         <noscript>
-            <!-- no JS -->
         </noscript>
     </head>
-    <body> <!--alink, background, bgcolor, link, margin*, text, vlink - устаревшие -->
+    <body> 
         <aside>
             <nav>
                 <h2>Навигация</h2>
@@ -320,6 +325,452 @@
             </nav>
         </aside>
 
+        <script>
+            document.addEventListener("scroll", () => {
+                const maxMove = 700;
+                const scrollTop = window.scrollY;
+                const docHeight = document.body.scrollHeight - window.innerHeight;
+
+                const progress = scrollTop / docHeight;
+
+                const car = document.querySelector(".car-bg img");
+
+                car.style.transform =
+                    `translate(0, ${progress * maxMove}px)`;
+            });
+        </script>
+
+        <div class="car-bg">
+            <img src="{% static 'images/car.png' %}" alt="car">
+        </div>
+        <div class="park-bg">
+            <img src="{% static 'images/park.png' %}" alt="car">
+        </div>
+        
+        <div id="box"></div>
+
+        <style>
+            #box {
+                width: 40px;
+                height: 40px;
+                background: tomato;
+                position: relative;
+                left: 0;
+                transition: left 0.05s linear;
+            }
+        </style>
+
+        <script>
+            let x = 0;
+            let direction = 1;
+
+            function animate() {
+                const box = document.getElementById("box");
+                x += direction * 2;
+                if (x > 300) direction = -1;
+                if (x < 0) direction = 1;
+                box.style.left = x + "px";
+            }
+
+            setInterval(animate, 16);
+        </script>
+
+
+        <div class="container">
+
+            <h2>Employees Directory</h2>
+
+            <table id="employeesTable">
+                <thead>
+                    <tr>
+                        <th>Last Name</th>
+                        <th>Initials</th>
+                        <th>Phone Number</th>
+                        <th>Department</th>
+                    </tr>
+                </thead>
+                <tbody id="employeesList"></tbody>
+            </table>
+
+            <h3>Search Employee</h3>
+            <div class="form-group">
+                <label>Last Name:</label>
+                <input type="text" id="lastName" placeholder="Enter last name">
+            </div>
+
+            <div class="form-group">
+                <label>Initials:</label>
+                <input type="text" id="initials" placeholder="Enter initials">
+            </div>
+
+            <button onclick="EmployeeFull.search()">Search Phone</button>
+            <button onclick="EmployeeFull.clearForm()">Clear</button>
+
+            <div id="result" class="result"></div>
+
+            <h3>Add Employee</h3>
+
+            <div class="form-group">
+                <label>Last Name:</label>
+                <input type="text" id="add_last">
+            </div>
+
+            <div class="form-group">
+                <label>Initials:</label>
+                <input type="text" id="add_init">
+            </div>
+
+            <div class="form-group">
+                <label>Phone:</label>
+                <input type="text" id="add_phone">
+            </div>
+
+            <div class="form-group">
+                <label>Department:</label>
+                <input type="text" id="add_dep">
+            </div>
+
+            <button onclick="EmployeeFull.addFromForm()">Add Employee</button>
+
+        </div>
+
+    <script src="{% static 'js/employees.js' %}"></script>
+
+
+    
+
+        <!-- <script>
+            const employees = [
+                { lastName: "Smith", initials: "J.K.", phone: "+1-555-0101", department: "IT" },
+                { lastName: "Johnson", initials: "M.L.", phone: "+1-555-0102", department: "HR" },
+                { lastName: "Williams", initials: "R.T.", phone: "+1-555-0103", department: "Finance" },
+                { lastName: "Brown", initials: "S.A.", phone: "+1-555-0104", department: "Marketing" },
+                { lastName: "Jones", initials: "A.B.", phone: "+1-555-0105", department: "IT" },
+                { lastName: "Garcia", initials: "L.M.", phone: "+1-555-0106", department: "Sales" },
+                { lastName: "Miller", initials: "D.C.", phone: "+1-555-0107", department: "Operations" },
+                { lastName: "Davis", initials: "P.K.", phone: "+1-555-0108", department: "HR" },
+                { lastName: "Rodriguez", initials: "F.G.", phone: "+1-555-0109", department: "IT" },
+                { lastName: "Martinez", initials: "H.J.", phone: "+1-555-0110", department: "Finance" },
+                { lastName: "Wilson", initials: "T.J.", phone: "+1-555-0111", department: "Marketing" },
+                { lastName: "Anderson", initials: "K.L.", phone: "+1-555-0112", department: "Sales" },
+                { lastName: "Taylor", initials: "W.N.", phone: "+1-555-0113", department: "Operations" },
+                { lastName: "Thomas", initials: "E.P.", phone: "+1-555-0114", department: "IT" },
+                { lastName: "Jackson", initials: "O.R.", phone: "+1-555-0115", department: "HR" }
+            ];
+
+            function displayEmployees() {
+                const tbody = document.getElementById('employeesList');
+                tbody.innerHTML = employees.map(emp => `
+                    <tr>
+                        <td>${emp.lastName}</td>
+                        <td>${emp.initials}</td>
+                        <td>${emp.phone}</td>
+                    </tr>
+                `).join('');
+            }
+            
+            function findPhoneByEmployee(lastName, initials) {
+                const employee = employees.find(emp => 
+                    emp.lastName.toLowerCase() === lastName.toLowerCase() && 
+                    emp.initials.toLowerCase() === initials.toLowerCase()
+                );
+                
+                return employee ? employee : null;
+            }
+
+            
+            function searchEmployee() {
+                const lastName = document.getElementById('lastName').value.trim();
+                const initials = document.getElementById('initials').value.trim();
+                const resultDiv = document.getElementById('result');
+
+                if (!lastName || !initials) {
+                    showResult('Please enter both last name and initials.', 'error');
+                    return;
+                }
+
+                const employee = findPhoneByEmployee(lastName, initials);
+                
+                if (employee) {
+                    showResult(`<strong>Found:</strong> ${employee.lastName} ${employee.initials}<br>
+                            <strong>Phone:</strong> ${employee.phone}<br>
+                            <strong>Department:</strong> ${employee.department}`, 'success');
+                } else {
+                    showResult(`Employee not found: ${lastName} ${initials}<br>
+                            Please check the spelling and try again.`, 'error');
+                }
+            }
+
+            function showResult(message, type) {
+                const resultDiv = document.getElementById('result');
+                resultDiv.innerHTML = message;
+                resultDiv.className = `result ${type}`;
+                resultDiv.style.display = 'block';
+            }
+
+            function clearForm() {
+                document.getElementById('lastName').value = '';
+                document.getElementById('initials').value = '';
+                document.getElementById('result').style.display = 'none';
+            }
+
+            function fillExample(lastName, initials) {
+                document.getElementById('lastName').value = lastName;
+                document.getElementById('initials').value = initials;
+                document.getElementById('result').style.display = 'none';
+            }
+
+            function searchByLastNameOnly(lastName) {
+                return employees.filter(emp => 
+                    emp.lastName.toLowerCase().includes(lastName.toLowerCase())
+                );
+            }
+
+            function searchByDepartment(department) {
+                return employees.filter(emp => 
+                    emp.department.toLowerCase() === department.toLowerCase()
+                );
+            }
+
+            displayEmployees();
+
+            document.addEventListener('keypress', function(event) {
+                if (event.key === 'Enter') {
+                    searchEmployee();
+                }
+            });
+        </script> -->
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <canvas id="expChart"></canvas>
+
+        <script>
+        let eps = 0.01;
+
+        function My_factorial(n) {
+            let res = 1;
+            while (n) {
+                res *= n;
+                n -= 1;
+            }
+            return res;
+        }
+
+        function Macloren_exp(x, eps) {
+            let n = 0;
+            let Fx = 0;
+            let MATH_F = Math.exp(x);
+            while (eps < Math.abs(MATH_F - Fx)) {
+                Fx += Math.pow(x, n) / My_factorial(n);
+                n += 1;
+                if(n > 100) break;
+            }
+            return Fx;
+        }
+
+        let xValues = [];
+        let maclorenValues = [];
+        let mathValues = [];
+
+        let startX = -2;
+        let endX = 2;
+        let step = 0.1;
+
+        for(let x = startX; x <= endX; x += step) {
+            x = Number(x.toFixed(2));
+            xValues.push(x);
+            maclorenValues.push(Macloren_exp(x, eps));
+            mathValues.push(Math.exp(x));
+        }
+
+        const data = {
+            labels: xValues,
+            datasets: [
+                {
+                    label: 'exp(x)',
+                    data: maclorenValues,
+                    borderColor: 'red',
+                    fill: false,
+                    tension: 0.3
+                },
+                {
+                    label: 'Math.exp(x)',
+                    data: mathValues,
+                    borderColor: 'blue',
+                    fill: false,
+                    tension: 0.3
+                }
+            ]
+        };
+
+        const config = {
+            type: 'line',
+            data: data,
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    },
+                    title: {
+                        display: true,
+                        text: 'Сравнение exp(x) и разложения в ряд Маклорена'
+                    },
+                    tooltip: {
+                        enabled: true
+                    }
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'x'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'y'
+                        }
+                    }
+                },
+                animation: {
+                    duration: 3000,
+                    delay: (context) => {
+                        const datasetIndex = context.datasetIndex;
+                        const pointIndex = context.dataIndex;
+
+                        if(datasetIndex === 0) return pointIndex * 20;  
+                        if(datasetIndex === 1) return pointIndex * 0;  
+                        return 0;
+                    },
+                    easing: 'easeOutQuart'
+                }
+            }
+        };
+
+        const ctx = document.getElementById('expChart').getContext('2d');
+        const expChart = new Chart(ctx, config);
+        </script>
+
+
+
+        <label>
+            <input type="checkbox" id="addDateToggle"> Добавить поле даты
+        </label>
+
+        <div id="container"></div>
+
+        <script>
+        window.onload = () => {
+            const saved = JSON.parse(localStorage.getItem("dateItems") || "[]");
+            saved.forEach(cfg => createItem(cfg));
+        };
+
+        document.getElementById("addDateToggle").addEventListener("change", function () {
+            if (this.checked) {
+                createItem();
+                this.checked = false;
+            }
+        });
+
+        function createItem(config = null) {
+            const id = Date.now();
+
+            const wrapper = document.createElement("div");
+            wrapper.className = "item";
+            wrapper.dataset.id = id;
+
+            wrapper.innerHTML = `
+                <input type="date" class="date-field"><br><br>
+
+                title: <input type="text" class="attr-title"><br>
+                min: <input type="date" class="attr-min"><br>
+                max: <input type="date" class="attr-max"><br>
+                value: <input type="date" class="attr-value"><br>
+
+                <label><input type="checkbox" class="attr-required"> required</label><br>
+                <label><input type="checkbox" class="attr-readonly"> readonly</label><br><br>
+
+                <button class="delete">Удалить</button>
+            `;
+
+            document.getElementById("container").appendChild(wrapper);
+
+            if (config) {
+                const f = wrapper.querySelector(".date-field");
+                f.title = config.title;
+                f.min = config.min;
+                f.max = config.max;
+                f.value = config.value;
+                f.required = config.required;
+                f.readOnly = config.readonly;
+
+                wrapper.querySelector(".attr-title").value = config.title;
+                wrapper.querySelector(".attr-min").value = config.min;
+                wrapper.querySelector(".attr-max").value = config.max;
+                wrapper.querySelector(".attr-value").value = config.value;
+                wrapper.querySelector(".attr-required").checked = config.required;
+                wrapper.querySelector(".attr-readonly").checked = config.readonly;
+            }
+
+            bindEvents(wrapper);
+            saveAll();
+        }
+
+        function bindEvents(block) {
+            const field = block.querySelector(".date-field");
+
+            block.querySelector(".attr-title").addEventListener("input", e => {
+                field.title = e.target.value;
+                saveAll();
+            });
+            block.querySelector(".attr-min").addEventListener("input", e => {
+                field.min = e.target.value;
+                saveAll();
+            });
+            block.querySelector(".attr-max").addEventListener("input", e => {
+                field.max = e.target.value;
+                saveAll();
+            });
+            block.querySelector(".attr-value").addEventListener("input", e => {
+                field.value = e.target.value;
+                saveAll();
+            });
+            block.querySelector(".attr-required").addEventListener("change", e => {
+                field.required = e.target.checked;
+                saveAll();
+            });
+            block.querySelector(".attr-readonly").addEventListener("change", e => {
+                field.readOnly = e.target.checked;
+                saveAll();
+            });
+
+            block.querySelector(".delete").addEventListener("click", () => {
+                block.remove();
+                saveAll();
+            });
+        }
+
+        function saveAll() {
+            const items = [...document.querySelectorAll(".item")].map(div => {
+                const f = div.querySelector(".date-field");
+                return {
+                    title: f.title || "",
+                    min: f.min || "",
+                    max: f.max || "",
+                    value: f.value || "",
+                    required: f.required,
+                    readonly: f.readOnly
+                };
+            });
+
+            localStorage.setItem("dateItems", JSON.stringify(items));
+        }
+        </script>
+
+
         <kbd hidden>
             Вывод пользователя
         </kbd>
@@ -327,7 +778,6 @@
 
         <div id="downloads">
             <a href="/auto_car/static/audio/Ohne dich.mp3" download="music" target="_blank" rel="nofollow">
-                <!--  -->
                 скачать песню<br>
             </a>
             <a href="#end">Перейти в конец<br></a>
@@ -503,7 +953,7 @@
         </div>
 
         <div id="form">
-            <form action="/submit_feedback" method="post" accept-charset="ru" autocomplete="off" enctype="ssh" application="email" multipart="form-date" name="login form" > <!--novalidate-->
+            <form action="/submit_feedback" method="post" accept-charset="ru" autocomplete="off" enctype="ssh" application="email" multipart="form-date" name="login form" >
                 <label for="name">Имя:</label>
                 <input type="text" id="name" name="name" required placeholder="mfemwf"><br><br>
                 <label for="email">Email:</label>

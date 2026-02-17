@@ -1,36 +1,492 @@
 {% extends "auto_car/base.html" %}
-
 {% load static %}
-{% block content %}
-<main class="container contacts">
-    {% if contacts %}
-        <section class="contacts__section" aria-labelledby="contacts-heading">
-            <h2 id="contacts-heading" class="contacts__title">Контакты</h2>
 
-            <div class="contacts__flex-container">
-                <div class="contacts__header">
-                    <div class="contacts__header-item">Пользователь</div>
-                    <div class="contacts__header-item">Фотография</div>
-                    <div class="contacts__header-item">Номер телефона</div>
+{% block content %}
+<main role="main">
+    <div id="preloader" class="preloader-overlay">
+       {% include "auto_car/components/html/preloader.html" %}
+    </div>
+
+    <article aria-labelledby="employees-heading" class="employee-page-content">
+        <header>
+            <h1 id="employees-heading">Сотрудники AutoCar</h1>
+        </header>
+
+        <div class="controls-group">
+            <button id="add-employee-btn" type="button" class="btn-primary">Добавить сотрудника</button>
+            <button id="reward-btn" type="button" class="btn-secondary" disabled>Премировать выбранных</button>
+        </div>
+
+
+        <div id="add-form-container">
+            <h3>Добавление нового сотрудника</h3>
+            <form id="add-employee-form">
+                <div class="form-group">
+                    <label for="new-name">ФИО:</label>
+                    <input type="text" id="new-name" required>
                 </div>
-                
-                <div class="contacts__body">
-                    {% for contact in contacts %}
-                    <div class="contacts__row">
-                        <div class="contacts__cell" data-label="Пользователь">
-                            {{ contact.user.user }}
-                        </div>
-                        <div class="contacts__cell" data-label="Фотография">
-                            <img src="{% static contact.pic.url %}" alt="Фотография {{ contact.user.user }}">
-                        </div>
-                        <div class="contacts__cell" data-label="Номер телефона">
-                            {{ contact.user.phone }}
-                        </div>
-                    </div>
-                    {% endfor %}
+                <div class="form-group">
+                    <label for="new-position">Должность:</label>
+                    <input type="text" id="new-position" required>
                 </div>
-            </div>
-        </section>
-    {% endif %}
+                <div class="form-group">
+                    <label for="new-photo-url">URL Фото (http(s)://.../*.php или *.html):</label>
+                    <input type="url" id="new-photo-url" required>
+                    <div id="url-validation-message" class="validation-message"></div>
+                </div>
+                <div class="form-group">
+                    <label for="new-phone">Телефон (+375 (XX) XXX-XX-XX или 80XX...):</label>
+                    <input type="tel" id="new-phone" required>
+                    <div id="phone-validation-message" class="validation-message"></div>
+                </div>
+                <div class="form-group">
+                    <label for="new-email">E-mail:</label>
+                    <input type="email" id="new-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="new-description">Описание работ:</label>
+                    <textarea id="new-description" required></textarea>
+                </div>
+                <button type="submit" id="submit-new-employee-btn" disabled class="btn-success">Добавить в таблицу</button>
+            </form>
+        </div>
+
+        <div class="filter-controls">
+            <label for="filter-text">Фильтрация:</label>
+            <input type="text" id="filter-text" placeholder="Введите текст для поиска...">
+            <button id="filter-btn" class="btn-default">Найти</button>
+        </div>
+
+        <div class="table-responsive">
+            <table class="employee-table">
+                <thead>
+                    <tr>
+                        <th class="col-checkbox"><input type="checkbox" id="select-all-checkbox"></th>
+                        <th data-column="name">ФИО <span class="sort-indicator"></span></th>
+                        <th data-column="photo">Фото</th>
+                        <th data-column="position">Должность <span class="sort-indicator"></span></th>
+                        <th data-column="phone">Телефон <span class="sort-indicator"></span></th>
+                        <th data-column="email">E-mail <span class="sort-indicator"></span></th>
+                        <th data-column="description">Описание <span class="sort-indicator"></span></th>
+                    </tr>
+                </thead>
+                <tbody id="employee-table-body">
+                </tbody>
+            </table>
+        </div>
+
+        <div class="pagination-controls">
+            <button id="prev-page-btn">Предыдущая</button>
+            <span id="page-info"></span>
+            <button id="next-page-btn">Следующая</button>
+        </div>
+
+        <div id="detailed-info-block" class="info-block info-details">
+            <h3>Детальная информация</h3>
+            <p id="info-content">Кликните на строку, чтобы увидеть детали.</p>
+        </div>
+
+        <div id="reward-message-block" class="info-block info-success"></div>
+    </article>
 </main>
+
+
+<style>
+main { padding: 1rem; max-width: 1200px; margin: 0 auto; }
+.employee-page-content { padding: 20px; }
+.controls-group, .filter-controls { margin-bottom: 1rem; display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap; }
+.filter-controls { margin-bottom: 20px; }
+.table-responsive { overflow-x: auto; }
+.employee-table { width: 100%; border-collapse: separate; border-spacing: 0; margin-bottom: 1rem; background: white; border-radius: 6px; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); overflow: hidden; }
+.employee-table th, .employee-table td { border-bottom: 1px solid #e1e5e9; padding: 0.75rem 0.5rem; text-align: left; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; transition: background-color 0.2s ease; font-size: 0.875rem; }
+.employee-table th { background-color: #f8f9fa; cursor: pointer; user-select: none; position: relative; font-weight: 600; color: #2d3748; border-bottom: 2px solid #e2e8f0; }
+.employee-table th.col-checkbox { width: 30px; cursor: default; }
+.employee-table th:hover { background-color: #edf2f7; }
+.employee-table th .sort-indicator { position: absolute; right: 0.5rem; top: 50%; transform: translateY(-50%); font-size: 0.75rem; color: #718096; }
+.employee-table tr:hover:not(.selected-row) { background-color: #f7fafc; }
+.employee-table .selected-row { background-color: #ebf8ff !important; cursor: pointer; box-shadow: inset 0 0 0 1px #4299e1; }
+.table-image { width: 2.5rem; height: 2.5rem; object-fit: cover; border-radius: 4px; border: 1px solid #e2e8f0; }
+.employee-table tr:last-child td { border-bottom: none; }
+#add-form-container { border: 1px solid #e2e8f0; border-radius: 6px; padding: 1rem; margin-bottom: 1rem; display: none; background: #f8f9fa; }
+.form-group { margin-bottom: 0.75rem; }
+.form-group label { display: block; margin-bottom: 0.25rem; font-weight: 600; color: #2d3748; font-size: 0.8rem; }
+.form-group input, .form-group textarea, .filter-controls input { width: 100%; padding: 0.5rem 0.75rem; border: 1px solid #cbd5e0; border-radius: 4px; box-sizing: border-box; font-size: 0.875rem; transition: all 0.2s ease; background: white; }
+.form-group input:focus, .form-group textarea:focus, .filter-controls input:focus { outline: none; border-color: #4299e1; box-shadow: 0 0 0 2px rgba(66, 153, 225, 0.1); }
+#filter-text { width: auto; flex: 1; min-width: 180px; margin: 0; }
+button { padding: 0.5rem 1rem; border: none; border-radius: 4px; font-weight: 600; font-size: 0.8rem; cursor: pointer; transition: all 0.2s ease; }
+button:hover:not(:disabled) { filter: brightness(0.9); }
+button:disabled { opacity: 0.6; cursor: not-allowed; }
+.btn-primary { background: #48bb78; color: white; }
+.btn-secondary { background: #4299e1; color: white; }
+.btn-secondary:disabled { background: #a0aec0; }
+.btn-success { background: #38a169; color: white; }
+.btn-default { background: #e2e8f0; color: #2d3748; }
+.btn-default:hover:not(:disabled) { background: #cbd5e0; }
+.invalid-input { border: 1px solid #e53e3e !important; background-color: #fed7d7 !important; }
+.validation-message { margin-top: 0.25rem; font-size: 0.7rem; font-weight: 500; }
+.validation-error { color: #e53e3e; }
+.validation-success { color: #38a169; }
+.info-block { border-radius: 6px; padding: 1rem; margin-top: 1rem; display: none; font-size: 0.875rem; }
+.info-details { border: 1px solid #4299e1; background: #ebf8ff; }
+.info-details img { max-width: 150px; height: auto; margin-top: 1rem; display: block; border-radius: 4px; }
+.info-success { border: 1px solid #48bb78; background-color: #f0fff4; }
+.info-success p { margin: 0.25rem 0; color: #2d3748; }
+.info-success strong { color: #2f855a; }
+.pagination-controls { text-align: center; margin-top: 1rem; display: flex; justify-content: center; align-items: center; gap: 0.25rem; }
+.pagination-controls button { margin: 0; padding: 0.4rem 0.8rem; cursor: pointer; border: 1px solid #cbd5e0; background-color: white; color: #4a5568; font-size: 0.8rem; }
+.pagination-controls button:hover:not(:disabled) { background-color: #edf2f7; border-color: #a0aec0; }
+
+#page-info { font-size: 0.8rem; color: #718096; margin: 0 0.75rem; }
+.preloader-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.95); z-index: 10000; display: none; justify-content: center; align-items: center; }
+.preloader-cart { width: 200px; margin: 0 auto; background: white; border-radius: 12px; padding: 1.5rem 1rem; box-sizing: border-box; text-align: center; border: 1px solid #e2e8f0; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); }
+.cart-anim { opacity: 0.18; transition: opacity 0.3s; }
+.cart-anim.handle { animation: cart-blink 2.2s infinite; animation-delay: 0s; }
+.cart-anim.body { animation: cart-blink 2.2s infinite; animation-delay: 0.3s; }
+.cart-anim.wheel-left { animation: cart-blink 2.2s infinite; animation-delay: 0.6s; }
+.cart-anim.wheel-right { animation: cart-blink 2.2s infinite; animation-delay: 0.9s; }
+.cart-anim.all { opacity: 0; animation: cart-blink-all 2.2s infinite; animation-delay: 1.2s; }
+@keyframes cart-blink { 0%, 100% { opacity: 0.20; } 60% { opacity: 1; } }
+@keyframes cart-blink-all { 0%, 80% { opacity: 0; } 90% { opacity: 0.5; } 100% { opacity: 0; } }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const ITEMS_PER_PAGE = 3;
+    let employeesData = [];
+    let currentPage = 1;
+    let sortColumn = 'name';
+    let sortDirection = 'asc';
+    let currentFilter = '';
+    let filteredData = [];
+    
+    let selectedEmployeeIds = new Set();
+
+    const preloader = document.getElementById('preloader');
+    const tableBody = document.getElementById('employee-table-body');
+    const rewardBtn = document.getElementById('reward-btn');
+    const selectAllCheckbox = document.getElementById('select-all-checkbox');
+    const addFormContainer = document.getElementById('add-form-container');
+    const addForm = document.getElementById('add-employee-form');
+    const submitNewBtn = document.getElementById('submit-new-employee-btn');
+    const rewardMessageBlock = document.getElementById('reward-message-block');
+    const detailedInfoBlock = document.getElementById('detailed-info-block');
+
+    function isValidUrl(url) {
+        return /^(https?:\/\/.+?)(\.php|\.html\.png)$/i.test(url);
+    }
+
+    function isValidPhone(phone) {
+        return /^(?:(\+375|8)\s?\(?\d{2,3}\)?\s?\d{3}[\s\-]?\d{2}[\s\-]?\d{2})$/.test(phone);
+    }
+
+    function applyValidation(input, isValid, msgEl, success, error) {
+        if (isValid) {
+            input.classList.remove('invalid-input');
+            msgEl.classList.remove('validation-error');
+            msgEl.classList.add('validation-success');
+            msgEl.textContent = success;
+        } else {
+            input.classList.add('invalid-input');
+            msgEl.classList.remove('validation-success');
+            msgEl.classList.add('validation-error');
+            msgEl.textContent = error;
+        }
+        checkFormValidity();
+    }
+
+    function checkFormValidity() {
+        const name = document.getElementById('new-name').value.trim();
+        const position = document.getElementById('new-position').value.trim();
+        const url = document.getElementById('new-photo-url').value.trim();
+        const phone = document.getElementById('new-phone').value.trim();
+        const email = document.getElementById('new-email').value.trim();
+        const desc = document.getElementById('new-description').value.trim();
+
+        const allFilled = name && position && email && desc;
+        const validCustom = isValidUrl(url) && isValidPhone(phone);
+
+        submitNewBtn.disabled = !(allFilled && validCustom);
+    }
+
+    function togglePreloader(show) {
+        preloader.style.display = show ? 'flex' : 'none';
+    }
+
+    async function loadData() {
+        togglePreloader(true);
+        try {
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            const response = await fetch('/employees/');
+            const data = await response.json();
+            employeesData = data;
+
+
+        } catch (error) {
+            console.error("Ошибка загрузки:", error);
+            employeesData = [];
+        } finally {
+            filteredData = employeesData;
+            sortData(sortColumn);
+            togglePreloader(false);
+        }
+    }
+
+    function sortData(column) {
+        if (sortColumn === column) {
+            sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
+        } else {
+            sortColumn = column;
+            sortDirection = 'asc';
+        }
+
+        document.querySelectorAll('.sort-indicator').forEach(s => s.textContent = '');
+        const indicator = document.querySelector(`th[data-column="${column}"] .sort-indicator`);
+        if (indicator) indicator.textContent = sortDirection === 'asc' ? ' ▲' : ' ▼';
+
+        filteredData.sort((a, b) => {
+            let valA = (a[column] || '').toString().toLowerCase();
+            let valB = (b[column] || '').toString().toLowerCase();
+            if (valA < valB) return sortDirection === 'asc' ? -1 : 1;
+            if (valA > valB) return sortDirection === 'asc' ? 1 : -1;
+            return 0;
+        });
+
+        currentPage = 1;
+        renderTable();
+    }
+
+    function filterData(text) {
+        currentFilter = text.toLowerCase().trim();
+        if (!currentFilter) {
+            filteredData = employeesData;
+        } else {
+            filteredData = employeesData.filter(emp =>
+                Object.values(emp).some(val => String(val).toLowerCase().includes(currentFilter))
+            );
+        }
+        currentPage = 1;
+        renderTable();
+    }
+
+    function renderTable() {
+        const total = filteredData.length;
+        const totalPages = Math.ceil(total / ITEMS_PER_PAGE);
+        currentPage = Math.max(1, Math.min(currentPage, totalPages || 1));
+
+        const start = (currentPage - 1) * ITEMS_PER_PAGE;
+        const end = start + ITEMS_PER_PAGE;
+        const pageData = filteredData.slice(start, end);
+
+        let html = '';
+        if (total === 0) {
+            html = '<tr><td colspan="7" style="text-align: center;">Нет данных</td></tr>';
+        } else {
+            pageData.forEach(emp => {
+                const isChecked = selectedEmployeeIds.has(emp.id);
+                
+                html += `
+                    <tr data-id="${emp.id}" class="employee-row">
+                        <td><input type="checkbox" class="employee-checkbox" data-id="${emp.id}" ${isChecked ? 'checked' : ''}></td>
+                        <td>${emp.name}</td>
+                        <td><img src="${emp.photo_url}" alt="${emp.name}" class="table-image"></td>
+                        <td>${emp.position}</td>
+                        <td>${emp.phone}</td>
+                        <td>${emp.email}</td>
+                        <td title="${emp.description}">${emp.description.substring(0, 50)}...</td>
+                    </tr>
+                `;
+            });
+        }
+        tableBody.innerHTML = html;
+
+        document.getElementById('page-info').textContent = `Страница ${currentPage} из ${totalPages}. Всего: ${total}`;
+        document.getElementById('prev-page-btn').disabled = currentPage === 1;
+        document.getElementById('next-page-btn').disabled = currentPage === totalPages || totalPages === 0;
+
+        addRowListeners();
+        addCheckboxListeners();
+        updateRewardButton();
+    }
+
+    function updateRewardButton() {
+        const allCheckboxes = document.querySelectorAll('.employee-checkbox');
+        const checkedCount = selectedEmployeeIds.size;
+
+        rewardBtn.disabled = checkedCount === 0;
+
+        const currentPageIds = [...allCheckboxes].map(cb => parseInt(cb.dataset.id));
+        const allCurrentPageSelected = currentPageIds.every(id => selectedEmployeeIds.has(id));
+        
+        selectAllCheckbox.checked = allCurrentPageSelected && currentPageIds.length > 0;
+    }
+
+    function addRowListeners() {
+        document.querySelectorAll('.employee-row').forEach(row => {
+            row.addEventListener('click', (e) => {
+                if (e.target.type === 'checkbox' || e.target.tagName === 'IMG') return;
+
+
+                document.querySelectorAll('.employee-row').forEach(r => r.classList.remove('selected-row'));
+                row.classList.add('selected-row');
+
+                const id = parseInt(row.dataset.id);
+                const emp = employeesData.find(e => e.id === id);
+
+                if (emp) {
+                    document.getElementById('info-content').innerHTML = `
+                        <p><strong>ФИО:</strong> ${emp.name}</p>
+                        <p><strong>Должность:</strong> ${emp.position}</p>
+                        <p><strong>Телефон:</strong> ${emp.phone}</p>
+                        <p><strong>E-mail:</strong> ${emp.email}</p>
+                        <p><strong>Описание:</strong> ${emp.description}</p>
+                        <img src="${emp.photo_url}" alt="${emp.name}">
+                    `;
+                    detailedInfoBlock.style.display = 'block';
+                }
+                rewardMessageBlock.style.display = 'none';
+            });
+        });
+    }
+
+    function addCheckboxListeners() {
+        document.querySelectorAll('.employee-checkbox').forEach(checkbox => {
+            checkbox.addEventListener('change', (e) => {
+                const id = parseInt(e.target.dataset.id);
+                
+                if (e.target.checked) {
+                    selectedEmployeeIds.add(id);
+                } else {
+                    selectedEmployeeIds.delete(id);
+                }
+                
+                updateRewardButton();
+            });
+        });
+    }
+
+    document.getElementById('add-employee-btn').addEventListener('click', () => {
+        const isVisible = addFormContainer.style.display === 'block';
+        addFormContainer.style.display = isVisible ? 'none' : 'block';
+        if (!isVisible) {
+            addForm.reset();
+            document.getElementById('new-photo-url').classList.remove('invalid-input');
+            document.getElementById('new-phone').classList.remove('invalid-input');
+            document.getElementById('url-validation-message').textContent = '';
+            document.getElementById('phone-validation-message').textContent = '';
+            checkFormValidity();
+        }
+    });
+
+    document.getElementById('new-photo-url').addEventListener('input', (e) => {
+        applyValidation(e.target, isValidUrl(e.target.value.trim()),
+            document.getElementById('url-validation-message'),
+            'URL валиден', 'Невалидный URL'
+        );
+    });
+
+    document.getElementById('new-phone').addEventListener('input', (e) => {
+        applyValidation(e.target, isValidPhone(e.target.value.trim()),
+            document.getElementById('phone-validation-message'),
+            'Телефон валиден', 'Невалидный телефон'
+        );
+    });
+
+    ['new-name', 'new-position', 'new-email', 'new-description'].forEach(id => {
+        document.getElementById(id).addEventListener('input', checkFormValidity);
+    });
+
+    addForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        togglePreloader(true);
+        
+        setTimeout(() => {
+            const newId = employeesData.length > 0 ? Math.max(...employeesData.map(e => e.id)) + 1 : 1;
+            const newEmp = {
+                id: newId,
+                name: document.getElementById('new-name').value.trim(),
+                position: document.getElementById('new-position').value.trim(),
+                photo: document.getElementById('new-photo-url').value.trim(),
+                phone: document.getElementById('new-phone').value.trim(),
+                email: document.getElementById('new-email').value.trim(),
+                description: document.getElementById('new-description').value.trim()
+            };
+
+            employeesData.push(newEmp);
+            filterData(currentFilter);
+            addForm.reset();
+            addFormContainer.style.display = 'none';
+            togglePreloader(false);
+            alert(`Сотрудник ${newEmp.name} добавлен!`);
+        }, 500);
+    });
+
+
+    rewardBtn.addEventListener('click', () => {
+        const names = [];
+        selectedEmployeeIds.forEach(id => {
+            const emp = employeesData.find(e => e.id === id);
+            if (emp) names.push(emp.name.split(' ')[0]);
+        });
+
+        if (names.length > 0) {
+            rewardMessageBlock.innerHTML = `
+                <p>Премируются: <strong>${names.join(', ')}</strong></p>
+                <p>За отличную работу!</p>
+            `;
+            rewardMessageBlock.style.display = 'block';
+            
+            selectedEmployeeIds.clear();
+            renderTable();
+        }
+    });
+
+    document.querySelectorAll('th[data-column]').forEach(th => {
+        th.addEventListener('click', () => sortData(th.dataset.column));
+    });
+
+    selectAllCheckbox.addEventListener('change', () => {
+        const isChecked = selectAllCheckbox.checked;
+        const currentPageCheckboxes = document.querySelectorAll('.employee-checkbox');
+        
+        currentPageCheckboxes.forEach(cb => {
+            const id = parseInt(cb.dataset.id);
+            cb.checked = isChecked;
+            
+            if (isChecked) {
+                selectedEmployeeIds.add(id);
+            } else {
+                selectedEmployeeIds.delete(id);
+            }
+        });
+        
+        updateRewardButton();
+    });
+
+    document.getElementById('prev-page-btn').addEventListener('click', () => {
+        if (currentPage > 1) {
+            currentPage--;
+            renderTable();
+        }
+    });
+
+    document.getElementById('next-page-btn').addEventListener('click', () => {
+        const totalPages = Math.ceil(filteredData.length / ITEMS_PER_PAGE);
+        if (currentPage < totalPages) {
+            currentPage++;
+            renderTable();
+        }
+    });
+
+    document.getElementById('filter-btn').addEventListener('click', () => {
+        filterData(document.getElementById('filter-text').value);
+    });
+
+    document.getElementById('filter-text').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') filterData(e.target.value);
+    });
+
+    loadData();
+});
+</script>
 {% endblock %}
