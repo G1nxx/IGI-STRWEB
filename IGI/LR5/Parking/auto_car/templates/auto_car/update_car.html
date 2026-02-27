@@ -1,0 +1,47 @@
+{% extends "auto_car/base.html" %}
+
+{% block content %}
+<main class="main container">
+    <header class="page-header">
+        <h1 class="page-header__title">Обновление информации об автомобиле</h1>
+    </header>
+    
+    <form class="form" method="post" action="{% url 'auto_car:client_dashboard/update_car/update' car_id %}">
+        {% csrf_token %}
+        
+        {% if error %}
+            <div class="message message--error" role="alert" aria-live="polite">
+                <p class="message__text">{{ error }}</p>
+            </div>
+        {% endif %}
+        
+        <fieldset class="form__fieldset">
+            <legend class="form__legend">Информация об автомобиле</legend>
+            
+            <div class="form-group">
+                <label class="form-group__label" for="brand">Марка:</label>
+                <input class="form-group__input" id="brand" name="brand" type="text" placeholder="{{ data.brand }}" required aria-required="true">
+            </div>
+            
+            <div class="form-group">
+                <label class="form-group__label" for="model">Модель:</label>
+                <input class="form-group__input" id="model" name="model" type="text" placeholder="{{ data.model }}" required aria-required="true">
+            </div>
+            
+            <div class="form-group">
+                <label class="form-group__label" for="number">Номер:</label>
+                <input class="form-group__input" id="number" name="number" type="text" placeholder="{{ data.number }}" required aria-required="true">
+            </div>
+            
+            <div class="form-group">
+                <label class="form-group__label" for="type">Тип:</label>
+                <input class="form-group__input" id="type" name="type" type="text" placeholder="{{ data.type }}" required aria-required="true">
+            </div>
+        </fieldset>
+        
+        <div class="form__actions">
+            <button class="button button--primary" type="submit">Обновить</button>
+        </div>
+    </form>
+</main>
+{% endblock %}

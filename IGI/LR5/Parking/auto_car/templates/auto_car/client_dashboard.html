@@ -1,0 +1,71 @@
+{% extends "auto_car/base.html" %}
+
+{% block content %}
+<main class="main container">
+    <header class="page-header">
+        <h1 class="page-header__title">Мои автомобили</h1>
+    </header>
+
+    <div class="page-actions">
+        <form method="post" action="{% url 'auto_car:client_dashboard/register_car' %}" class="form form--inline">
+            {% csrf_token %}
+            <button type="submit" class="button button--primary">Добавить автомобиль</button>
+        </form>
+    </div>
+
+    <section class="cars-grid">
+        {% for car in cars %}
+            <article class="car-card">
+                <div class="car-card__header">
+                    <h3 class="car-card__title">{{ car.brand }} {{ car.model }}</h3>
+                </div>
+
+                <div class="car-card__body">
+                    <p class="car-card__number"><strong>Номер:</strong> {{ car.number }}</p>
+                    <p class="car-card__status">
+                        <strong>Статус:</strong>
+                        {% if car.is_parked %}
+                            <span class="status status--parked">Припаркован</span>
+                        {% else %}
+                            <span class="status status--not-parked">Не припаркован</span>
+                        {% endif %}
+                    </p>
+                </div>
+
+                <div class="car-card__footer">
+                    {% if not car.is_parked %}
+                        <div class="car-card__actions car-card__actions--management">
+                            <form method="post" action="{% url 'auto_car:client_dashboard/update_car' car.id %}" class="form form--inline">
+                                {% csrf_token %}
+                                <button type="submit" class="button button--secondary">Редактировать</button>
+                            </form>
+                            <form method="post" action="{% url 'auto_car:client_dashboard/delete_car' car.id %}" class="form form--inline">
+                                {% csrf_token %}
+                                <button type="submit" class="button button--danger">Удалить</button>
+                            </form>
+                        </div>
+                    {% endif %}
+
+                    <div class="car-card__actions">
+                        {% if not car.is_parked %}
+                            <form method="post" action="{% url 'auto_car:client_dashboard/park_car' car.id %}" class="form">
+                                {% csrf_token %}
+                                <button type="submit" class="button button--primary">Припарковать</button>
+                            </form>
+                        {% else %}
+                            <form method="post" action="{% url 'auto_car:client_dashboard/unpark_car' car.id %}" class="form">
+                                {% csrf_token %}
+                                <button type="submit" class="button button--warning">Снять с парковки</button>
+                            </form>
+                        {% endif %}
+                    </div>
+                </div>
+            </article>
+        {% empty %}
+            <div class="cars-empty">
+                <p class="cars-empty__text">У вас пока нет зарегистрированных автомобилей.</p>
+            </div>
+        {% endfor %}
+    </section>
+</main>
+{% endblock %}

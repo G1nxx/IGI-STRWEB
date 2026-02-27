@@ -1,0 +1,75 @@
+.anim-container {
+    position: relative;
+    z-index: 999;
+}
+
+div[class|="ring"] {
+    background-color: white;
+    position: absolute;
+}
+
+div[class|="ring-up"] {
+    width: 45px;
+    height: 100px;
+    animation: rotate-outer 2s linear infinite;
+}
+
+.ring-up-left {
+    background-color: transparent;
+    border: 10px solid red;
+    border-right: none;
+    border-bottom: none;
+    border-bottom-left-radius: 50px;
+    border-top-left-radius: 50px;
+    border-bottom-right-radius: 10px;
+    border-top-right-radius: 10px;
+    transform-origin: right center;
+}
+
+.ring-up-right {
+    background-color: transparent;
+    border: 10px solid red;
+    border-left: none;
+    border-top: none;
+    inset-inline-start: 55px;
+    inset-block-start: 0px;
+    border-bottom-right-radius: 50px;
+    border-top-right-radius: 50px;
+    border-bottom-left-radius: 10px;
+    border-top-left-radius: 10px;
+    transform-origin: left center;
+}
+
+div[class|="ring-down"] {
+    border: blue;
+    border: 8px solid blue;
+    border-right: none;
+    border-left: 5px solid blue;
+    width: 20px;
+    height: 40px;
+    opacity: 0.5;
+    inset-inline-start: 20px; 
+    inset-block-start: 28px;
+    border-end-start-radius: 20px;
+    border-start-start-radius: 20px;
+    animation: rotate-inner 1.5s linear infinite reverse;
+    transform-origin: 125% 50% ;
+}
+
+@keyframes rotate-outer {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes rotate-inner {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}

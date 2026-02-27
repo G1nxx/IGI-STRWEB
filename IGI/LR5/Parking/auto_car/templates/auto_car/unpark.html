@@ -1,0 +1,17 @@
+{% extends "auto_car/base.html" %}
+
+{% block content %}
+<main class="main container">
+    {% if ok %}
+        <article class="message message--success" aria-labelledby="success-heading">
+            <h1 id="success-heading" class="message__title">Автомобиль снят с парковки успешно</h1>
+            <p class="message__text">Ваш автомобиль был успешно снят с парковки. Хорошей дороги!</p>
+        </article>
+    {% else %}
+        <article class="message message--error" aria-labelledby="error-heading">
+            <h1 id="error-heading" class="message__title">Автомобиль не был снят с парковки</h1>
+            <p class="message__text">При попытке снять автомобиль с парковки произошла ошибка. Пожалуйста, попробуйте снова или обратитесь в службу поддержки.</p>
+        </article>
+    {% endif %}
+</main>
+{% endblock %}

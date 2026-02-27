@@ -1,0 +1,162 @@
+{% extends "auto_car/base.html" %}
+{% load static %}
+
+{% block content %}
+<main class="main container">
+    <header class="page-header">
+        <h1 class="page-header__title">Статистика посещений</h1>
+        <p class="page-header__subtitle">
+            Среднее время на сайте: 
+            <span class="highlight">{{ avg_time }}</span>
+        </p>
+    </header>
+
+    <section class="statistics section">
+        <header class="section-header">
+            <h2 class="section-header__title">Дневная активность</h2>
+        </header>
+
+        <div class="statistics__table-wrapper">
+            <table class="table table--striped">
+                <thead>
+                    <tr>
+                        <th>Дата</th>
+                        <th>Уникальные пользователи</th>
+                        <th>Сессии</th>
+                        <th>Среднее время</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for day in daily_stats %}
+                    <tr>
+                        <td>{{ day.date }}</td>
+                        <td>{{ day.users }}</td>
+                        <td>{{ day.sessions }}</td>
+                        <td>{{ day.avg_duration }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" class="table__empty">Нет данных за выбранный период.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+    
+    <section class="users-section section">
+        <header class="section-header">
+            <h2 class="section-header__title">Пользователи</h2>
+        </header>
+
+        <div class="users-grid">
+            {% for client in clients %}
+            <div class="user-card card">
+                <div class="user-card__content">
+                    <h3 class="user-card__name">{{ client.user }}</h3>
+                    <ul class="user-card__details">
+                        <li><strong>Телефон:</strong> {{ client.phone }}</li>
+                        <li><strong>Дата рождения:</strong> {{ client.birthday_date }}</li>
+                    </ul>
+                </div>
+            </div>
+            {% empty %}
+            <div class="users-empty">
+                <p class="users-empty__text">Пока нет зарегистрированных пользователей.</p>
+            </div>
+            {% endfor %}
+        </div>
+
+        <figure class="statistics-image">
+            <img src="{% static 'images/statistic.png' %}" alt="График статистики" class="statistics-image__img" style="max-width: 650px;">
+            <figcaption class="statistics-image__caption">Общая динамика активности</figcaption>
+        </figure>
+    </section>
+</main>
+
+<style>
+.statistics__table-wrapper {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.table {
+    border-collapse: collapse;
+    width: 90%;
+    background-color: #fafafa;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.table thead th {
+    background-color: #007acc;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 10px;
+    border: 1px solid #aaa;
+}
+
+.table td {
+    border: 1px solid #aaa;
+    padding: 10px;
+    vertical-align: middle;
+    color: #333;
+}
+
+.table--striped tbody tr:nth-child(odd) {
+    background-color: #f2f8ff;
+}
+
+.table--striped tbody tr:hover {
+    background-color: #d8ecff;
+    transition: background-color 0.2s ease;
+}
+
+.table__empty {
+    text-align: center;
+    font-style: italic;
+    color: #777;
+    background-color: #fff8dc;
+}
+
+@media (max-width: 768px) {
+    .table {
+        width: 100%;
+        font-size: 0.9rem;
+    }
+
+    .table thead {
+        display: none;
+    }
+
+    .table, .table tbody, .table tr, .table td {
+        display: block;
+        width: 100%;
+    }
+
+    .table td {
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+        border: none;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 10px;
+        width: 45%;
+        text-align: left;
+        font-weight: bold;
+        color: #555;
+    }
+}
+
+</style>
+{% endblock %}

@@ -1,0 +1,128 @@
+{% extends "auto_car/base.html" %}
+
+{% load static %}
+{% block content %}
+<main class="container about">
+    <header class="about__header">
+        <section class="about__logo">
+            <img src="../../auto_car/static/images/logo.png" alt="Логотип компании">
+        </section>
+        {% if about %}
+            <section class="about__info" aria-labelledby="about-heading">
+                <h2 id="about-heading">О нас</h2>
+                <div class="info">
+                    <p>{{ about.info }}</p>
+                </div>
+            </section>
+        {% endif %}
+    </header>
+
+    <section class="about__video" aria-labelledby="video-heading">
+        <h2 id="video-heading">Our video</h2>
+        <div class="video-wrapper">
+            <video controls>
+                <source src="../../auto_car/static/videos/PixVerse_V5_Image_Text_720P_машина_заезжает_на.mp4" type="video/mp4">
+                Ваш браузер не поддерживает видео тег.
+            </video>
+        </div>
+    </section>
+
+    {% if about %}
+        <section class="about__history">
+            {% for hy in about.year_historys %}
+                <article class="history__card">
+                    <h3 class="history__year">Год: {{ hy.year }}</h3>
+                    <p class="history__text">{{ hy.text }}</p>
+                </article>
+            {% endfor %}
+        </section>
+    {% endif %}
+
+    {% if last %}
+        <article class="about__news" aria-labelledby="news-heading">
+            <header>
+                <h3 id="news-heading">{{ last.title }}</h3>
+            </header>
+            <p>{{ last.text|truncatewords:50 }}</p>
+            <footer>
+                <time datetime="{{ last.date|date:'Y-m-d' }}">{{ last.date }}</time>
+            </footer>
+        </article>
+    {% endif %}
+
+    <section class="about__certificate">
+    <div class="certificate-wrapper">
+        <img src="../../auto_car/static/images/sertificate.png" alt="Сертификат не найден">
+    </div>
+</section>
+
+    <section class="about__requisites" aria-labelledby="requisites-heading">
+        <div class="requisites">
+            <div>
+                <h3>Юридическая информация</h3>
+                <p><strong>Название:</strong> Auto Car</p>
+                <p><strong>ИНН:</strong> 1234567890</p>
+                <p><strong>КПП:</strong> 123456789</p>
+                <p><strong>ОГРН:</strong> 1234567890123</p>
+            </div>
+            <div>
+                <h3>Банковские реквизиты</h3>
+                <p><strong>Банк:</strong> TBANK</p>
+                <p><strong>Р/с:</strong> 40702810123456789012</p>
+                <p><strong>К/с:</strong> 30101234567890123456</p>
+                <p><strong>БИК:</strong> 044525225</p>
+            </div>
+            <div>
+                <h3>Контакты</h3>
+                <p><strong>Адрес:</strong> г. Минск, ул. Ноя, д. 29</p>
+                <p><strong>Телефон:</strong> +375 (33) 333-33-33</p>
+                <p><strong>Email:</strong> auto_car_comercial@gmail.com</p>
+            </div>
+        </div>
+    </section>
+
+    <script src="{% static 'js/verification.js' %}"></script>
+</main>
+
+<style>
+.certificate-wrapper {
+    max-width: 40%;
+    position: relative;
+    display: inline-block;
+}
+
+.certificate-wrapper::before {
+    content: '';
+    position: absolute;
+    top: -15px;
+    left: -15px;
+    right: -15px;
+    bottom: -15px;
+    border: 40px solid;
+    border-image: url("{% static 'images/border1.png' %}") 70 stretch;
+    pointer-events: none;
+    z-index: 3;
+}
+
+.certificate-wrapper::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border: 40px solid;
+    border-image: url("{% static 'images/border2.png' %}") 70 round;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.certificate-wrapper img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    position: relative;
+    z-index: 1;
+}
+</style>
+{% endblock %}

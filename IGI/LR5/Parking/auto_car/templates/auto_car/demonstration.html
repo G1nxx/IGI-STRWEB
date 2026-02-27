@@ -1,0 +1,1019 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <head> 
+        <title>Страница демонстрации</title>
+        
+<style>
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0 220px 40px 20px;
+            background-color: #fdfdfd;
+            color: #333;
+        }
+
+        h1, h2, h3 {
+            color: #222;
+            margin-top: 1em;
+        }
+
+        a {
+            color: #007acc;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+
+        aside {
+            position: fixed;
+            top: 80px;
+            right: 0;
+            width: 200px;
+            height: 80%;
+            overflow-y: auto;
+            background-color: #f0f0f0;
+            border-left: 1px solid #ccc;
+            padding: 10px;
+            box-sizing: border-box;
+            font-size: 0.9rem;
+        }
+
+        aside h2 {
+            font-size: 1rem;
+            margin-top: 0;
+        }
+
+        aside ul {
+            list-style: none;
+            padding-left: 10px;
+        }
+
+        aside li {
+            margin: 5px 0;
+        }
+
+        pre, code, kbd {
+            background-color: #f7f7f7;
+            border-radius: 4px;
+            padding: 4px 6px;
+            font-family: Consolas, monospace;
+        }
+
+        figure {
+            text-align: center;
+        }
+
+        figcaption {
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        details {
+            background-color: #fafafa;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 8px;
+            margin: 10px 0;
+        }
+
+        audio, video {
+            display: block;
+            margin: 20px auto;
+        }
+
+        iframe {
+            display: block;
+            margin: 20px auto;
+            border: 2px solid #ccc;
+            width: 400px;
+            height: 200px;
+        }
+
+        form {
+            background-color: #f8f8f8;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 16px;
+            margin-top: 20px;
+            width: fit-content;
+        }
+
+        input, select, textarea, button {
+            font-size: 1rem;
+            margin-top: 6px;
+            padding: 4px 8px;
+        }
+
+        input[type$="submit"], input[type^="reset"], button {
+            background-color: #007acc;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            padding: 6px 12px;
+        }
+
+        input[type="submit"]:hover, input[type="reset"]:hover, button:hover {
+            background-color: #005fa3;
+        }
+
+        ol.custom-numbers {
+            padding-left: 20px;
+        }
+
+        ol.custom-numbers li {
+            margin-bottom: 5px;
+        }
+
+        hr {
+            margin: 15px 0;
+            border: none;
+            border-top: 3px solid #6c5ce7;
+            width: 200px;
+        }
+
+        /* Таблица не тронута, стили сохранены */
+        .table-container {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .report-title {
+            text-align: center;
+            font-size: 1.8em;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .sales-table {
+            border-collapse: collapse;
+            width: 90%;
+            background-color: #fafafa;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        .sales-table th, 
+        .sales-table td {
+            border: 1px solid #aaa;
+            padding: 10px;
+            vertical-align: middle; 
+        }
+
+        .sales-table thead th {
+            background-color: #007acc;
+            color: white;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .sales-table tfoot th, 
+        .sales-table tfoot td {
+            background-color: #e0e0e0;
+            font-weight: bold;
+        }
+
+        .sales-table tbody tr:nth-child(odd) {
+            background-color: #f2f8ff;
+        }
+
+        .sales-table tbody tr:hover {
+            background-color: #d8ecff;
+        }
+
+        .sales-table td:empty {
+            background-color: #fff8dc;
+        }
+
+        .sales-table caption {
+            caption-side: top;
+            text-align: left;
+            font-style: italic;
+            font-weight: 500;
+            padding: 8px;
+            color: #555;
+        }
+        .table-container {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .report-title {
+            text-align: center;
+            font-size: 1.8em;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .sales-table {
+            border-collapse: collapse; /* - double lines */
+            width: 90%;
+            background-color: #fafafa;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        .sales-table th, 
+        .sales-table td {
+            border: 1px solid #aaa;
+            padding: 10px;
+            vertical-align: middle; 
+        }
+
+        .sales-table thead th {
+            background-color: #007acc;
+            color: white;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .sales-table tfoot th, 
+        .sales-table tfoot td {
+            background-color: #e0e0e0;
+            font-weight: bold;
+        }
+
+        .sales-table tbody tr:nth-child(odd) {
+            background-color: #f2f8ff;
+        }
+
+        .sales-table tbody tr:hover {
+            background-color: #d8ecff;
+        }
+
+        .sales-table td:empty {
+            background-color: #fff8dc;
+        }
+
+        .sales-table caption {
+            caption-side: top;
+            text-align: left;
+            font-style: italic;
+            font-weight: 500;
+            padding: 8px;
+            color: #555;
+        }
+
+        aside {
+            position: fixed;
+            top: 400px;      
+            right: 0;       
+            width: 200px;  
+            height: 400px; 
+            overflow-y: auto;
+            background-color: #f0f0f0;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        .car-bg {
+            position: fixed;
+            top: 0;
+            right: 50%;
+            z-index: -10;          
+            pointer-events: none;  
+            width: 200px;
+        }
+        .park-bg {
+            position: fixed;
+            top: 700px;
+            left: 20%;
+            z-index: -11;          
+            pointer-events: none;  
+            width: 700px;
+        }
+
+        .car-bg img {
+            width: 100%;
+            opacity: 0.9;
+            transition: transform 0.1s ease-in-out;
+        }
+
+        </style>
+
+        <noscript>
+        </noscript>
+    </head>
+    <body> 
+        <aside>
+            <nav>
+                <h2>Навигация</h2>
+                <ul type="disc">
+                    <li type="disc" value="3"><a href="#downloads">Скачать песню</a></li>
+                    <li><a href="#code">Пример кода</a></li>
+                    <li><a href="#abbreviations">Сокращения</a></li>
+                    <li><a href="#definitions">Пример определения</a></li>
+                    <li><a href="#quotes">Цитата</a></li>
+                    <li><a href="#fixed-line">Фиксированный перенос</a></li>
+                    <li><a href="#fluid-line">Потенциальный перенос</a></li>
+                    <li><a href="#svg-circle">Круг (SVG)</a></li>
+                    <li><a href="#svg-triangle">Треугольник (SVG)</a></li>
+                    <li><a href="#hr-line">Линия</a></li>
+                    <li><a href="#sales-report">Отчет по продажам</a></li>
+                    <li><a href="#ol-list">Нумерованный список</a></li>
+                    <li><a href="#audio">Аудио</a></li>
+                    <li><a href="#iframe">Iframe</a></li>
+                    <li><a href="#end">Конец страницы</a></li>
+                    <li><a href="#form">Форма</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <script>
+            document.addEventListener("scroll", () => {
+                const maxMove = 700;
+                const scrollTop = window.scrollY;
+                const docHeight = document.body.scrollHeight - window.innerHeight;
+
+                const progress = scrollTop / docHeight;
+
+                const car = document.querySelector(".car-bg img");
+
+                car.style.transform =
+                    `translate(0, ${progress * maxMove}px)`;
+            });
+        </script>
+
+        <div class="car-bg">
+            <img src="{% static 'images/car.png' %}" alt="car">
+        </div>
+        <div class="park-bg">
+            <img src="{% static 'images/park.png' %}" alt="car">
+        </div>
+        
+        <div id="box"></div>
+
+        <style>
+            #box {
+                width: 40px;
+                height: 40px;
+                background: tomato;
+                position: relative;
+                left: 0;
+                transition: left 0.05s linear;
+            }
+        </style>
+
+        <script>
+            let x = 0;
+            let direction = 1;
+
+            function animate() {
+                const box = document.getElementById("box");
+                x += direction * 2;
+                if (x > 300) direction = -1;
+                if (x < 0) direction = 1;
+                box.style.left = x + "px";
+            }
+
+            setInterval(animate, 16);
+        </script>
+
+
+        <div class="container">
+
+            <h2>Employees Directory</h2>
+
+            <table id="employeesTable">
+                <thead>
+                    <tr>
+                        <th>Last Name</th>
+                        <th>Initials</th>
+                        <th>Phone Number</th>
+                        <th>Department</th>
+                    </tr>
+                </thead>
+                <tbody id="employeesList"></tbody>
+            </table>
+
+            <h3>Search Employee</h3>
+            <div class="form-group">
+                <label>Last Name:</label>
+                <input type="text" id="lastName" placeholder="Enter last name">
+            </div>
+
+            <div class="form-group">
+                <label>Initials:</label>
+                <input type="text" id="initials" placeholder="Enter initials">
+            </div>
+
+            <button onclick="EmployeeFull.search()">Search Phone</button>
+            <button onclick="EmployeeFull.clearForm()">Clear</button>
+
+            <div id="result" class="result"></div>
+
+            <h3>Add Employee</h3>
+
+            <div class="form-group">
+                <label>Last Name:</label>
+                <input type="text" id="add_last">
+            </div>
+
+            <div class="form-group">
+                <label>Initials:</label>
+                <input type="text" id="add_init">
+            </div>
+
+            <div class="form-group">
+                <label>Phone:</label>
+                <input type="text" id="add_phone">
+            </div>
+
+            <div class="form-group">
+                <label>Department:</label>
+                <input type="text" id="add_dep">
+            </div>
+
+            <button onclick="EmployeeFull.addFromForm()">Add Employee</button>
+
+        </div>
+
+    <script src="{% static 'js/employees.js' %}"></script>
+
+
+    
+
+        <!-- <script>
+            const employees = [
+                { lastName: "Smith", initials: "J.K.", phone: "+1-555-0101", department: "IT" },
+                { lastName: "Johnson", initials: "M.L.", phone: "+1-555-0102", department: "HR" },
+                { lastName: "Williams", initials: "R.T.", phone: "+1-555-0103", department: "Finance" },
+                { lastName: "Brown", initials: "S.A.", phone: "+1-555-0104", department: "Marketing" },
+                { lastName: "Jones", initials: "A.B.", phone: "+1-555-0105", department: "IT" },
+                { lastName: "Garcia", initials: "L.M.", phone: "+1-555-0106", department: "Sales" },
+                { lastName: "Miller", initials: "D.C.", phone: "+1-555-0107", department: "Operations" },
+                { lastName: "Davis", initials: "P.K.", phone: "+1-555-0108", department: "HR" },
+                { lastName: "Rodriguez", initials: "F.G.", phone: "+1-555-0109", department: "IT" },
+                { lastName: "Martinez", initials: "H.J.", phone: "+1-555-0110", department: "Finance" },
+                { lastName: "Wilson", initials: "T.J.", phone: "+1-555-0111", department: "Marketing" },
+                { lastName: "Anderson", initials: "K.L.", phone: "+1-555-0112", department: "Sales" },
+                { lastName: "Taylor", initials: "W.N.", phone: "+1-555-0113", department: "Operations" },
+                { lastName: "Thomas", initials: "E.P.", phone: "+1-555-0114", department: "IT" },
+                { lastName: "Jackson", initials: "O.R.", phone: "+1-555-0115", department: "HR" }
+            ];
+
+            function displayEmployees() {
+                const tbody = document.getElementById('employeesList');
+                tbody.innerHTML = employees.map(emp => `
+                    <tr>
+                        <td>${emp.lastName}</td>
+                        <td>${emp.initials}</td>
+                        <td>${emp.phone}</td>
+                    </tr>
+                `).join('');
+            }
+            
+            function findPhoneByEmployee(lastName, initials) {
+                const employee = employees.find(emp => 
+                    emp.lastName.toLowerCase() === lastName.toLowerCase() && 
+                    emp.initials.toLowerCase() === initials.toLowerCase()
+                );
+                
+                return employee ? employee : null;
+            }
+
+            
+            function searchEmployee() {
+                const lastName = document.getElementById('lastName').value.trim();
+                const initials = document.getElementById('initials').value.trim();
+                const resultDiv = document.getElementById('result');
+
+                if (!lastName || !initials) {
+                    showResult('Please enter both last name and initials.', 'error');
+                    return;
+                }
+
+                const employee = findPhoneByEmployee(lastName, initials);
+                
+                if (employee) {
+                    showResult(`<strong>Found:</strong> ${employee.lastName} ${employee.initials}<br>
+                            <strong>Phone:</strong> ${employee.phone}<br>
+                            <strong>Department:</strong> ${employee.department}`, 'success');
+                } else {
+                    showResult(`Employee not found: ${lastName} ${initials}<br>
+                            Please check the spelling and try again.`, 'error');
+                }
+            }
+
+            function showResult(message, type) {
+                const resultDiv = document.getElementById('result');
+                resultDiv.innerHTML = message;
+                resultDiv.className = `result ${type}`;
+                resultDiv.style.display = 'block';
+            }
+
+            function clearForm() {
+                document.getElementById('lastName').value = '';
+                document.getElementById('initials').value = '';
+                document.getElementById('result').style.display = 'none';
+            }
+
+            function fillExample(lastName, initials) {
+                document.getElementById('lastName').value = lastName;
+                document.getElementById('initials').value = initials;
+                document.getElementById('result').style.display = 'none';
+            }
+
+            function searchByLastNameOnly(lastName) {
+                return employees.filter(emp => 
+                    emp.lastName.toLowerCase().includes(lastName.toLowerCase())
+                );
+            }
+
+            function searchByDepartment(department) {
+                return employees.filter(emp => 
+                    emp.department.toLowerCase() === department.toLowerCase()
+                );
+            }
+
+            displayEmployees();
+
+            document.addEventListener('keypress', function(event) {
+                if (event.key === 'Enter') {
+                    searchEmployee();
+                }
+            });
+        </script> -->
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <canvas id="expChart"></canvas>
+
+        <script>
+        let eps = 0.01;
+
+        function My_factorial(n) {
+            let res = 1;
+            while (n) {
+                res *= n;
+                n -= 1;
+            }
+            return res;
+        }
+
+        function Macloren_exp(x, eps) {
+            let n = 0;
+            let Fx = 0;
+            let MATH_F = Math.exp(x);
+            while (eps < Math.abs(MATH_F - Fx)) {
+                Fx += Math.pow(x, n) / My_factorial(n);
+                n += 1;
+                if(n > 100) break;
+            }
+            return Fx;
+        }
+
+        let xValues = [];
+        let maclorenValues = [];
+        let mathValues = [];
+
+        let startX = -2;
+        let endX = 2;
+        let step = 0.1;
+
+        for(let x = startX; x <= endX; x += step) {
+            x = Number(x.toFixed(2));
+            xValues.push(x);
+            maclorenValues.push(Macloren_exp(x, eps));
+            mathValues.push(Math.exp(x));
+        }
+
+        const data = {
+            labels: xValues,
+            datasets: [
+                {
+                    label: 'exp(x)',
+                    data: maclorenValues,
+                    borderColor: 'red',
+                    fill: false,
+                    tension: 0.3
+                },
+                {
+                    label: 'Math.exp(x)',
+                    data: mathValues,
+                    borderColor: 'blue',
+                    fill: false,
+                    tension: 0.3
+                }
+            ]
+        };
+
+        const config = {
+            type: 'line',
+            data: data,
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    },
+                    title: {
+                        display: true,
+                        text: 'Сравнение exp(x) и разложения в ряд Маклорена'
+                    },
+                    tooltip: {
+                        enabled: true
+                    }
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'x'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'y'
+                        }
+                    }
+                },
+                animation: {
+                    duration: 3000,
+                    delay: (context) => {
+                        const datasetIndex = context.datasetIndex;
+                        const pointIndex = context.dataIndex;
+
+                        if(datasetIndex === 0) return pointIndex * 20;  
+                        if(datasetIndex === 1) return pointIndex * 0;  
+                        return 0;
+                    },
+                    easing: 'easeOutQuart'
+                }
+            }
+        };
+
+        const ctx = document.getElementById('expChart').getContext('2d');
+        const expChart = new Chart(ctx, config);
+        </script>
+
+
+
+        <label>
+            <input type="checkbox" id="addDateToggle"> Добавить поле даты
+        </label>
+
+        <div id="container"></div>
+
+        <script>
+        window.onload = () => {
+            const saved = JSON.parse(localStorage.getItem("dateItems") || "[]");
+            saved.forEach(cfg => createItem(cfg));
+        };
+
+        document.getElementById("addDateToggle").addEventListener("change", function () {
+            if (this.checked) {
+                createItem();
+                this.checked = false;
+            }
+        });
+
+        function createItem(config = null) {
+            const id = Date.now();
+
+            const wrapper = document.createElement("div");
+            wrapper.className = "item";
+            wrapper.dataset.id = id;
+
+            wrapper.innerHTML = `
+                <input type="date" class="date-field"><br><br>
+
+                title: <input type="text" class="attr-title"><br>
+                min: <input type="date" class="attr-min"><br>
+                max: <input type="date" class="attr-max"><br>
+                value: <input type="date" class="attr-value"><br>
+
+                <label><input type="checkbox" class="attr-required"> required</label><br>
+                <label><input type="checkbox" class="attr-readonly"> readonly</label><br><br>
+
+                <button class="delete">Удалить</button>
+            `;
+
+            document.getElementById("container").appendChild(wrapper);
+
+            if (config) {
+                const f = wrapper.querySelector(".date-field");
+                f.title = config.title;
+                f.min = config.min;
+                f.max = config.max;
+                f.value = config.value;
+                f.required = config.required;
+                f.readOnly = config.readonly;
+
+                wrapper.querySelector(".attr-title").value = config.title;
+                wrapper.querySelector(".attr-min").value = config.min;
+                wrapper.querySelector(".attr-max").value = config.max;
+                wrapper.querySelector(".attr-value").value = config.value;
+                wrapper.querySelector(".attr-required").checked = config.required;
+                wrapper.querySelector(".attr-readonly").checked = config.readonly;
+            }
+
+            bindEvents(wrapper);
+            saveAll();
+        }
+
+        function bindEvents(block) {
+            const field = block.querySelector(".date-field");
+
+            block.querySelector(".attr-title").addEventListener("input", e => {
+                field.title = e.target.value;
+                saveAll();
+            });
+            block.querySelector(".attr-min").addEventListener("input", e => {
+                field.min = e.target.value;
+                saveAll();
+            });
+            block.querySelector(".attr-max").addEventListener("input", e => {
+                field.max = e.target.value;
+                saveAll();
+            });
+            block.querySelector(".attr-value").addEventListener("input", e => {
+                field.value = e.target.value;
+                saveAll();
+            });
+            block.querySelector(".attr-required").addEventListener("change", e => {
+                field.required = e.target.checked;
+                saveAll();
+            });
+            block.querySelector(".attr-readonly").addEventListener("change", e => {
+                field.readOnly = e.target.checked;
+                saveAll();
+            });
+
+            block.querySelector(".delete").addEventListener("click", () => {
+                block.remove();
+                saveAll();
+            });
+        }
+
+        function saveAll() {
+            const items = [...document.querySelectorAll(".item")].map(div => {
+                const f = div.querySelector(".date-field");
+                return {
+                    title: f.title || "",
+                    min: f.min || "",
+                    max: f.max || "",
+                    value: f.value || "",
+                    required: f.required,
+                    readonly: f.readOnly
+                };
+            });
+
+            localStorage.setItem("dateItems", JSON.stringify(items));
+        }
+        </script>
+
+
+        <kbd hidden>
+            Вывод пользователя
+        </kbd>
+        <font size="5" color="red" face="Arial">П</font>
+
+        <div id="downloads">
+            <a href="/auto_car/static/audio/Ohne dich.mp3" download="music" target="_blank" rel="nofollow">
+                скачать песню<br>
+            </a>
+            <a href="#end">Перейти в конец<br></a>
+        </div>
+
+        <div id="code">
+            <code>
+            def get_user(email):<br>
+                return user_db.get_user_by_email(email)
+            </code>
+        </div>
+
+        <div id="abbreviations">
+            <h2>Cокращения</h2>
+            <p align="right">
+                <abbr title="HyperText Markup Language">HTML</abbr> - стандартный язык разметки для веб-страниц.
+            </p>
+            <pre>
+                formated
+            </pre>
+        </div>
+
+        <div id="definitions">
+            <h2>Пример определения</h2>
+            <dl>
+                <dt>HTML</dt>
+                <dd>HyperText Markup Language - язык разметки для создания веб-страниц</dd>
+            </dl>
+            <dfn title="HTML">HTML</dfn> - 
+            <mark>HyperText Markup Language - язык разметки для создания веб-страниц</mark>
+        </div>
+
+        <div id="quotes">
+            <h2>Пример цитаты</h2>
+            <q cite="https://google.com">
+                Программирование — это искусство создавать решения для проблем, 
+                о которых люди даже не подозревали, способами, которые никто не понимает.
+            </q>
+        </div>
+
+        <div id="fixed-line">
+            <details open>
+                <summary>Фиксированный перенос строк</summary>
+                <p>
+                В тишине вечерней падают звёзды,<br>
+                И память гладит давно ушедший путь.<br>
+                Пусть мрак укроет случайные годы —<br>
+                Но свет в сердцах нам поможет вернуть.
+                </p>
+            </details>
+        </div>
+
+        <div id="fluid-line">
+            <h2>Потенциальный перенос строк</h2>
+            <p>
+            В тишине вечерней падают звёзды, и<wbr> память гладит давно ушедший путь.<wbr
+            Пусть мрак укроет случайные годы, но<wbr> свет в сердцах нам поможет вернуть.<wbr>
+            </p>
+        </div>
+
+        <div id="svg-circle">
+            <h2>Круг (SVG)</h2>
+            <svg width="100" height="100">
+                <circle cx="50" cy="50" r="40" fill="#45b7d1"/>
+            </svg>
+        </div>
+
+        <figure>
+            <p><img src="/auto_car/static/images/add2.png" alt="" width="50"></p>
+            <figcaption>logo</figcaption>
+        </figure>
+
+        <div id="svg-triangle">
+            <h2>Треугольник (SVG)</h2>
+            <svg width="100" height="100">
+                <polygon points="50,10 90,90 10,90" fill="#f9ca24"/>
+            </svg>
+        </div>
+
+        <div id="hr-line">
+            <h2>Линия (hr)</h2>
+            <hr width="200" size="5" color="#6c5ce7" align="left" noshade>
+        </div>
+
+        <div id="sales-report">
+            <h1 class="report-title">Отчет по продажам за 2024 год</h1>
+
+            <div class="table-container">
+                <table class="sales-table">
+                    <caption>Пример таблицы</caption>
+                    <thead>
+                        <tr>
+                            <th rowspan="2">Отдел</th>
+                            <th rowspan="2">Сотрудник</th>
+                            <th colspan="3">1 квартал</th>
+                            <th colspan="3">2 квартал</th>
+                            <th rowspan="2">Итого</th>
+                        </tr>
+                        <tr>
+                            <th>1</th>
+                            <th>2</th>
+                            <th>3</th>
+                            <th>4</th>
+                            <th>5</th>
+                            <th>6</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td rowspan="2">IT</td>
+                            <td>Иванов</td>
+                            <td>120</td>
+                            <td></td>
+                            <td>150</td>
+                            <td>145</td>
+                            <td>160</td>
+                            <td>175</td>
+                            <td>2250</td>
+                        </tr>
+                        <tr>
+                            <td>Петров</td>
+                            <td>95</td>
+                            <td>110</td>
+                            <td>125</td>
+                            <td>140</td>
+                            <td></td>
+                            <td>170</td>
+                            <td>2130</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th colspan="2">Итого</th>
+                            <td>375</td>
+                            <td>435</td>
+                            <td>495</td>
+                            <td>535</td>
+                            <td>595</td>
+                            <td>1015</td>
+                            <td><strong>8280</strong></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+
+
+        <div id="ol-list">
+            <h2>Нумерованный список (OL)</h2>
+            <ol class="custom-numbers" type="A" reversed start="B">
+                <li>Изучить HTML основы</li>
+                <li>Освоить CSS стили</li>
+                <li>Изучить JavaScript</li>
+                <li>Практиковаться на проектах</li>
+                <li>Изучить фреймворки</li>
+            </ol>
+        </div>
+
+        <div id="audio">
+            <audio id="audioPlayer" controls>
+                <source src="/auto_car/static/audio/Ohne dich.mp3">
+                Ваш браузер не поддерживает аудио элемент.
+            </audio>
+        </div>
+
+        <div id="iframe">
+            <iframe src="company/about.html" sandbox="allow-forms">
+            </iframe>
+        </div>
+
+        <div id="end">
+            <p>end</p>
+        </div>
+
+        <div id="form">
+            <form action="/submit_feedback" method="post" accept-charset="ru" autocomplete="off" enctype="ssh" application="email" multipart="form-date" name="login form" >
+                <label for="name">Имя:</label>
+                <input type="text" id="name" name="name" required placeholder="mfemwf"><br><br>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email"><br><br>
+                <label for="password">Пароль:</label>
+                <input type="password" id="password" name="password"><br><br>
+                <p>Пол:</p>
+                <input type="radio" id="male" name="gender" value="male">
+                <label for="male">Мужской</label><br>
+                <input type="radio" id="female" name="gender" value="female">
+                <label for="female">Женский</label><br><br>
+                <p>Интересы:</p>
+                <input type="checkbox" id="html" name="interest" value="html">
+                <label for="html">HTML</label><br>
+                <input type="checkbox" id="css" name="interest" value="css">
+                <label for="css">CSS</label><br>
+                <input type="checkbox" id="js" name="interest" value="js">
+                <label for="js">JavaScript</label><br><br>
+                <label for="message">Сообщение:</label><br>
+                <textarea id="message" name="message" rows="4" cols="50" disabled name="textfield" readonly rows autofocus form maxlength="10" placeholder="10" required></textarea><br><br>
+                <label for="country">Страна:</label>
+                <select id="country" name="country">
+                    <option value="ru">Россия</option>
+                    <option value="us">США</option>
+                    <option value="de">Германия</option>
+                    <option value="fr">Франция</option>
+                </select><br><br>
+                <label for="skills">Навыки (Ctrl+Click для выбора нескольких):</label><br>
+                <select  id="skills" name="skills" multiple size="4">
+                    <option selected value="html">HTML</option>
+                    <option value="css">CSS</option>
+                    <option value="js">JavaScript</option>
+                    <option value="python">Python</option>
+                </select><br><br>
+                <label for="age">Возраст:</label>
+                <input   type="range" id="age" name="age" min="10" max="100" value="25"><br><br>
+                <input type="submit" value="Отправить">
+                <input type="reset" value="Сбросить">
+                <button title="demo" type="button" onclick="alert('Нажата кнопка!')">Нажми меня</button>
+                <button type="button" onclick="alert('Нажата кнопка!')" disabled>Disabled</button>
+
+
+                Color:&nbsp;<input type="color" name="color"><br>
+                Date:&nbsp;<input type="date" name="date"><br>
+                Date and time:&nbsp;<input type="datetime" name="dt"><br>
+                Date and time (local):&nbsp;<input type="datetime-local" name="dtl"><br>
+                Email:&nbsp;<input type="email" name="email"><br>
+                Number:&nbsp;<input type="number" name="number"><br>
+                Range:&nbsp;<input type="range" name="range" min="10" max="20"><br>
+                Search:&nbsp;<input type="search" name="search"><br>
+                Tel:&nbsp;<input type="tel" name="tel"><br>
+                Time:&nbsp;<input type="time" name="time"><br>
+                URL:&nbsp;<input type="url" name="url"><br>
+                Month:&nbsp;<input type="month" name="month"><br>
+                Week:&nbsp;<input type="week" name="week"><br>
+
+            </form>
+        </div>
+        <video autoplay preload controls="true" loop="true" poster="/auto_car/static/images/add1.png" height="300" width="300" muted="false" src="/auto_car/static/videos/PixVerse_V5_Image_Text_720P_машина_заезжает_на.mp4">
+            <track kind="subtitles" src="video/jane.en.vtt" srclang="en" label="English">
+        </video>
+    </body>
+</html>

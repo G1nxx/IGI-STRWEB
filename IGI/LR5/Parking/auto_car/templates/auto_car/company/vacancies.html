@@ -1,0 +1,23 @@
+{% extends "auto_car/base.html" %}
+
+{% block content %}
+<main class="container vacancies">
+    <header class="vacancies__header">
+        <h1 class="vacancies__title">Вакансии</h1>
+    </header>
+
+    <section class="vacancies__list">
+        {% for vacancy in vacancies %}
+        <article class="vacancies__card">
+            <h3 class="vacancies__name">Вакансия: {{ vacancy.name }}</h3>
+            <p class="vacancies__salary">Зарплата: {{ vacancy.salary }} $</p>
+            <p class="vacancies__info">Информация: {{ vacancy.info }}</p>
+        </article>
+        {% empty %}
+        <p class="vacancies__empty">В данный момент открытых вакансий нет.</p>
+        {% endfor %}
+        <div class="clear"></div>
+    </section>
+</main>
+{% endblock %}
+
